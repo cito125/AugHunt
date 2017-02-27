@@ -3,9 +3,6 @@ package com.example.andresarango.aughunt;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -18,6 +15,7 @@ import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 
 
+
 public class MainActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener {
@@ -25,19 +23,27 @@ public class MainActivity extends AppCompatActivity implements
     private static final int REQUEST_CAMERA_PERMISSION = 1;
 
     private CameraView mCameraView;
-
-    private Handler mBackgroundHandler;
     private Button mTakePhotoButton;
+    private CameraCallback mCameraCallback;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initializeCamera();
+        initializeTakePhotoButton();
+    }
+
+    private void initializeCamera() {
         mCameraView = (CameraView) findViewById(R.id.activity_main_camera);
+        mCameraCallback = new CameraCallback(getApplicationContext());
         if (mCameraView != null) {
-            mCameraView.addCallback(mCallback);
+            mCameraView.addCallback(mCameraCallback);
         }
+    }
+
+    private void initializeTakePhotoButton() {
         mTakePhotoButton = (Button) findViewById(R.id.activity_main_button_take_photo);
         mTakePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,8 +54,19 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onAspectRatioSelected(@NonNull AspectRatio ratio) {
+        if (mCameraView != null) {
+            mCameraView.setAspectRatio(ratio);
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        checkCameraPermission();
+    }
+
+    private void checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
             mCameraView.start();
@@ -71,14 +88,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mBackgroundHandler != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                mBackgroundHandler.getLooper().quitSafely();
-            } else {
-                mBackgroundHandler.getLooper().quit();
-            }
-            mBackgroundHandler = null;
-        }
+        mCameraCallback.destroyHandler();
     }
 
     @Override
@@ -97,43 +107,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-
-    @Override
-    public void onAspectRatioSelected(@NonNull AspectRatio ratio) {
-        if (mCameraView != null) {
-
-        }
-    }
-
-    private Handler getBackgroundHandler() {
-        if (mBackgroundHandler == null) {
-            HandlerThread thread = new HandlerThread("background");
-            thread.start();
-            mBackgroundHandler = new Handler(thread.getLooper());
-        }
-        return mBackgroundHandler;
-    }
-
-    private CameraView.Callback mCallback
-            = new CameraView.Callback() {
-
-        @Override
-        public void onCameraOpened(CameraView cameraView) {
-            System.out.println("camera opened");
-        }
-
-        @Override
-        public void onCameraClosed(CameraView cameraView) {
-            System.out.println("camera closed");
-        }
-
-        @Override
-        public void onPictureTaken(CameraView cameraView, final byte[] data) {
-            System.out.println("picture taken");
-
-        }
-
-    };
 
 
 }
