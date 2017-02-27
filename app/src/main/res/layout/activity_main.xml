@@ -11,10 +11,16 @@
     tools:context="com.example.andresarango.aughunt.MainActivity">
 
     <com.google.android.cameraview.CameraView
-        android:id="@+id/camera"
+        android:id="@+id/activity_main_camera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:keepScreenOn="true"
         android:adjustViewBounds="true"
         />
+    <Button
+        android:id="@+id/activity_main_button_take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="take photo"
+        android:layout_below="@id/activity_main_camera"/>
 </RelativeLayout>
