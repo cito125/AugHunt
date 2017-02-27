@@ -21,17 +21,12 @@ public class MainActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener {
 
-    private static final String TAG = "MainActivity";
-
     private static final int REQUEST_CAMERA_PERMISSION = 1;
-
-    private static final String FRAGMENT_DIALOG = "dialog";
 
 
     private CameraView mCameraView;
 
     private Handler mBackgroundHandler;
-
 
 
     @Override
@@ -93,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements
                 break;
         }
     }
-
 
 
     @Override
