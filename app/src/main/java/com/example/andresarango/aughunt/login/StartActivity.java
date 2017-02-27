@@ -1,7 +1,9 @@
 package com.example.andresarango.aughunt.login;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.example.andresarango.aughunt.R;
 
 public class StartActivity extends AppCompatActivity {
 

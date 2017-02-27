@@ -10,4 +10,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.andresarango.aughunt.homescreen.HomeScreenActivity">
 
+    <RelativeLayout
+        android:id="@+id/upper_button_menu"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_page_buttons"
+        >
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/search_for_challenge"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_page_buttons"
+        android:layout_below="@id/upper_button_menu"
+        android:text="search for challenge"/>
+    <Button
+        android:id="@+id/create_challenge"
+        android:layout_below="@id/search_for_challenge"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_page_buttons"
+        android:text="create challenge"/>
+    <Button
+        android:id="@+id/challenge_history"
+        android:layout_below="@id/create_challenge"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_page_buttons"
+        android:text="challenge history"/>
+
+
 </RelativeLayout>
