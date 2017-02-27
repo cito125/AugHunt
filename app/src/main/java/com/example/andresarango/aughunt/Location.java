@@ -5,31 +5,40 @@ package com.example.andresarango.aughunt;
  */
 
 public class Location {
-    private Double lat;
-    private Double lng;
-    private Double elevation;
+    private Double mLat;
+    private Double mLng;
+    private Double mElevation;
+
+    public Location(Double lat, Double lng) {
+        this(lat,lng,0.0);
+    }
+    public Location(Double lat, Double lng, Double elevation) {
+        this.mLat = lat;
+        this.mLng = lng;
+        this.mElevation = elevation;
+    }
 
     public Double getLat() {
-        return lat;
+        return mLat;
     }
 
     public void setLat(Double lat) {
-        this.lat = lat;
+        this.mLat = lat;
     }
 
     public Double getLng() {
-        return lng;
+        return mLng;
     }
 
     public void setLng(Double lng) {
-        this.lng = lng;
+        this.mLng = lng;
     }
 
     public Double getElevation() {
-        return elevation;
+        return mElevation;
     }
 
     public void setElevation(Double elevation) {
-        this.elevation = elevation;
+        this.mElevation = elevation;
     }
 }
