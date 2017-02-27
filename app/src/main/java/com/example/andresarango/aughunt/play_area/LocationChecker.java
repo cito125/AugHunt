@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt;
+package com.example.andresarango.aughunt.play_area;
 
 /**
  * Created by andresarango on 2/26/17.
