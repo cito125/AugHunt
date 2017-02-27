@@ -1,7 +1,9 @@
-package com.example.andresarango.aughunt;
+package com.example.andresarango.aughunt.play_area;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.andresarango.aughunt.R;
 
 
 public class MainActivity extends AppCompatActivity {
