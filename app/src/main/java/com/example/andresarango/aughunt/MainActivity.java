@@ -66,6 +66,19 @@ public class MainActivity extends AppCompatActivity implements
         checkCameraPermission();
     }
 
+    @Override
+    protected void onPause() {
+        mCameraView.stop();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCameraCallback.destroyHandler();
+    }
+    
+
     private void checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -79,17 +92,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    protected void onPause() {
-        mCameraView.stop();
-        super.onPause();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mCameraCallback.destroyHandler();
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
