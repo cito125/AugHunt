@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
@@ -23,20 +24,27 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final int REQUEST_CAMERA_PERMISSION = 1;
 
-
     private CameraView mCameraView;
 
     private Handler mBackgroundHandler;
+    private Button mTakePhotoButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mCameraView = (CameraView) findViewById(R.id.camera);
+        mCameraView = (CameraView) findViewById(R.id.activity_main_camera);
         if (mCameraView != null) {
             mCameraView.addCallback(mCallback);
         }
+        mTakePhotoButton = (Button) findViewById(R.id.activity_main_button_take_photo);
+        mTakePhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCameraView.takePicture();
+            }
+        });
     }
 
     @Override
