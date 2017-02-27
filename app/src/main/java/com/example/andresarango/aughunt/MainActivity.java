@@ -1,69 +1,40 @@
 package com.example.andresarango.aughunt;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.afollestad.materialcamera.MaterialCamera;
 
 
 public class MainActivity extends AppCompatActivity {
 
 
-    private double mStationaryLat;
-    private double mStationaryLng;
-    private double mMovingLat;
-    private double mMovingLng;
-    private double mRadius; //in meters
+    private static final int CAMERA_RQ = 6969;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mStationaryLat = 40.742974;
-        mStationaryLng = -73.935016;
-        mMovingLat = 40.742970;
-        mMovingLng = -73.934978;
-        mRadius = 10;
-        if (isWithinRadius(mMovingLat, mMovingLng, mStationaryLat, mStationaryLng, mRadius)) {
-            System.out.println("true");
-        } else {
-            System.out.println("false");
+        new MaterialCamera(this)
+                .stillShot()
+                .start(CAMERA_RQ);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        // Received recording or error from MaterialCamera
+        if (requestCode == CAMERA_RQ) {
+
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "Saved to: " + data.getDataString(), Toast.LENGTH_LONG).show();
+            } else if(data != null) {
+                Exception e = (Exception) data.getSerializableExtra(MaterialCamera.ERROR_EXTRA);
+                e.printStackTrace();
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
-
-
-    }
-
-    private boolean isWithinRadius(Double movingLat,
-                                   Double movingLng,
-                                   Double stationaryLat,
-                                   Double stationaryLng,
-                                   Double radius) {
-
-        double distance = getDistance(movingLat, movingLng, stationaryLat, stationaryLng, 0.0, 0.0);
-
-        return distance <= radius;
-    }
-
-    private double getDistance(Double movingLat,
-                               Double movingLng,
-                               Double stationaryLat,
-                               Double stationaryLng,
-                               Double movingHeight,
-                               Double stationaryHeight) {
-        final Double R = 6371.0; // Radius of the earth in meters
-
-        Double latDistance = Math.toRadians(movingLat - stationaryLat);
-        Double lonDistance = Math.toRadians(movingLng - stationaryLng);
-        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(stationaryLat)) * Math.cos(Math.toRadians(movingLat))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        Double distance = R * c * 1000; // convert to meters
-
-        Double height = stationaryHeight - movingHeight;
-
-        distance = Math.pow(distance, 2) + Math.pow(height, 2);
-
-        System.out.println(Double.toString(Math.sqrt(distance)));
-
-        return Math.sqrt(distance); // returns distance in meters
     }
 }
