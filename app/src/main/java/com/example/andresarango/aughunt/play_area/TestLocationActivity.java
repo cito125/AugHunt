@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.example.andresarango.aughunt.R;
 
 
-public class MainActivity extends AppCompatActivity {
+public class TestLocationActivity extends AppCompatActivity {
 
 
     private double mRadius; //in meters
