@@ -1,6 +1,5 @@
 package com.example.andresarango.aughunt;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
@@ -13,7 +12,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Constructor;
 
 /**
  * Created by andresarango on 2/27/17.
