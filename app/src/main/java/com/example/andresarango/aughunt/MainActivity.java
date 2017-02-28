@@ -6,8 +6,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -32,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements
     private Button mTakePhotoButton;
     private CameraView.Callback mCameraCallback;
     private final String TAG="ActivityPicture";
-    private Handler mBackgroundHandler;
 
 
     @Override
@@ -55,14 +52,7 @@ public class MainActivity extends AppCompatActivity implements
             public void onCameraClosed(CameraView cameraView) {
                 super.onCameraClosed(cameraView);
             }
-            private Handler getBackgroundHandler() {
-                if (mBackgroundHandler == null) {
-                    HandlerThread thread = new HandlerThread("background");
-                    thread.start();
-                    mBackgroundHandler = new Handler(thread.getLooper());
-                }
-                return mBackgroundHandler;
-            }
+
 
             @Override
             public void onPictureTaken(CameraView cameraView, final byte[] data) {
