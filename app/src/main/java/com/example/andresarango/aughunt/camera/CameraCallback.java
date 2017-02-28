@@ -1,6 +1,5 @@
 package com.example.andresarango.aughunt.camera;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
