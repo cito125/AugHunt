@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.play_area;
+package com.example.andresarango.aughunt;
 
 
 import android.Manifest;
@@ -11,11 +11,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.andresarango.aughunt.camera.AspectRatioFragment;
+import com.example.andresarango.aughunt.camera.CameraCallback;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
-
-
-import com.example.andresarango.aughunt.R;
 
 
 public class MainActivity extends AppCompatActivity implements

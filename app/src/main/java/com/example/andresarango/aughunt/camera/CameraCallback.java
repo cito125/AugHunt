@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt;
+package com.example.andresarango.aughunt.camera;
 
 import android.content.Context;
 import android.os.Build;

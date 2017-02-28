@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt;
+package com.example.andresarango.aughunt.camera;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
