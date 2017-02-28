@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onDestroy();
         mCameraCallback.destroyHandler();
     }
-    
+
 
     private void checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
