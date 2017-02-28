@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt;
+package com.example.andresarango.aughunt.camera;
 
 import android.content.Context;
 import android.os.Build;
@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Constructor;
 
 /**
  * Created by andresarango on 2/27/17.
@@ -76,7 +75,7 @@ public class CameraCallback extends CameraView.Callback {
         return mBackgroundHandler;
     }
 
-    public void destroyHandler(){
+    public void destroyHandler() {
         if (mBackgroundHandler != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 mBackgroundHandler.getLooper().quitSafely();
