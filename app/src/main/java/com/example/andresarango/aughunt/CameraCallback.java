@@ -1,5 +1,6 @@
 package com.example.andresarango.aughunt;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
@@ -76,7 +77,7 @@ public class CameraCallback extends CameraView.Callback {
         return mBackgroundHandler;
     }
 
-    public void destroyHandler(){
+    public void destroyHandler() {
         if (mBackgroundHandler != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 mBackgroundHandler.getLooper().quitSafely();

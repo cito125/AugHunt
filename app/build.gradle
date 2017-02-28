@@ -25,6 +25,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.github.google:cameraview:d0b508a5ea'
+    compile 'com.github.google:cameraview:d0b508a5ea' //This is a preview release. The API is subject to change. This is not an official Google product.
     testCompile 'junit:junit:4.12'
 }
