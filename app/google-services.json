@@ -1,0 +1,45 @@
+{
+  "project_info": {
+    "project_number": "27429281589",
+    "firebase_url": "https://capstoneaughunt.firebaseio.com",
+    "project_id": "capstoneaughunt",
+    "storage_bucket": "capstoneaughunt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27429281589:android:8eabdc2dd43adc9c",
+        "android_client_info": {
+          "package_name": "com.example.andresarango.aughunt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27429281589-79a6k3028k832vj6h4egl201oq21sqan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF0a1yqa0z8iyqOGUc7t2TKOkgWs5wj3g"
+        },
+        {
+          "current_key": "AIzaSyBMp9midhkssE7wBQ0kFWbHrvu3C4GfN2c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
