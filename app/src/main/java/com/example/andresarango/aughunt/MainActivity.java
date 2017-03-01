@@ -13,6 +13,8 @@ import android.widget.Button;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
+import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.location.Location;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 
@@ -110,7 +112,5 @@ public class MainActivity extends AppCompatActivity implements
                 break;
         }
     }
-
-
 
 }
