@@ -36,6 +36,16 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         initializeCamera();
         initializeTakePhotoButton();
+        Location location = getLocation();
+        System.out.println(Double.toString(location.getLat()));
+        System.out.println(Double.toString(location.getLng()));
+
+    }
+
+    private Location getLocation() {
+
+        final String key = "AIzaSyBeF2aZF_8M99U4ryAymUg3fPcAm-hww9A";
+        return null;
     }
 
     private void initializeCamera() {
