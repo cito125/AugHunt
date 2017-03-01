@@ -13,11 +13,13 @@ import android.widget.Button;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
-import com.example.andresarango.aughunt.location.Location;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.Awareness;
+
+import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 
 
 
@@ -38,22 +40,31 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         initializeCamera();
         initializeTakePhotoButton();
-        Location location = getLocation();
-        System.out.println(Double.toString(location.getLat()));
-        System.out.println(Double.toString(location.getLng()));
+        getLocation();
 
     }
 
-    private Location getLocation() {
-
-        final String key = "AIzaSyBeF2aZF_8M99U4ryAymUg3fPcAm-hww9A";
+    private void getLocation() {
 
         GoogleApiClient client = new GoogleApiClient.Builder(getApplicationContext())
                 .addApi(Awareness.API)
                 .build();
         client.connect();
-        
-        return null;
+        Awareness.SnapshotApi.getLocation(client).setResultCallback(new ResultCallback<LocationResult>() {
+            @Override
+            public void onResult(@NonNull LocationResult locationResult) {
+                if (locationResult.getStatus().isSuccess()) {
+                    double latitude = locationResult.getLocation().getLatitude();
+                    double longitude = locationResult.getLocation().getLongitude();
+                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        System.out.println("need permission");
+                        return;
+                    }
+                    String location = Double.toString(latitude) + "," + Double.toString(longitude);
+                    System.out.println(location);
+                }
+            }
+        });
     }
 
     private void initializeCamera() {
