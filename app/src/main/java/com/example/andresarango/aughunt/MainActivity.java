@@ -13,10 +13,12 @@ import android.widget.Button;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
-import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.location.Location;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
+import com.google.android.gms.awareness.Awareness;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -45,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements
     private Location getLocation() {
 
         final String key = "AIzaSyBeF2aZF_8M99U4ryAymUg3fPcAm-hww9A";
+
+        GoogleApiClient client = new GoogleApiClient.Builder(getApplicationContext())
+                .addApi(Awareness.API)
+                .build();
+        client.connect();
+        
         return null;
     }
 

@@ -33,6 +33,9 @@ dependencies {
     compile 'com.github.google:cameraview:d0b508a5ea' //This is a preview release. The API is subject to change. This is not an official Google product.
     testCompile 'junit:junit:4.12'
 
+    compile 'com.google.android.gms:play-services-awareness:10.2.0' //awareness API
+
+
     // Firebase
     compile 'com.google.firebase:firebase-auth:10.2.0'
     compile 'com.google.firebase:firebase-database:10.2.0'
