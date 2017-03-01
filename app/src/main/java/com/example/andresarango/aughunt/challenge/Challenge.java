@@ -2,26 +2,35 @@ package com.example.andresarango.aughunt.challenge;
 
 import android.graphics.Bitmap;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.example.andresarango.aughunt.location.Location;
 
 /**
  * Created by Millochka on 2/28/17.
  */
 
 public class Challenge {
+    private Bitmap mChallenge;
+    private Location mLocation;
+    private String mHint;
 
-
-    private Map<Double,Double> location= new HashMap<>();
-    private Map<Bitmap,Map<Double, Double>> challenge = new HashMap<>();
-
-
-    public void setLocation(Map<Double, Double> location) {
-        this.location = location;
+    public Challenge(Bitmap mChallenge, Location mLocation) {
+        this.mChallenge = mChallenge;
+        this.mLocation = mLocation;
     }
 
-    public void setChallenge(Bitmap image) {
-
-        this.challenge.put(image,this.location);
+    public Bitmap getmChallenge() {
+        return mChallenge;
     }
+
+    public Location getmLocation() {
+        return mLocation;
+    }
+
+    public void setmHint(String mHint) {
+        this.mHint = mHint;
+    }
+
+
+
+
 }

@@ -5,7 +5,6 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -23,6 +22,7 @@ import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
 import com.example.andresarango.aughunt.homescreen.HomeScreenActivity;
+import com.example.andresarango.aughunt.location.Location;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 
@@ -39,12 +39,15 @@ public class ChallengeTemplate extends AppCompatActivity implements
     private CameraCallback mCameraCallback;
     private final String TAG="ActivityPicture";
     private FrameLayout mPhoto;
-    private Bitmap mBitmap;
     private Button mHint;
     private Button mSubmit;
+    private Challenge mChallenge;
+    private Location mLocation;
+    private  String  mHintText = "";
+    private FbEmulator mFbEmulator;
 
 
-    private  Challenge mChallenge = new Challenge();
+    //private  Challenge mChallenge = new Challenge();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +161,17 @@ public class ChallengeTemplate extends AppCompatActivity implements
 
             case R.id.submit_challenge:
 
+
+
+                mLocation = new Location(0.1,0.1);
+
+                mChallenge=new Challenge(mCameraCallback.getmBitmap(),mLocation);
+                mChallenge.setmHint(mHintText);
+                mFbEmulator= new FbEmulator(mChallenge,this);
+                mFbEmulator.bitmapToByte();
+
+
+
                 Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
                         .show();
                 Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
@@ -179,7 +193,7 @@ public class ChallengeTemplate extends AppCompatActivity implements
         alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                String hint = edittext.getText().toString();
+                mHintText = edittext.getText().toString();
 
             }
         });
