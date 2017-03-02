@@ -15,7 +15,7 @@ import java.io.ByteArrayOutputStream;
 public class FbEmulator {
 
     private static final String HINT_DATA ="hint_data" ;
-    private Challenge mChallenge;
+    private Challenge<Bitmap> mChallenge;
     private Context mContext;
     private static final String IMAGE_DATA ="image_data" ;
 
@@ -28,10 +28,10 @@ public class FbEmulator {
     public void bitmapToByte( ){
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        mChallenge.getmChallenge().compress(Bitmap.CompressFormat.PNG, 100, stream);
+        mChallenge.getChallenge().compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
 
-        saveToShPref(byteArray, mChallenge.getmHint());
+        saveToShPref(byteArray, mChallenge.getHint());
     }
 
     public void saveToShPref(final byte[] image, final String hint){
