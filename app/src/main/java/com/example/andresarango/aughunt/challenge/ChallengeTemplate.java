@@ -5,6 +5,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,22 +34,22 @@ import com.google.android.gms.common.api.ResultCallback;
 
 public class ChallengeTemplate extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
-        AspectRatioFragment.Listener,ViewGroup.OnClickListener {
+        AspectRatioFragment.Listener, ViewGroup.OnClickListener {
 
     private static final int REQUEST_CAMERA_PERMISSION = 1;
-    private static final String IMAGE_DATA ="image_data" ;
+    private static final String IMAGE_DATA = "image_data";
     private static final int LOCATION_PERMISSION = 1245;
 
     private CameraView mCameraView;
     private Button mTakePhotoButton;
     private CameraCallback mCameraCallback;
-    private final String TAG="ActivityPicture";
+    private final String TAG = "ActivityPicture";
     private FrameLayout mPhoto;
     private Button mHint;
     private Button mSubmit;
-    private Challenge mChallenge;
+    private Challenge<Bitmap> mChallenge;
     private Location mLocation;
-    private  String  mHintText = "";
+    private String mHintText = "";
     private FbEmulator mFbEmulator;
 
 
@@ -56,11 +57,11 @@ public class ChallengeTemplate extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.challenge_template);
-        mPhoto=(FrameLayout) findViewById(R.id.photo);
+        mPhoto = (FrameLayout) findViewById(R.id.photo);
         mPhoto.setOnClickListener(this);
-        mHint=(Button) findViewById(R.id.leave_hint);
+        mHint = (Button) findViewById(R.id.leave_hint);
         mHint.setOnClickListener(this);
-        mSubmit=(Button) findViewById(R.id.submit_challenge);
+        mSubmit = (Button) findViewById(R.id.submit_challenge);
         mSubmit.setOnClickListener(this);
 
         initializeCamera();
@@ -167,7 +168,7 @@ public class ChallengeTemplate extends AppCompatActivity implements
         int locationPermission = ContextCompat.checkSelfPermission(ChallengeTemplate.this, Manifest.permission.ACCESS_FINE_LOCATION);
         boolean locationPermissionIsNotGranted = locationPermission != PackageManager.PERMISSION_GRANTED;
         boolean APILevelIsTwentyThreeOrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-        if(locationPermissionIsNotGranted && APILevelIsTwentyThreeOrHigher){
+        if (locationPermissionIsNotGranted && APILevelIsTwentyThreeOrHigher) {
             marshamallowRequestPermission();
         }
         if (locationPermissionIsNotGranted) {
@@ -182,13 +183,13 @@ public class ChallengeTemplate extends AppCompatActivity implements
     @TargetApi(Build.VERSION_CODES.M)
     private void marshamallowRequestPermission() {
         boolean userHasAlreadyRejectedPermission = !shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION);
-        if(userHasAlreadyRejectedPermission){
+        if (userHasAlreadyRejectedPermission) {
             showMessageOKCancel("We need your location to find nearby challenges, is this too much trouble ?",
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions(ChallengeTemplate.this,
-                                    new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     LOCATION_PERMISSION);
                         }
                     });
@@ -226,38 +227,36 @@ public class ChallengeTemplate extends AppCompatActivity implements
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.photo:
 
-            mPhoto.setVisibility(View.INVISIBLE);
-            //mBitmap.recycle();
-
+                mPhoto.setVisibility(View.INVISIBLE);
                 break;
             case R.id.leave_hint:
 
                 createDialog();
                 break;
-
             case R.id.submit_challenge:
 
+                mChallenge = new Challenge<>();
+                mChallenge.setChallenge(mCameraCallback.getmBitmap());
+                mChallenge.setLocation(mLocation);
+                mChallenge.setHint(mHintText);
 
-
-//                mLocation = new Location(0.1,0.1);
-
-                mChallenge=new Challenge(mCameraCallback.getmBitmap(),mLocation);
-                mChallenge.setmHint(mHintText);
-                mFbEmulator= new FbEmulator(mChallenge,this);
+                mFbEmulator = new FbEmulator(mChallenge, this);
                 mFbEmulator.bitmapToByte();
 
                 Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
                         .show();
+
                 finish();
                 break;
         }
 
     }
-    public  void createDialog(){
+
+    public void createDialog() {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
