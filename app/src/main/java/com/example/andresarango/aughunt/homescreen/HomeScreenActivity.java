@@ -1,5 +1,6 @@
 package com.example.andresarango.aughunt.homescreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,6 +22,8 @@ public class HomeScreenActivity extends AppCompatActivity implements ViewGroup.O
 
         mSearchForChall=(Button) findViewById(R.id.search_for_challenge);
         mSearchForChall.setOnClickListener(this);
+        mCreatChall = (Button) findViewById(R.id.create_challenge);
+        mCreatChall.setOnClickListener(this);
 
     }
 
@@ -30,9 +33,14 @@ public class HomeScreenActivity extends AppCompatActivity implements ViewGroup.O
         switch (v.getId()){
             case R.id.search_for_challenge:
 
-                getSupportFragmentManager().beginTransaction().add(R.id.activity_home_screen,new SearchChallFragment()).commit();
+               // getSupportFragmentManager().beginTransaction().add(R.id.activity_home_screen,new SearchChallFragment()).commit();
+                Intent intent= new Intent(getApplicationContext(),SearchChallenge.class);
+                startActivity(intent);
                 break;
-
+            case  R.id.create_challenge:
+                Intent otherIntent= new Intent(getApplicationContext(),CreateChallenge.class);
+                startActivity(otherIntent);
+                break;
         }
     }
 }
