@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.andresarango.aughunt.R;
 
@@ -17,12 +18,16 @@ public class SearchChallenge extends AppCompatActivity {
 
     private ImageView mChallImage;
     private static final String IMAGE_DATA ="image_data" ;
+    private static final String HINT_DATA ="hint_data" ;
+    private TextView mHint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.challenge_list);
         mChallImage = (ImageView) findViewById(R.id.existing_challenge);
+        mHint=(TextView) findViewById(R.id.challenge_hint);
+
 
     }
 
@@ -30,8 +35,12 @@ public class SearchChallenge extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
       Bitmap image=retrieveFrSh();
+        SharedPreferences shre = PreferenceManager.getDefaultSharedPreferences(this);
+        String hint = shre.getString(HINT_DATA, "");
+
         Drawable d = new BitmapDrawable(getResources(), image);
         mChallImage.setImageDrawable(d);
+        mHint.setText(hint);
 
     }
 

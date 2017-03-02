@@ -30,7 +30,7 @@ public class Challenge {
         this.mHint = mHint;
     }
 
-
-
-
+    public String getmHint() {
+        return mHint;
+    }
 }

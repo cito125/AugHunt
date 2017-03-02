@@ -3,7 +3,6 @@ package com.example.andresarango.aughunt.challenge;
 
 import android.Manifest;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
-import com.example.andresarango.aughunt.homescreen.HomeScreenActivity;
 import com.example.andresarango.aughunt.location.Location;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
@@ -170,12 +168,9 @@ public class ChallengeTemplate extends AppCompatActivity implements
                 mFbEmulator= new FbEmulator(mChallenge,this);
                 mFbEmulator.bitmapToByte();
 
-
-
                 Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
                         .show();
-                Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
-                startActivity(intent);
+                finish();
                 break;
         }
 
