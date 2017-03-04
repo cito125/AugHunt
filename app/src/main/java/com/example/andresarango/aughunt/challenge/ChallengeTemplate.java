@@ -5,7 +5,6 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,12 +22,9 @@ import android.widget.Toast;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
+import com.example.andresarango.aughunt.location.DAMLocation;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
-import com.google.android.gms.awareness.Awareness;
-import com.google.android.gms.awareness.snapshot.LocationResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 
 
 public class ChallengeTemplate extends AppCompatActivity implements
@@ -36,18 +32,16 @@ public class ChallengeTemplate extends AppCompatActivity implements
         AspectRatioFragment.Listener,ViewGroup.OnClickListener {
 
     private static final int REQUEST_CAMERA_PERMISSION = 1;
-    private static final String IMAGE_DATA ="image_data" ;
     private static final int LOCATION_PERMISSION = 1245;
 
     private CameraView mCameraView;
     private Button mTakePhotoButton;
     private CameraCallback mCameraCallback;
-    private final String TAG="ActivityPicture";
     private FrameLayout mPhoto;
     private Button mHint;
     private Button mSubmit;
     private Challenge mChallenge;
-    private Location mLocation;
+    private DAMLocation mLocation;
     private  String  mHintText = "";
     private FbEmulator mFbEmulator;
 
@@ -62,47 +56,47 @@ public class ChallengeTemplate extends AppCompatActivity implements
         mHint.setOnClickListener(this);
         mSubmit=(Button) findViewById(R.id.submit_challenge);
         mSubmit.setOnClickListener(this);
-
+        mLocation = new DAMLocation(this);
         initializeCamera();
         initializeTakePhotoButton();
         requestPermission();
-        getLocation();
+        //getLocation();
 
     }
 
-    private void getLocation() {
-
-        GoogleApiClient client = new GoogleApiClient.Builder(getApplicationContext())
-                .addApi(Awareness.API)
-                .build();
-        client.connect();
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Awareness.SnapshotApi.getLocation(client)
-                .setResultCallback(new ResultCallback<LocationResult>() {
-                    @Override
-                    public void onResult(@NonNull LocationResult locationResult) {
-                        System.out.println(locationResult.getStatus().getStatusMessage());
-                        if (!locationResult.getStatus().isSuccess()) {
-                            System.out.println("dont work");
-                            return;
-                        }
-                        mLocation = locationResult.getLocation();
-                        System.out.println("Lat: " + mLocation.getLatitude() + ", Lng: " + mLocation.getLongitude());
-                    }
-                });
-
-        System.out.println("made it");
-    }
+//    private void getLocation() {
+//
+//        GoogleApiClient client = new GoogleApiClient.Builder(getApplicationContext())
+//                .addApi(Awareness.API)
+//                .build();
+//        client.connect();
+//
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return;
+//        }
+//        Awareness.SnapshotApi.getLocation(client)
+//                .setResultCallback(new ResultCallback<LocationResult>() {
+//                    @Override
+//                    public void onResult(@NonNull LocationResult locationResult) {
+//                        System.out.println(locationResult.getStatus().getStatusMessage());
+//                        if (!locationResult.getStatus().isSuccess()) {
+//                            System.out.println("dont work");
+//                            return;
+//                        }
+//                        mLocation = locationResult.getLocation();
+//                        System.out.println("Lat: " + mLocation.getLatitude() + ", Lng: " + mLocation.getLongitude());
+//                    }
+//                });
+//
+//        System.out.println("made it");
+//    }
 
     private void initializeCamera() {
         mCameraView = (CameraView) findViewById(R.id.activity_main_camera);
@@ -217,7 +211,6 @@ public class ChallengeTemplate extends AppCompatActivity implements
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
 
                 }
-                // No need to start camera here; it is handled by onResume
                 break;
         }
     }
@@ -231,7 +224,6 @@ public class ChallengeTemplate extends AppCompatActivity implements
             case R.id.photo:
 
             mPhoto.setVisibility(View.INVISIBLE);
-            //mBitmap.recycle();
 
                 break;
             case R.id.leave_hint:
@@ -242,13 +234,10 @@ public class ChallengeTemplate extends AppCompatActivity implements
             case R.id.submit_challenge:
 
 
-
-//                mLocation = new Location(0.1,0.1);
-
                 mChallenge=new Challenge(mCameraCallback.getmBitmap(),mLocation);
                 mChallenge.setmHint(mHintText);
                 mFbEmulator= new FbEmulator(mChallenge,this);
-                mFbEmulator.bitmapToByte();
+                mFbEmulator.saveToDB();
 
                 Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
                         .show();

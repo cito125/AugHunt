@@ -1,7 +1,8 @@
 package com.example.andresarango.aughunt.challenge;
 
 import android.graphics.Bitmap;
-import android.location.Location;
+
+import com.example.andresarango.aughunt.location.DAMLocation;
 
 
 /**
@@ -10,10 +11,10 @@ import android.location.Location;
 
 public class Challenge {
     private Bitmap mChallenge;
-    private Location mLocation;
+    private DAMLocation mLocation;
     private String mHint;
 
-    public Challenge(Bitmap mChallenge, Location mLocation) {
+    public Challenge(Bitmap mChallenge, DAMLocation mLocation) {
         this.mChallenge = mChallenge;
         this.mLocation = mLocation;
     }
@@ -22,7 +23,7 @@ public class Challenge {
         return mChallenge;
     }
 
-    public Location getmLocation() {
+    public DAMLocation getmLocation() {
         return mLocation;
     }
 
@@ -33,4 +34,7 @@ public class Challenge {
     public String getmHint() {
         return mHint;
     }
+
+
+
 }

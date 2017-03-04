@@ -6,23 +6,23 @@ package com.example.andresarango.aughunt.location;
 
 public class LocationChecker {
 
-    public boolean areLocationsWithinRadius(Location firstLocation, Location secondLocation, Double radius){
-        return isWithinRadius(firstLocation.getLat(),
-                firstLocation.getLng(),
-                firstLocation.getElevation(),
-                secondLocation.getLat(),
-                secondLocation.getLng(),
-                secondLocation.getElevation(),
+    public boolean areLocationsWithinRadius(DAMLocation firstDAMLocation, DAMLocation secondDAMLocation, Double radius){
+        return isWithinRadius(firstDAMLocation.getLat(),
+                firstDAMLocation.getLng(),
+                firstDAMLocation.getElevation(),
+                secondDAMLocation.getLat(),
+                secondDAMLocation.getLng(),
+                secondDAMLocation.getElevation(),
                 radius);
     }
 
-    public Double distanceBetweenLocations(Location firstLocation, Location secondLocation){
-        return getDistance(firstLocation.getLat(),
-                firstLocation.getLng(),
-                firstLocation.getElevation(),
-                secondLocation.getLat(),
-                secondLocation.getLng(),
-                secondLocation.getElevation());
+    public Double distanceBetweenLocations(DAMLocation firstDAMLocation, DAMLocation secondDAMLocation){
+        return getDistance(firstDAMLocation.getLat(),
+                firstDAMLocation.getLng(),
+                firstDAMLocation.getElevation(),
+                secondDAMLocation.getLat(),
+                secondDAMLocation.getLng(),
+                secondDAMLocation.getElevation());
     }
 
     private boolean isWithinRadius(Double firstLat,
