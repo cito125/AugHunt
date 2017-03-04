@@ -64,39 +64,6 @@ public class ChallengeTemplate extends AppCompatActivity implements
 
     }
 
-//    private void getLocation() {
-//
-//        GoogleApiClient client = new GoogleApiClient.Builder(getApplicationContext())
-//                .addApi(Awareness.API)
-//                .build();
-//        client.connect();
-//
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        Awareness.SnapshotApi.getLocation(client)
-//                .setResultCallback(new ResultCallback<LocationResult>() {
-//                    @Override
-//                    public void onResult(@NonNull LocationResult locationResult) {
-//                        System.out.println(locationResult.getStatus().getStatusMessage());
-//                        if (!locationResult.getStatus().isSuccess()) {
-//                            System.out.println("dont work");
-//                            return;
-//                        }
-//                        mLocation = locationResult.getLocation();
-//                        System.out.println("Lat: " + mLocation.getLatitude() + ", Lng: " + mLocation.getLongitude());
-//                    }
-//                });
-//
-//        System.out.println("made it");
-//    }
 
     private void initializeCamera() {
         mCameraView = (CameraView) findViewById(R.id.activity_main_camera);
@@ -224,6 +191,7 @@ public class ChallengeTemplate extends AppCompatActivity implements
             case R.id.photo:
 
             mPhoto.setVisibility(View.INVISIBLE);
+            mCameraCallback.setmBitmap(null);
 
                 break;
             case R.id.leave_hint:
@@ -233,15 +201,23 @@ public class ChallengeTemplate extends AppCompatActivity implements
 
             case R.id.submit_challenge:
 
-
+                if(mCameraCallback.getmBitmap()!= null && !mHintText.equals("")){
                 mChallenge=new Challenge(mCameraCallback.getmBitmap(),mLocation);
-                mChallenge.setmHint(mHintText);
-                mFbEmulator= new FbEmulator(mChallenge,this);
-                mFbEmulator.saveToDB();
+                    mChallenge.setmHint(mHintText);
+                    mFbEmulator= new FbEmulator(mChallenge,this);
+                    mFbEmulator.saveToDB();
 
-                Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
-                        .show();
-                finish();
+                    Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
+                            .show();
+                    finish();}
+                else {
+
+                    Toast.makeText(getApplicationContext(), "Photo or Hint is missing", Toast.LENGTH_SHORT)
+                            .show();
+
+                }
+
+
                 break;
         }
 

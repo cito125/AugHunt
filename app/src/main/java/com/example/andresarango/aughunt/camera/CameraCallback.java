@@ -76,5 +76,7 @@ public class CameraCallback extends CameraView.Callback {
         return mBitmap;
     }
 
-
+    public void setmBitmap(Bitmap mBitmap) {
+        this.mBitmap = mBitmap;
+    }
 }
