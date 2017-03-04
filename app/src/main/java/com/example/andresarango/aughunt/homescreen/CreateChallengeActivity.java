@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.ChallengeTemplate;
+import com.example.andresarango.aughunt.challenge.ChallengeActivity;
 
-public class CreateChallenge extends AppCompatActivity implements ViewGroup.OnClickListener{
+public class CreateChallengeActivity extends AppCompatActivity implements ViewGroup.OnClickListener{
 
     Button mCreateChall;
 
@@ -24,7 +24,7 @@ public class CreateChallenge extends AppCompatActivity implements ViewGroup.OnCl
 
     @Override
     public void onClick(View v) {
-        Intent intent=new Intent(getApplicationContext(), ChallengeTemplate.class);
+        Intent intent=new Intent(getApplicationContext(), ChallengeActivity.class);
         startActivity(intent);
         //getSupportFragmentManager().beginTransaction().add(R.id.activity_create_challenge, new ChallengeTemplateFragment()).commit();
 
