@@ -30,8 +30,7 @@ public class DAMLocation {
     }
 
     public DAMLocation(Double lat, Double lng ) {
-        this.mLat = lat;
-        this.mLng = lng;
+        this(lat,lng,0.0);
 
     }
 
