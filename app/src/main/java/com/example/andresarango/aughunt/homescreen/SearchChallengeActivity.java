@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.R;
 
-public class SearchChallenge extends AppCompatActivity {
+public class SearchChallengeActivity extends AppCompatActivity {
 
     private ImageView mChallImage;
     private static final String IMAGE_DATA ="image_data" ;

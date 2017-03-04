@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:weightSum="7"
     android:orientation="vertical"
-    tools:context="com.example.andresarango.aughunt.challenge.ChallengeTemplate">
+    tools:context="com.example.andresarango.aughunt.challenge.ChallengeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
