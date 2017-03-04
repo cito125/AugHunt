@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.FbEmulator;
+import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
 
 public class SearchChallenge extends AppCompatActivity {
 
@@ -18,7 +18,7 @@ public class SearchChallenge extends AppCompatActivity {
     private static final String IMAGE_DATA ="image_data" ;
     private static final String HINT_DATA ="hint_data" ;
     private TextView mHint;
-    private FbEmulator mFbEmulator;
+    private FirebaseEmulator mFirebaseEmulator;
     private TextView mLocation;
 
     @Override
@@ -27,7 +27,7 @@ public class SearchChallenge extends AppCompatActivity {
         setContentView(R.layout.challenge_list);
         mChallImage = (ImageView) findViewById(R.id.existing_challenge);
         mHint=(TextView) findViewById(R.id.challenge_hint);
-        mFbEmulator=new FbEmulator(this);
+        mFirebaseEmulator =new FirebaseEmulator(this);
        mLocation=(TextView) findViewById(R.id.challenge_location);
 
     }
@@ -35,13 +35,13 @@ public class SearchChallenge extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Challenge<Bitmap> challenge = mFbEmulator.getmChallenge();
-      Bitmap image=challenge.getmChallenge();
+        Challenge<Bitmap> challenge = mFirebaseEmulator.getmChallenge();
+      Bitmap image=challenge.getChallenge();
 
         String hint = challenge.getmHint();
 
-        Double lat=challenge.getmLocation().getLat();
-        Double lng=challenge.getmLocation().getLng();
+        Double lat=challenge.getLocation().getLat();
+        Double lng=challenge.getLocation().getLng();
         mLocation.setText(lat+" " +lng);
         Drawable d = new BitmapDrawable(getResources(), image);
         mChallImage.setImageDrawable(d);

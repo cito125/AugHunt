@@ -15,20 +15,20 @@ import java.io.ByteArrayOutputStream;
  * Created by Millochka on 3/1/17.
  */
 
-public class FbEmulator {
+public class FirebaseEmulator {
 
     private static final String HINT_DATA = "hint_data";
     private Challenge<Bitmap> mChallenge;
     private Context mContext;
     private static final String IMAGE_DATA ="image_data" ;
 
-    public  FbEmulator(Context context){
+    public FirebaseEmulator(Context context){
 
         this.mContext=context;
 
     }
 
-    public  FbEmulator(Challenge challenge, Context context){
+    public FirebaseEmulator(Challenge<Bitmap> challenge, Context context){
         this.mChallenge=challenge;
         this.mContext=context;
 
@@ -37,10 +37,10 @@ public class FbEmulator {
     public void saveToDB( ){
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        mChallenge.getmChallenge().compress(Bitmap.CompressFormat.PNG, 100, stream);
+        mChallenge.getChallenge().compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
 
-        saveToShPref(byteArray, mChallenge.getmHint(),mChallenge.getmLocation());
+        saveToShPref(byteArray, mChallenge.getmHint(),mChallenge.getLocation());
 
     }
 
@@ -58,11 +58,11 @@ public class FbEmulator {
 
     }
 
-    public Challenge getmChallenge(){
+    public Challenge<Bitmap> getmChallenge(){
 
         DAMLocation location = new DAMLocation(retrieveLLFrSh()[0],retrieveLLFrSh()[1]);
 
-        Challenge<Bitmap> challenge= new Challenge(retrieveBFrSh(),location);
+        Challenge<Bitmap> challenge= new Challenge<Bitmap>(retrieveBFrSh(),location);
         challenge.setmHint(retrieveHFrSh());
 
 

@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,16 +28,18 @@ import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 
 
-public class ChallengeTemplate extends AppCompatActivity implements
+public class ChallengeActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener,ViewGroup.OnClickListener {
 
     private static final int REQUEST_CAMERA_PERMISSION = 1;
+
     private static final int LOCATION_PERMISSION = 1245;
 
     private CameraView mCameraView;
     private Button mTakePhotoButton;
     private CameraCallback mCameraCallback;
+
     private final String TAG="ActivityPicture";
     private FrameLayout mPhoto;
     private Button mHint;
@@ -46,7 +47,7 @@ public class ChallengeTemplate extends AppCompatActivity implements
     private Challenge<Bitmap> mChallenge;
     private DAMLocation mLocation;
     private  String  mHintText = "";
-    private FbEmulator mFbEmulator;
+    private FirebaseEmulator mFirebaseEmulator;
 
 
     @Override
@@ -161,14 +162,14 @@ public class ChallengeTemplate extends AppCompatActivity implements
     }
 
     private void requestPermission() {
-        int locationPermission = ContextCompat.checkSelfPermission(ChallengeTemplate.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int locationPermission = ContextCompat.checkSelfPermission( ChallengeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
         boolean locationPermissionIsNotGranted = locationPermission != PackageManager.PERMISSION_GRANTED;
         boolean APILevelIsTwentyThreeOrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
         if (locationPermissionIsNotGranted && APILevelIsTwentyThreeOrHigher) {
             marshamallowRequestPermission();
         }
         if (locationPermissionIsNotGranted) {
-            ActivityCompat.requestPermissions(ChallengeTemplate.this,
+            ActivityCompat.requestPermissions( ChallengeActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION);
         }
@@ -184,7 +185,7 @@ public class ChallengeTemplate extends AppCompatActivity implements
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(ChallengeTemplate.this,
+                            ActivityCompat.requestPermissions( ChallengeActivity.this,
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     LOCATION_PERMISSION);
                         }
@@ -194,7 +195,7 @@ public class ChallengeTemplate extends AppCompatActivity implements
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
-        new AlertDialog.Builder(ChallengeTemplate.this)
+        new AlertDialog.Builder( ChallengeActivity.this)
                 .setMessage(message)
                 .setPositiveButton("NO", onClickListener)
                 .setNegativeButton("YES", null)
@@ -240,8 +241,8 @@ public class ChallengeTemplate extends AppCompatActivity implements
 
                 mChallenge=new Challenge(mCameraCallback.getmBitmap(),mLocation);
                 mChallenge.setmHint(mHintText);
-                mFbEmulator= new FbEmulator(mChallenge,this);
-                mFbEmulator.saveToDB();
+                mFirebaseEmulator = new FirebaseEmulator(mChallenge,this);
+                mFirebaseEmulator.saveToDB();
 
                 Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
                         .show();
