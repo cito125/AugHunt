@@ -50,6 +50,8 @@ public class SearchChallengeActivity extends AppCompatActivity {
                     radius);
             if(challengeIsNearUser){
                 System.out.println(challenge.getChallenge());
+            }else{
+                System.out.println("oh no");
             }
         }
     }
@@ -63,6 +65,7 @@ public class SearchChallengeActivity extends AppCompatActivity {
         Location fifthLocation = new Location(40.822770, -73.941818);
         Location sixthLocation = new Location(40.822940, -73.941957);
         Location seventhLocation = new Location(40.822705, -73.941893);
+        Location wrongLocation = new Location(40.821349, -73.938213);
 
         Challenge<String> firstChallenge = new Challenge<>();
         firstChallenge.setChallenge("first Challenge");
@@ -92,12 +95,18 @@ public class SearchChallengeActivity extends AppCompatActivity {
         seventhChallenge.setChallenge("seventh Challenge");
         seventhChallenge.setLocation(seventhLocation);
 
+        Challenge<String> badChallenge = new Challenge<>();
+        badChallenge.setChallenge("wrong");
+        badChallenge.setLocation(wrongLocation);
+
         mChallengeList.add(firstChallenge);
         mChallengeList.add(secondChallenge);
         mChallengeList.add(thirdChallenge);
         mChallengeList.add(fourthChallenge);
         mChallengeList.add(fifthChallenge);
         mChallengeList.add(sixthChallenge);
+        mChallengeList.add(seventhChallenge);
+        mChallengeList.add(badChallenge);
 
 
 
