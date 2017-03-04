@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.location.Location;
+import com.example.andresarango.aughunt.location.LocationChecker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class SearchChallengeActivity extends AppCompatActivity {
     private static final String IMAGE_DATA = "image_data";
     private static final String HINT_DATA = "hint_data";
     private TextView mHint;
-    private List<Challenge<Bitmap>> mChallengeList;
+    private List<Challenge<String>> mChallengeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,23 @@ public class SearchChallengeActivity extends AppCompatActivity {
         mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
         mHint = (TextView) findViewById(R.id.challenge_hint);
         makeListofChallenges();
+        checkListOfChallenges();
 
+    }
+
+    private void checkListOfChallenges() {
+        LocationChecker locationChecker = new LocationChecker();
+        Location userLocation = new Location(40.822827, -73.941979);
+        Double radius = 30.0;
+        for (int i = 0; i < mChallengeList.size(); i++) {
+            Challenge<String> challenge = mChallengeList.get(i);
+            boolean challengeIsNearUser = locationChecker.areLocationsWithinRadius(
+                    userLocation, challenge.getLocation(),
+                    radius);
+            if(challengeIsNearUser){
+                System.out.println(challenge.getChallenge());
+            }
+        }
     }
 
     private void makeListofChallenges() {
@@ -46,21 +63,42 @@ public class SearchChallengeActivity extends AppCompatActivity {
         Location fifthLocation = new Location(40.822770, -73.941818);
         Location sixthLocation = new Location(40.822940, -73.941957);
         Location seventhLocation = new Location(40.822705, -73.941893);
+
         Challenge<String> firstChallenge = new Challenge<>();
         firstChallenge.setChallenge("first Challenge");
         firstChallenge.setLocation(firstLocation);
+
         Challenge<String> secondChallenge = new Challenge<>();
-        firstChallenge.setChallenge("second Challenge");
+        secondChallenge.setChallenge("second Challenge");
+        secondChallenge.setLocation(secondLocation);
+
         Challenge<String> thirdChallenge = new Challenge<>();
-        firstChallenge.setChallenge("third Challenge");
+        thirdChallenge.setChallenge("third Challenge");
+        thirdChallenge.setLocation(thirdLocation);
+
         Challenge<String> fourthChallenge = new Challenge<>();
-        firstChallenge.setChallenge("fourth Challenge");
+        fourthChallenge.setChallenge("fourth Challenge");
+        fourthChallenge.setLocation(fourthLocation);
+
         Challenge<String> fifthChallenge = new Challenge<>();
-        firstChallenge.setChallenge("fifth Challenge");
+        fifthChallenge.setChallenge("fifth Challenge");
+        fifthChallenge.setLocation(fifthLocation);
+
         Challenge<String> sixthChallenge = new Challenge<>();
-        firstChallenge.setChallenge("sixth Challenge");
+        sixthChallenge.setChallenge("sixth Challenge");
+        sixthChallenge.setLocation(sixthLocation);
+
         Challenge<String> seventhChallenge = new Challenge<>();
-        firstChallenge.setChallenge("seventh Challenge");
+        seventhChallenge.setChallenge("seventh Challenge");
+        seventhChallenge.setLocation(seventhLocation);
+
+        mChallengeList.add(firstChallenge);
+        mChallengeList.add(secondChallenge);
+        mChallengeList.add(thirdChallenge);
+        mChallengeList.add(fourthChallenge);
+        mChallengeList.add(fifthChallenge);
+        mChallengeList.add(sixthChallenge);
+
 
 
     }

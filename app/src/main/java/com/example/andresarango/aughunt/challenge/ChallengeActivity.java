@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +23,7 @@ import android.widget.Toast;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
+import com.example.andresarango.aughunt.location.Location;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.Awareness;
@@ -45,7 +45,6 @@ public class ChallengeActivity extends AppCompatActivity implements
     private FrameLayout mPhoto;
     private Button mHint;
     private Button mSubmit;
-    private Location mLocation;
     private String mHintText = "";
 
 
@@ -83,8 +82,8 @@ public class ChallengeActivity extends AppCompatActivity implements
                             System.out.println("dont work");
                             return;
                         }
-                        mLocation = locationResult.getLocation();
-                        System.out.println("Lat: " + mLocation.getLatitude() + ", Lng: " + mLocation.getLongitude());
+                        android.location.Location location = locationResult.getLocation();
+                        System.out.println("Lat: " + location.getLatitude() + ", Lng: " + location.getLongitude());
                     }
                 });
 
@@ -139,7 +138,7 @@ public class ChallengeActivity extends AppCompatActivity implements
     private void submitChallenge() {
         Challenge<Bitmap> challenge = new Challenge<>();
         challenge.setChallenge(mCameraCallback.getmBitmap());
-        challenge.setLocation(mLocation);
+//        challenge.setLocation(mLocation);
         challenge.setHint(mHintText);
         getLocation();
         FirebaseEmulator firebaseEmulator = new FirebaseEmulator(challenge, this);
