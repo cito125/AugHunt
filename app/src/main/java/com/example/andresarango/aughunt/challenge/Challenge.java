@@ -1,7 +1,7 @@
 package com.example.andresarango.aughunt.challenge;
 
-import android.location.Location;
 
+import com.example.andresarango.aughunt.location.Location;
 
 /**
  * Created by Millochka on 2/28/17.

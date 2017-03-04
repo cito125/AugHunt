@@ -34,11 +34,11 @@ public class HomeScreenActivity extends AppCompatActivity implements ViewGroup.O
             case R.id.search_for_challenge:
 
                // getSupportFragmentManager().beginTransaction().add(R.id.activity_home_screen,new SearchChallFragment()).commit();
-                Intent intent= new Intent(getApplicationContext(),SearchChallenge.class);
+                Intent intent= new Intent(getApplicationContext(),SearchChallengeActivity.class);
                 startActivity(intent);
                 break;
             case  R.id.create_challenge:
-                Intent otherIntent= new Intent(getApplicationContext(),CreateChallenge.class);
+                Intent otherIntent= new Intent(getApplicationContext(),CreateChallengeActivity.class);
                 startActivity(otherIntent);
                 break;
         }
