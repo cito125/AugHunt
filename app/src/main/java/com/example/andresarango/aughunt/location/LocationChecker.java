@@ -1,9 +1,5 @@
 package com.example.andresarango.aughunt.location;
 
-/**
- * Created by andresarango on 2/26/17.
- */
-
 public class LocationChecker {
 
     public boolean areLocationsWithinRadius(Location firstLocation, Location secondLocation, Double radius){
