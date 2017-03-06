@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,13 +18,15 @@ import android.widget.TextView;
 import com.example.andresarango.aughunt.challenge.ChallengeFilter;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
 import com.example.andresarango.aughunt.challenge.challenges_adapter.ChallengesAdapter;
+import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.DialogFragmentListener;
 import com.example.andresarango.aughunt.location.Location;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchChallengeActivity extends AppCompatActivity {
+public class SearchChallengeActivity extends AppCompatActivity implements DialogFragmentListener {
 
     private ImageView mChallengeImage;
     private static final String IMAGE_DATA = "image_data";
@@ -56,7 +59,7 @@ public class SearchChallengeActivity extends AppCompatActivity {
                 userLocation,
                 radius
         );
-
+        mNearbyChallengesAdapter.setChallengeList(nearbyChallenges);
 
 
     }
@@ -149,4 +152,9 @@ public class SearchChallengeActivity extends AppCompatActivity {
         return null;
     }
 
+    @Override
+    public <T> void startDialogueFragment(Challenge<T> challenge) {
+        DialogFragment dialogFragment = new ChallengeDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(),"challenge_fragment");
+    }
 }

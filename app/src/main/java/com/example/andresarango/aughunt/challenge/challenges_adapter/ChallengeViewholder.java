@@ -1,8 +1,6 @@
 package com.example.andresarango.aughunt.challenge.challenges_adapter;
 
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,12 +8,13 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.ChallengeActivity;
+import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.DialogFragmentListener;
 
-class ChallengeViewholder<T> extends RecyclerView.ViewHolder implements View.OnClickListener {
+class ChallengeViewholder<T> extends RecyclerView.ViewHolder {
 
     private final TextView mHintTextView;
     private final ImageView mChallengeImageView;
+    private DialogFragmentListener mListener;
 
     public ChallengeViewholder(View itemView) {
         super(itemView);
@@ -23,13 +22,20 @@ class ChallengeViewholder<T> extends RecyclerView.ViewHolder implements View.OnC
         mChallengeImageView = (ImageView) itemView.findViewById(R.id.viewholder_challenge_picture);
     }
 
-    public void bind(Challenge<T> challenge) {
+    public void bind(Challenge<T> challenge, DialogFragmentListener listener) {
         mHintTextView.setText(challenge.getHint());
-        itemView.setOnClickListener(this);
+        mListener = listener;
+        itemView.setOnClickListener(onClick(challenge));
     }
 
-    @Override
-    public void onClick(View view) {
-        
+    private View.OnClickListener onClick(final Challenge<T> challenge) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.startDialogueFragment(challenge);
+            }
+        };
     }
+
+
 }
