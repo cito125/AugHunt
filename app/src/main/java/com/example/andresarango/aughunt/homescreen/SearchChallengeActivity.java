@@ -12,6 +12,7 @@ import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.andresarango.aughunt.ChallengeFilter;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.location.Location;
@@ -43,18 +44,14 @@ public class SearchChallengeActivity extends AppCompatActivity {
         LocationChecker locationChecker = new LocationChecker();
         Location userLocation = new Location(40.822827, -73.941979);
         Double radius = 30.0;
-        for (int i = 0; i < mChallengeList.size(); i++) {
-            Challenge<String> challenge = mChallengeList.get(i);
-            boolean challengeIsNearUser = locationChecker.areLocationsWithinRadius(
-                    userLocation, challenge.getLocation(),
-                    radius);
-            if(challengeIsNearUser){
-                System.out.println(challenge.getChallenge());
-            }else{
-                System.out.println("oh no");
-            }
-        }
+        ChallengeFilter<String> challengeFilter = new ChallengeFilter<String>();
+        List<Challenge<String>> nearbyChallenges = challengeFilter.filterChallengesByProximity(mChallengeList,
+                locationChecker,
+                userLocation,
+                radius);
     }
+
+
 
     private void makeListofChallenges() {
         mChallengeList = new ArrayList<>();
