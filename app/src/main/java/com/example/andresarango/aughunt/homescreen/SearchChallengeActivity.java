@@ -65,7 +65,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
     }
 
 
-
     private void makeListofChallenges() {
         mChallengeList = new ArrayList<>();
         Location firstLocation = new Location(40.822770, -73.941915);
@@ -128,7 +127,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
         mChallengeList.add(badChallenge);
 
 
-
     }
 
     @Override
@@ -164,6 +162,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
     @Override
     public <T> void startDialogueFragment(Challenge<T> challenge) {
         DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
-        dialogFragment.show(getSupportFragmentManager(),"challenge_fragment");
+        dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
     }
 }
