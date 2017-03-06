@@ -3,22 +3,9 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-<android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_challenge_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    <ImageView
-        android:id="@+id/existing_challenge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/challenge_hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

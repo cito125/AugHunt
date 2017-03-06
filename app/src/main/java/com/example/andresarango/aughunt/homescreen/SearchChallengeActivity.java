@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class SearchChallengeActivity extends AppCompatActivity {
     private static final String HINT_DATA = "hint_data";
     private TextView mHint;
     private List<Challenge<String>> mChallengeList;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class SearchChallengeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_challenge);
         mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
         mHint = (TextView) findViewById(R.id.challenge_hint);
+        mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
         makeListofChallenges();
         checkListOfChallenges();
 
