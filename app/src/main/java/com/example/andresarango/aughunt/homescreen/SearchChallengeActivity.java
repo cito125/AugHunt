@@ -31,7 +31,7 @@ public class SearchChallengeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.challenge_list);
+        setContentView(R.layout.activity_search_challenge);
         mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
         mHint = (TextView) findViewById(R.id.challenge_hint);
         makeListofChallenges();
@@ -46,6 +46,7 @@ public class SearchChallengeActivity extends AppCompatActivity {
         List<Challenge<String>> nearbyChallenges = challengeFilter.filterChallengesByProximity(mChallengeList,
                 userLocation,
                 radius);
+
     }
 
 
