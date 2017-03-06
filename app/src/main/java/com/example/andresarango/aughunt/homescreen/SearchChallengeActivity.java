@@ -34,7 +34,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
     private TextView mHint;
     private List<Challenge<String>> mChallengeList;
     private RecyclerView mRecyclerView;
-    private ChallengesAdapter<String> mNearbyChallengesAdapter = new ChallengesAdapter<>();
+    private ChallengesAdapter<String> mNearbyChallengesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +44,14 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
         mHint = (TextView) findViewById(R.id.viewholder_challenge_hint);
         mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mNearbyChallengesAdapter = new ChallengesAdapter<>(this);
         mRecyclerView.setAdapter(mNearbyChallengesAdapter);
         makeListofChallenges();
-        checkListOfChallenges();
+        setChallengesToAdaper();
 
     }
 
-    private void checkListOfChallenges() {
+    private void setChallengesToAdaper() {
         Location userLocation = new Location(40.822827, -73.941979);
         Double radius = 30.0;
         ChallengeFilter<String> challengeFilter = new ChallengeFilter<String>();
