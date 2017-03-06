@@ -41,12 +41,10 @@ public class SearchChallengeActivity extends AppCompatActivity {
     }
 
     private void checkListOfChallenges() {
-        LocationChecker locationChecker = new LocationChecker();
         Location userLocation = new Location(40.822827, -73.941979);
         Double radius = 30.0;
         ChallengeFilter<String> challengeFilter = new ChallengeFilter<String>();
         List<Challenge<String>> nearbyChallenges = challengeFilter.filterChallengesByProximity(mChallengeList,
-                locationChecker,
                 userLocation,
                 radius);
     }

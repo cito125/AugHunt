@@ -13,8 +13,9 @@ import java.util.List;
 
 public class ChallengeFilter<T> {
 
-    public List<Challenge<T>> filterChallengesByProximity(List<Challenge<T>> mChallengeList, LocationChecker locationChecker, Location userLocation, Double radius) {
+    public List<Challenge<T>> filterChallengesByProximity(List<Challenge<T>> mChallengeList, Location userLocation, Double radius) {
         List<Challenge<T>> nearbyChallenges = new ArrayList<>();
+        LocationChecker locationChecker = new LocationChecker();
 
         for (int i = 0; i < mChallengeList.size(); i++) {
             Challenge<T> challenge = mChallengeList.get(i);
