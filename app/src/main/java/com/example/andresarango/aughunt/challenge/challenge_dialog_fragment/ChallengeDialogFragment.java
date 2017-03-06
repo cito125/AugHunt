@@ -16,10 +16,6 @@ public class ChallengeDialogFragment<T> extends DialogFragment {
 
     private static final String CHALLENGE_HINT = "challenge hint";
 
-    public ChallengeDialogFragment() {
-    }
-
-
     public static <T> ChallengeDialogFragment<T> getInstance(Challenge<T> challenge) {
         ChallengeDialogFragment<T> fragment = new ChallengeDialogFragment<>();
         Bundle bundle = new Bundle();
@@ -40,9 +36,7 @@ public class ChallengeDialogFragment<T> extends DialogFragment {
                 Intent intent = new Intent(getContext(), ChallengeActivity.class);
                 startActivity(intent);
             }
-        });
-
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
