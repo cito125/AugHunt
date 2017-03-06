@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
-import com.example.andresarango.aughunt.location.Location;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.Awareness;
@@ -51,7 +50,7 @@ public class ChallengeActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.challenge_template);
+        setContentView(R.layout.activity_challenge_template);
         mPhoto = (FrameLayout) findViewById(R.id.photo);
         mPhoto.setOnClickListener(this);
         mHint = (Button) findViewById(R.id.leave_hint);
