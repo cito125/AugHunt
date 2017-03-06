@@ -154,7 +154,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
 
     @Override
     public <T> void startDialogueFragment(Challenge<T> challenge) {
-        DialogFragment dialogFragment = new ChallengeDialogFragment();
+        DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
         dialogFragment.show(getSupportFragmentManager(),"challenge_fragment");
     }
 }
