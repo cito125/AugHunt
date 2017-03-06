@@ -40,7 +40,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_challenge);
-        mChallengeImage = (ImageView) findViewById(R.id.viewholder_challenge_picture);
         mHint = (TextView) findViewById(R.id.viewholder_challenge_hint);
         mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -54,7 +53,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
     private void setChallengesToAdaper() {
         Location userLocation = new Location(40.822827, -73.941979);
         Double radius = 30.0;
-        ChallengeFilter<String> challengeFilter = new ChallengeFilter<String>();
+        ChallengeFilter<String> challengeFilter = new ChallengeFilter<>();
         List<Challenge<String>> nearbyChallenges = challengeFilter.filterChallengesByProximity(
                 mChallengeList,
                 userLocation,
@@ -81,34 +80,43 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
         Challenge<String> firstChallenge = new Challenge<>();
         firstChallenge.setChallenge("first Challenge");
         firstChallenge.setLocation(firstLocation);
+        firstChallenge.setHint(firstChallenge.getChallenge());
 
         Challenge<String> secondChallenge = new Challenge<>();
         secondChallenge.setChallenge("second Challenge");
         secondChallenge.setLocation(secondLocation);
+        secondChallenge.setHint(secondChallenge.getChallenge());
+
 
         Challenge<String> thirdChallenge = new Challenge<>();
         thirdChallenge.setChallenge("third Challenge");
         thirdChallenge.setLocation(thirdLocation);
+        thirdChallenge.setHint(thirdChallenge.getChallenge());
 
         Challenge<String> fourthChallenge = new Challenge<>();
         fourthChallenge.setChallenge("fourth Challenge");
         fourthChallenge.setLocation(fourthLocation);
+        fourthChallenge.setHint(fourthChallenge.getChallenge());
 
         Challenge<String> fifthChallenge = new Challenge<>();
         fifthChallenge.setChallenge("fifth Challenge");
         fifthChallenge.setLocation(fifthLocation);
+        fifthChallenge.setHint(fifthChallenge.getChallenge());
 
         Challenge<String> sixthChallenge = new Challenge<>();
         sixthChallenge.setChallenge("sixth Challenge");
         sixthChallenge.setLocation(sixthLocation);
+        sixthChallenge.setHint(sixthChallenge.getChallenge());
 
         Challenge<String> seventhChallenge = new Challenge<>();
         seventhChallenge.setChallenge("seventh Challenge");
         seventhChallenge.setLocation(seventhLocation);
+        seventhChallenge.setHint(seventhChallenge.getChallenge());
 
         Challenge<String> badChallenge = new Challenge<>();
         badChallenge.setChallenge("wrong");
         badChallenge.setLocation(wrongLocation);
+        badChallenge.setHint(badChallenge.getChallenge());
 
         mChallengeList.add(firstChallenge);
         mChallengeList.add(secondChallenge);
@@ -126,7 +134,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
     @Override
     protected void onStart() {
         super.onStart();
-        setChallengeImage();
+//        setChallengeImage();
 
     }
 
