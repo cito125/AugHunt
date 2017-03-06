@@ -1,6 +1,5 @@
-package com.example.andresarango.aughunt;
+package com.example.andresarango.aughunt.challenge;
 
-import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.location.Location;
 import com.example.andresarango.aughunt.location.LocationChecker;
 
