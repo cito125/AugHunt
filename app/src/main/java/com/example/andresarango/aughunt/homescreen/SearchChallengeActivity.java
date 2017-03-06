@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.example.andresarango.aughunt.challenge.ChallengeFilter;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.challenge.challenges_adapter.ChallengesAdapter;
 import com.example.andresarango.aughunt.location.Location;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class SearchChallengeActivity extends AppCompatActivity {
     private TextView mHint;
     private List<Challenge<String>> mChallengeList;
     private RecyclerView mRecyclerView;
+    private ChallengesAdapter<String> mNearbyChallengesAdapter = new ChallengesAdapter<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,8 @@ public class SearchChallengeActivity extends AppCompatActivity {
         mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
         mHint = (TextView) findViewById(R.id.challenge_hint);
         mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setAdapter(mNearbyChallengesAdapter);
         makeListofChallenges();
         checkListOfChallenges();
 
