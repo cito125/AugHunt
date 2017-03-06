@@ -3,7 +3,6 @@ package com.example.andresarango.aughunt.location;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 
@@ -20,14 +19,7 @@ public class DAMLocation {
     private Double mLat;
     private Double mLng;
     private Double mElevation;
-    private Context mContext;
-    private Location mLocation;
 
-
-    public DAMLocation( Context context) {
-        this.mContext=context;
-        getLocation();
-    }
 
     public DAMLocation(Double lat, Double lng ) {
         this(lat,lng,0.0);
@@ -64,18 +56,15 @@ public class DAMLocation {
         this.mElevation = elevation;
     }
 
-    public void setmContext(Context mContext) {
-        this.mContext = mContext;
-    }
 
-    private void getLocation() {
+    private void setLocation(Context context) {
 
-        GoogleApiClient client = new GoogleApiClient.Builder(mContext)
+        GoogleApiClient client = new GoogleApiClient.Builder(context)
                 .addApi(Awareness.API)
                 .build();
         client.connect();
 
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
@@ -83,16 +72,16 @@ public class DAMLocation {
                 .setResultCallback(new ResultCallback<LocationResult>() {
                     @Override
                     public void onResult(@NonNull LocationResult locationResult) {
-                       // System.out.println(locationResult.getStatus().getStatusMessage());
+
                         if (!locationResult.getStatus().isSuccess()) {
                             System.out.println("dont work");
                             return;
                         }
-                       mLocation = locationResult.getLocation();
+                        setLat(locationResult.getLocation().getLatitude());
+                        setLng(locationResult.getLocation().getLongitude());
+                        System.out.println("Lat: " + getLat() + ", Lng: " + getLng());
 
-                        setLat(mLocation.getLatitude());
-                        setLng(mLocation.getLongitude());
-                        System.out.println("Lat: " + mLocation.getLatitude() + ", Lng: " + mLocation.getLongitude());
+
                     }
                 });
 

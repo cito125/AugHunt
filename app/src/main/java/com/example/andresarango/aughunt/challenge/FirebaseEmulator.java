@@ -37,10 +37,10 @@ public class FirebaseEmulator {
     public void saveToDB( ){
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        mChallenge.getChallenge().compress(Bitmap.CompressFormat.PNG, 100, stream);
+        mChallenge.getmChallenge().compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
 
-        saveToShPref(byteArray, mChallenge.getmHint(),mChallenge.getLocation());
+        saveToShPref(byteArray, mChallenge.getmHint(),mChallenge.getmLocation());
 
     }
 
@@ -62,7 +62,7 @@ public class FirebaseEmulator {
 
         DAMLocation location = new DAMLocation(retrieveLLFrSh()[0],retrieveLLFrSh()[1]);
 
-        Challenge<Bitmap> challenge= new Challenge<Bitmap>(retrieveBFrSh(),location);
+        Challenge<Bitmap> challenge= new Challenge<Bitmap>(retrieveBFrSh(),location,"userid");
         challenge.setmHint(retrieveHFrSh());
 
 

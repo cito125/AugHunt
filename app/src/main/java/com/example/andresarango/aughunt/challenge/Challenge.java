@@ -2,48 +2,65 @@ package com.example.andresarango.aughunt.challenge;
 
 import com.example.andresarango.aughunt.location.DAMLocation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by Millochka on 2/28/17.
  */
 
-public class Challenge<T> {
-    private T mChallenge;
-    private DAMLocation mLocation;
+public final class Challenge<T> {
+    private final T mChallenge;
+    private final DAMLocation mLocation;
     private String mHint;
+    private final String mOwnerId;
+    private Integer mNumUserAccepted;
+    private final List<CompletedChallenges> mCompletedChallenges;
 
-    public Challenge(T mChallenge, DAMLocation mLocation) {
-        this.mChallenge = mChallenge;
-        this.mLocation = mLocation;
+    public Challenge(T mChallenge, DAMLocation damLocation) {
+        this(mChallenge,damLocation,null);
     }
 
-    public T getChallenge() {
+    public Challenge(T mChallenge, DAMLocation mLocation,String ownerId) {
+        this.mChallenge = mChallenge;
+        this.mLocation = mLocation;
+        mOwnerId=ownerId;
+        this.mCompletedChallenges = new ArrayList<>();
+
+
+    }
+
+
+    public T getmChallenge() {
         return mChallenge;
     }
 
-    public DAMLocation getLocation() {
+    public DAMLocation getmLocation() {
         return mLocation;
-    }
-
-    public void setmHint(String mHint) {
-        this.mHint = mHint;
     }
 
     public String getmHint() {
         return mHint;
     }
 
-    public void setChallenge(T mChallenge) {
-        this.mChallenge = mChallenge;
+    public String getmOwnerId() {
+        return mOwnerId;
     }
 
-
-
-    public void setLocation(DAMLocation mLocation) {
-        this.mLocation = mLocation;
+    public Integer getmNumUserAccepted() {
+        return mNumUserAccepted;
     }
 
-    public void setHint(String mHint) {
+    public List<CompletedChallenges> getmCompletedChallenges() {
+        return mCompletedChallenges;
+    }
+
+    public void setmHint(String mHint) {
         this.mHint = mHint;
+    }
+
+    public void setmNumUserAccepted(Integer mNumUserAccepted) {
+        this.mNumUserAccepted = mNumUserAccepted;
     }
 }

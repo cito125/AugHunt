@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.ChallengeActivity;
+import com.example.andresarango.aughunt.challenge.ChallengeTemplateActivity;
 
 public class CreateChallengeActivity extends AppCompatActivity implements ViewGroup.OnClickListener{
 
@@ -24,7 +24,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
 
     @Override
     public void onClick(View v) {
-        Intent intent=new Intent(getApplicationContext(), ChallengeActivity.class);
+        Intent intent=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
         startActivity(intent);
         //getSupportFragmentManager().beginTransaction().add(R.id.activity_create_challenge, new ChallengeTemplateFragment()).commit();
 

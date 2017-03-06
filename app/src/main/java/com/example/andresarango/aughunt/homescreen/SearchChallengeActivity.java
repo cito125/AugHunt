@@ -45,10 +45,10 @@ public class SearchChallengeActivity extends AppCompatActivity {
         for (int i = 0; i < mChallengeList.size(); i++) {
             Challenge<String> challenge = mChallengeList.get(i);
             boolean challengeIsNearUser = locationChecker.areLocationsWithinRadius(
-                    userLocation, challenge.getLocation(),
+                    userLocation, challenge.getmLocation(),
                     radius);
             if(challengeIsNearUser){
-                System.out.println(challenge.getChallenge());
+                System.out.println(challenge.getmChallenge());
             }else{
                 System.out.println("oh no");
             }
@@ -101,16 +101,16 @@ public class SearchChallengeActivity extends AppCompatActivity {
         super.onStart();
 
         Challenge<Bitmap> challenge = mFirebaseEmulator.getmChallenge();
-        Bitmap image=challenge.getChallenge();
+        Bitmap image=challenge.getmChallenge();
 
         String hint = challenge.getmHint();
 
-        Double lat=challenge.getLocation().getLat();
-        Double lng=challenge.getLocation().getLng();
-        //mLocation.setText(lat+" " +lng);
+        Double lat=challenge.getmLocation().getLat();
+        Double lng=challenge.getmLocation().getLng();
+        mLocation.setText(lat+" " +lng);
         Drawable d = new BitmapDrawable(getResources(), image);
-        //mChallengeImage.setImageDrawable(d);
-        //mHint.setText(hint);
+        mChallengeImage.setImageDrawable(d);
+        mHint.setText(hint);
 
     }
 
