@@ -14,17 +14,18 @@ class ChallengeViewholder<T> extends RecyclerView.ViewHolder {
 
     private final TextView mHintTextView;
     private final ImageView mChallengeImageView;
-    private DialogFragmentListener mListener;
+    private final DialogFragmentListener mListener;
 
-    public ChallengeViewholder(View itemView) {
+    public ChallengeViewholder(View itemView, DialogFragmentListener listener) {
         super(itemView);
         mHintTextView = (TextView) itemView.findViewById(R.id.viewholder_challenge_hint);
         mChallengeImageView = (ImageView) itemView.findViewById(R.id.viewholder_challenge_picture);
+        mListener = listener;
+
     }
 
-    public void bind(Challenge<T> challenge, DialogFragmentListener listener) {
+    public void bind(Challenge<T> challenge) {
         mHintTextView.setText(challenge.getHint());
-        mListener = listener;
         itemView.setOnClickListener(onClick(challenge));
     }
 

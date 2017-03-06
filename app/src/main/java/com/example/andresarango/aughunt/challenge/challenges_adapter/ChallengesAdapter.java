@@ -24,7 +24,8 @@ public class ChallengesAdapter<T> extends RecyclerView.Adapter<ChallengeViewhold
     public ChallengeViewholder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ChallengeViewholder<>(LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.viewholder_challenge, parent, false));
+                .inflate(R.layout.viewholder_challenge, parent, false),
+                mDialogFragmentListener);
     }
 
     public void setChallengeList(List<Challenge<T>> challengeList) {
@@ -35,7 +36,7 @@ public class ChallengesAdapter<T> extends RecyclerView.Adapter<ChallengeViewhold
 
     @Override
     public void onBindViewHolder(ChallengeViewholder<T> holder, int position) {
-        holder.bind(mChallengeList.get(position),mDialogFragmentListener);
+        holder.bind(mChallengeList.get(position));
     }
 
     @Override
