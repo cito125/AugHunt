@@ -49,6 +49,8 @@ public class SearchChallengeActivity extends AppCompatActivity {
                 radius
         );
 
+
+
     }
 
 
