@@ -37,8 +37,8 @@ public class SearchChallengeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_challenge);
-        mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
-        mHint = (TextView) findViewById(R.id.challenge_hint);
+        mChallengeImage = (ImageView) findViewById(R.id.viewholder_challenge_picture);
+        mHint = (TextView) findViewById(R.id.viewholder_challenge_hint);
         mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setAdapter(mNearbyChallengesAdapter);
