@@ -16,7 +16,6 @@ import com.example.andresarango.aughunt.ChallengeFilter;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.location.Location;
-import com.example.andresarango.aughunt.location.LocationChecker;
 
 import java.util.ArrayList;
 import java.util.List;
