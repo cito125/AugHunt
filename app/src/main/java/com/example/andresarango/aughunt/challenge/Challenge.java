@@ -3,10 +3,6 @@ package com.example.andresarango.aughunt.challenge;
 
 import com.example.andresarango.aughunt.location.Location;
 
-/**
- * Created by Millochka on 2/28/17.
- */
-
 public class Challenge<T> {
     private T mChallenge;
     private Location mLocation;

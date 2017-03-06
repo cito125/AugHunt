@@ -6,10 +6,6 @@ import com.example.andresarango.aughunt.location.LocationChecker;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by andresarango on 3/5/17.
- */
-
 public class ChallengeFilter<T> {
 
     public List<Challenge<T>> filterChallengesByProximity(List<Challenge<T>> mChallengeList, Location userLocation, Double radius) {
