@@ -47,7 +47,7 @@ class CreatedChallengesAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
 
-                mListener.passingChallange(position);
+                mListener.passingChallange(mChallenges.get(position));
 
 
             }

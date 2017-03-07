@@ -8,25 +8,24 @@
     android:orientation="vertical"
     tools:context="com.example.andresarango.aughunt.homescreen.CreateChallengeActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/recview_placeholder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
     <android.support.v7.widget.RecyclerView
         android:id="@+id/created_challenges"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         </android.support.v7.widget.RecyclerView>
+        <Button
+            android:id="@+id/new_challenge"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
 
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/new_challenge"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/container_for_review"

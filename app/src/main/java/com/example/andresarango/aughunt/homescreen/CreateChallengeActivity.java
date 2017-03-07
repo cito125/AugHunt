@@ -19,14 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CreateChallengeActivity extends AppCompatActivity implements ViewGroup.OnClickListener, ChallengeReviewHelper{
+public class CreateChallengeActivity extends AppCompatActivity implements ViewGroup.OnClickListener, ChallengeReviewHelper<Bitmap>{
 
     private Button mCreateChallenge;
     private RecyclerView mRecyclerView;
     private List<Challenge<Bitmap>> mAllChallenges;
     private FirebaseEmulator mFirebaseEmulator;
     private List<Challenge<Bitmap>> mCurrentUserChallenges;
-
+    private ChallangeReviewFragment mChallangeReviewFragment;
+    private Boolean mIsInflated;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
         mCreateChallenge=(Button) findViewById(R.id.new_challenge);
         mCreateChallenge.setOnClickListener(this);
         mCurrentUserChallenges=new ArrayList<>();
+        mIsInflated=false;
         initFireBase();
         initRecyclerView();
 
@@ -78,9 +80,25 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
 
 
     @Override
-    public void passingChallange(Integer position) {
+    public void passingChallange(Challenge<Bitmap> c) {
+        mChallangeReviewFragment = new ChallangeReviewFragment();
+        mChallangeReviewFragment .setmCgallengeToReview(c);
+        mChallangeReviewFragment .setmContext(getApplicationContext());
+        mIsInflated=!mIsInflated;
 
-        getFragmentManager().beginTransaction().replace(R.id.container_for_review,new ChallangeReviewFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container_for_review,mChallangeReviewFragment ).commit();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+  if(mIsInflated){
+      getSupportFragmentManager().beginTransaction().remove(mChallangeReviewFragment ).commit();
+      mIsInflated=!mIsInflated;
+
+  }else {
+            super.onBackPressed();}
 
     }
 }
