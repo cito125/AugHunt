@@ -111,22 +111,22 @@ public class FirebaseEmulator implements FirebaseHelper<Bitmap>{
                 R.drawable.cat1);
         Challenge<Bitmap> challenge  =  new Challenge<Bitmap>(icon,null,"Danny");
         challenge.setmHint("Hint");
-        challenge.setmNumUserAccepted(4);
+        challenge.setmUsersAccepted(4);
         Bitmap icon2=BitmapFactory.decodeResource(mContext.getResources(),
                 R.drawable.cat2);
         Challenge<Bitmap> challenge1 = new Challenge<Bitmap>(icon2,null,"Mila");
         challenge1.setmHint("Hint1");
-        challenge.setmNumUserAccepted(5);
+        challenge1.setmUsersAccepted(5);
         Bitmap icon3=BitmapFactory.decodeResource(mContext.getResources(),
                 R.drawable.cat3);
         Challenge<Bitmap> challenge2 = new Challenge<Bitmap>(icon3,null,"Mila");
         challenge2.setmHint("Hint2");
-        challenge2.setmNumUserAccepted(6);
+        challenge2.setmUsersAccepted(6);
         Bitmap icon4=BitmapFactory.decodeResource(mContext.getResources(),
                 R.drawable.humans);
         Challenge<Bitmap> challenge3 = new Challenge<Bitmap>(icon4,null,"Mila");
         challenge3.setmHint("Hint3");
-        challenge3.setmNumUserAccepted(7);
+        challenge3.setmUsersAccepted(7);
         challenges.add(challenge);
         challenges.add(challenge1);
         challenges.add(challenge2);

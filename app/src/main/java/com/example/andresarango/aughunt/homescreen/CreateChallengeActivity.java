@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.ChallengeTemplateActivity;
+import com.example.andresarango.aughunt.challenge.CompletedChallenges;
 import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
     private List<Challenge<Bitmap>> mCurrentUserChallenges;
     private ChallangeReviewFragment mChallangeReviewFragment;
     private Boolean mIsInflated;
+    private ReviewFragment mReviewFragment;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +86,20 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
         mChallangeReviewFragment = new ChallangeReviewFragment();
         mChallangeReviewFragment .setmCgallengeToReview(c);
         mChallangeReviewFragment .setmContext(getApplicationContext());
+        mChallangeReviewFragment.setmListener(this);
         mIsInflated=!mIsInflated;
 
         getSupportFragmentManager().beginTransaction().add(R.id.container_for_review,mChallangeReviewFragment ).commit();
+    }
+
+    @Override
+    public void passingCompletedChallange(CompletedChallenges<Bitmap> cc, Challenge<Bitmap> c) {
+
+        mReviewFragment= new ReviewFragment();
+        mReviewFragment.setmCompletedChallenge(cc);
+        mReviewFragment.setmCurrentChallenge(c);
+        mReviewFragment.setmContext(this);
+        getSupportFragmentManager().beginTransaction().add(R.id.container_for_review,mReviewFragment ).commit();
     }
 
 
@@ -99,6 +112,24 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
 
   }else {
             super.onBackPressed();}
+
+    }
+
+    public void reviewResult(View view){
+
+        switch (view.getId()){
+
+            case R.id.decline:
+
+                getSupportFragmentManager().beginTransaction().remove(mReviewFragment ).commit();
+
+                break;
+            case R.id.accept:
+                getSupportFragmentManager().beginTransaction().remove(mReviewFragment ).commit();
+            break;
+
+        }
+
 
     }
 }

@@ -30,6 +30,7 @@ public class ChallangeReviewFragment extends Fragment {
     private ImageView mChallengePhoto;
     private TextView mHint;
     private TextView mUsersAccepted;
+    private ChallengeReviewHelper<Bitmap> mListener;
 
 
     @Nullable
@@ -48,8 +49,8 @@ public class ChallangeReviewFragment extends Fragment {
 
     }
 
-    public void setmCgallengeToReview(Challenge<Bitmap> mCgallengeToReview) {
-        this.mChallengeToReview = mCgallengeToReview;
+    public void setmCgallengeToReview(Challenge<Bitmap> cgallengeToReview) {
+        this.mChallengeToReview = cgallengeToReview;
     }
 
     public void setmContext(Context mContext) {
@@ -59,7 +60,7 @@ public class ChallangeReviewFragment extends Fragment {
     public void initRecyclerView(View view){
         mRecyclerView=(RecyclerView) view.findViewById(R.id.challanges_for_review);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mRecyclerView.setAdapter(new ReviewChallengeAdapter(mChallengeToReview));
+        mRecyclerView.setAdapter(new ReviewChallengeAdapter(mChallengeToReview, mListener));
 
     }
 
@@ -69,8 +70,12 @@ public class ChallangeReviewFragment extends Fragment {
         mUsersAccepted=(TextView) view.findViewById(R.id.usersaccepted);
         BitmapDrawable d= new BitmapDrawable(mContext.getResources(), mChallengeToReview.getmChallenge());
         mChallengePhoto.setImageDrawable(d);
-        mHint.setText(mChallengeToReview.getmHint());
-        mUsersAccepted.setText(String.valueOf(mChallengeToReview.getmNumUserAccepted()));
+        mHint.setText("Challenge Hint: "+mChallengeToReview.getmHint());
+        mUsersAccepted.setText("Users Accepted: "+String.valueOf(mChallengeToReview.getmUsersAccepted()));
 
+    }
+
+    public void setmListener(ChallengeReviewHelper<Bitmap> mListener) {
+        this.mListener = mListener;
     }
 }

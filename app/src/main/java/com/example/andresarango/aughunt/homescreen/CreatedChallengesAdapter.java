@@ -21,9 +21,9 @@ class CreatedChallengesAdapter extends RecyclerView.Adapter {
 
     private List<Challenge<Bitmap>> mChallenges=new ArrayList<>();
     private Context mContext;
-    private ChallengeReviewHelper mListener;
+    private ChallengeReviewHelper<Bitmap> mListener;
 
-    public CreatedChallengesAdapter(List<Challenge<Bitmap>> challenges, Context context,ChallengeReviewHelper listener ){
+    public CreatedChallengesAdapter(List<Challenge<Bitmap>> challenges, Context context,ChallengeReviewHelper<Bitmap> listener ){
         this.mChallenges=challenges;
         this.mContext= context;
         this.mListener=listener;

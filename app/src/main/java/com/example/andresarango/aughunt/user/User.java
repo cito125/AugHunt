@@ -6,14 +6,20 @@ package com.example.andresarango.aughunt.user;
 
 public class User {
 
-    private String UserId;
+    private final String mUserId;
+    private Integer mUserPoints;
 
     public User(){
 
-        this.UserId="Mila";
+        this.mUserId="Mila";
     }
 
     public String getUserId() {
-        return UserId;
+        return mUserId;
     }
+
+    public void setmUserPoints(Integer mUserPoints) {
+        this.mUserPoints = mUserPoints;
+    }
+
 }

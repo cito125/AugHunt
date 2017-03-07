@@ -19,9 +19,13 @@ import java.util.List;
 class ReviewChallengeAdapter extends RecyclerView.Adapter {
 
     private List<CompletedChallenges<Bitmap>> mCompletedChallanges;
+    private Challenge<Bitmap> mCurrentChallenge;
+    private ChallengeReviewHelper<Bitmap> mListener;
 
-    ReviewChallengeAdapter(Challenge<Bitmap> challenge){
+    ReviewChallengeAdapter(Challenge<Bitmap> challenge, ChallengeReviewHelper<Bitmap> listener){
+        this.mCurrentChallenge=challenge;
         this.mCompletedChallanges=challenge.getmCompletedChallenges();
+        this.mListener=listener;
 
     }
 
@@ -33,10 +37,18 @@ class ReviewChallengeAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         ReviewChallengeViewHolder reviewChallengeViewHolder=(ReviewChallengeViewHolder) holder;
         reviewChallengeViewHolder.bind(mCompletedChallanges.get(position));
+        reviewChallengeViewHolder.getmCompletedChallenge().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mListener.passingCompletedChallange(mCompletedChallanges.get(position),mCurrentChallenge);
+
+            }
+        });
 
     }
 

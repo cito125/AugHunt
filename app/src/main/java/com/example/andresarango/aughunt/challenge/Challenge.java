@@ -15,7 +15,7 @@ public final class Challenge<T> {
     private final DAMLocation mLocation;
     private String mHint;
     private final String mOwnerId;
-    private Integer mUsersAccepted;
+    private int mUsersAccepted;
     private Boolean mStatus;
     private  List<CompletedChallenges<T>> mCompletedChallenges;
 
@@ -28,6 +28,7 @@ public final class Challenge<T> {
         this.mLocation = mLocation;
         this.mOwnerId=ownerId;
         this.mCompletedChallenges = new ArrayList<>();
+
 
 
     }
@@ -49,9 +50,7 @@ public final class Challenge<T> {
         return mOwnerId;
     }
 
-    public Integer getmNumUserAccepted() {
-        return mUsersAccepted;
-    }
+
 
     public List<CompletedChallenges<T>> getmCompletedChallenges() {
         return mCompletedChallenges;
@@ -61,9 +60,6 @@ public final class Challenge<T> {
         this.mHint = mHint;
     }
 
-    public void setmNumUserAccepted(Integer mNumUserAccepted) {
-        this.mUsersAccepted = mNumUserAccepted;
-    }
 
     public void setmCompletedChallenges(List<CompletedChallenges<T>> mCompletedChallenges) {
         this.mCompletedChallenges = mCompletedChallenges;
@@ -75,5 +71,13 @@ public final class Challenge<T> {
 
     public void setmStatus(Boolean mStatus) {
         this.mStatus = mStatus;
+    }
+
+    public Integer getmUsersAccepted() {
+        return mUsersAccepted;
+    }
+
+    public void setmUsersAccepted(Integer usersAccepted) {
+        this.mUsersAccepted = usersAccepted;
     }
 }
