@@ -80,7 +80,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
     @Override
     public void passingChallange(Integer position) {
 
-        getFragmentManager().beginTransaction().add(R.id.activity_create_challenge,new ChallangeReviewFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container_for_review,new ChallangeReviewFragment()).commit();
 
     }
 }
