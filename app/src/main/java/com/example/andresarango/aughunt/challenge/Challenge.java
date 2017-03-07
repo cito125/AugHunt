@@ -1,38 +1,83 @@
 package com.example.andresarango.aughunt.challenge;
 
+import com.example.andresarango.aughunt.location.DAMLocation;
 
-import com.example.andresarango.aughunt.location.Location;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by Millochka on 2/28/17.
  */
 
-public class Challenge<T> {
-    private T mChallenge;
-    private Location mLocation;
+public final class Challenge<T> {
+    private final T mChallenge;
+    private final DAMLocation mLocation;
     private String mHint;
+    private final String mOwnerId;
+    private int mUsersAccepted;
+    private Boolean mStatus;
+    private  List<CompletedChallenges<T>> mCompletedChallenges;
 
-    public T getChallenge() {
+    public Challenge(T mChallenge, DAMLocation damLocation) {
+        this(mChallenge,damLocation,null);
+    }
+
+    public Challenge(T mChallenge, DAMLocation mLocation,String ownerId) {
+        this.mChallenge = mChallenge;
+        this.mLocation = mLocation;
+        this.mOwnerId=ownerId;
+        this.mCompletedChallenges = new ArrayList<>();
+
+
+
+    }
+
+
+    public T getmChallenge() {
         return mChallenge;
     }
 
-    public Location getLocation() {
+    public DAMLocation getmLocation() {
         return mLocation;
     }
 
-    public String getHint() {
+    public String getmHint() {
         return mHint;
     }
 
-    public void setChallenge(T mChallenge) {
-        this.mChallenge = mChallenge;
+    public String getmOwnerId() {
+        return mOwnerId;
     }
 
-    public void setLocation(Location mLocation) {
-        this.mLocation = mLocation;
+
+
+    public List<CompletedChallenges<T>> getmCompletedChallenges() {
+        return mCompletedChallenges;
     }
 
-    public void setHint(String mHint) {
+    public void setmHint(String mHint) {
         this.mHint = mHint;
+    }
+
+
+    public void setmCompletedChallenges(List<CompletedChallenges<T>> mCompletedChallenges) {
+        this.mCompletedChallenges = mCompletedChallenges;
+    }
+
+    public Boolean getmStatus() {
+        return mStatus;
+    }
+
+    public void setmStatus(Boolean mStatus) {
+        this.mStatus = mStatus;
+    }
+
+    public Integer getmUsersAccepted() {
+        return mUsersAccepted;
+    }
+
+    public void setmUsersAccepted(Integer usersAccepted) {
+        this.mUsersAccepted = usersAccepted;
     }
 }
