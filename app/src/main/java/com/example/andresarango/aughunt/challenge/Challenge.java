@@ -15,7 +15,7 @@ public final class Challenge<T> {
     private final DAMLocation mLocation;
     private String mHint;
     private final String mOwnerId;
-    private Integer mNumUserAccepted;
+    private Integer mUsersAccepted;
     private Boolean mStatus;
     private  List<CompletedChallenges<T>> mCompletedChallenges;
 
@@ -50,7 +50,7 @@ public final class Challenge<T> {
     }
 
     public Integer getmNumUserAccepted() {
-        return mNumUserAccepted;
+        return mUsersAccepted;
     }
 
     public List<CompletedChallenges<T>> getmCompletedChallenges() {
@@ -62,7 +62,7 @@ public final class Challenge<T> {
     }
 
     public void setmNumUserAccepted(Integer mNumUserAccepted) {
-        this.mNumUserAccepted = mNumUserAccepted;
+        this.mUsersAccepted = mNumUserAccepted;
     }
 
     public void setmCompletedChallenges(List<CompletedChallenges<T>> mCompletedChallenges) {

@@ -3,6 +3,7 @@ package com.example.andresarango.aughunt.homescreen;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
@@ -22,8 +25,11 @@ import com.example.andresarango.aughunt.challenge.Challenge;
 public class ChallangeReviewFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private Challenge<Bitmap> mCgallengeToReview;
+    private Challenge<Bitmap> mChallengeToReview;
     private Context mContext;
+    private ImageView mChallengePhoto;
+    private TextView mHint;
+    private TextView mUsersAccepted;
 
 
     @Nullable
@@ -37,17 +43,34 @@ public class ChallangeReviewFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view,savedInstanceState);
 
-        mRecyclerView=(RecyclerView) view.findViewById(R.id.challanges_for_review);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mRecyclerView.setAdapter(new ReviewChallengeAdapter(mCgallengeToReview));
+       initSetViews(view);
+        initRecyclerView(view);
 
     }
 
     public void setmCgallengeToReview(Challenge<Bitmap> mCgallengeToReview) {
-        this.mCgallengeToReview = mCgallengeToReview;
+        this.mChallengeToReview = mCgallengeToReview;
     }
 
     public void setmContext(Context mContext) {
         this.mContext = mContext;
+    }
+
+    public void initRecyclerView(View view){
+        mRecyclerView=(RecyclerView) view.findViewById(R.id.challanges_for_review);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mRecyclerView.setAdapter(new ReviewChallengeAdapter(mChallengeToReview));
+
+    }
+
+    public void initSetViews(View view){
+        mChallengePhoto=(ImageView) view.findViewById(R.id.review_challenge_picture);
+        mHint=(TextView) view.findViewById(R.id.review_challenge_hit);
+        mUsersAccepted=(TextView) view.findViewById(R.id.usersaccepted);
+        BitmapDrawable d= new BitmapDrawable(mContext.getResources(), mChallengeToReview.getmChallenge());
+        mChallengePhoto.setImageDrawable(d);
+        mHint.setText(mChallengeToReview.getmHint());
+        mUsersAccepted.setText(String.valueOf(mChallengeToReview.getmNumUserAccepted()));
+
     }
 }

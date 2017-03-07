@@ -12,12 +12,12 @@
         android:layout_height="0dp"
         android:layout_weight="3"/>
     <TextView
-        android:id="@+id/review_challenge__hit"
+        android:id="@+id/review_challenge_hit"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
     <TextView
-        android:id="@+id/review_challenge_usersaccepted"
+        android:id="@+id/usersaccepted"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
