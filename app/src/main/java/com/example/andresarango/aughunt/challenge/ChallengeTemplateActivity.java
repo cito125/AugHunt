@@ -257,8 +257,8 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
         damLocation.setLng(locationResult.getLocation().getLongitude());
        Challenge<Bitmap> challenge = new Challenge<>(mCameraCallback.getmBitmap(), damLocation);
         challenge.setmHint(mHintText);
-       mFirebaseEmulator = new FirebaseEmulator(challenge, this);
-       mFirebaseEmulator.saveToDB();
+       mFirebaseEmulator = new FirebaseEmulator(this);
+       mFirebaseEmulator.saveChallenge(challenge);
 
         Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
                 .show();
