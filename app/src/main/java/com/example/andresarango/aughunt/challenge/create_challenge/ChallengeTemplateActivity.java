@@ -27,7 +27,6 @@ import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
-import com.example.andresarango.aughunt.snapshot_callback.SnapshotListener;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.snapshot.LocationResult;
@@ -36,7 +35,7 @@ import com.google.android.gms.awareness.snapshot.LocationResult;
 public class ChallengeTemplateActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener, ViewGroup.OnClickListener,
-        SnapshotListener {
+        SnapshotHelper.SnapshotListener {
 
     private static final int REQUEST_CAMERA_PERMISSION = 1;
 
