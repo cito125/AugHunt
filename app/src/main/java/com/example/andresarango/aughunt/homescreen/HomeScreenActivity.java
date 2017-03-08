@@ -13,7 +13,6 @@ public class HomeScreenActivity extends AppCompatActivity implements ViewGroup.O
 
     private Button mSearchForChall;
     private Button mCreatChall;
-    private Button mChallHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
