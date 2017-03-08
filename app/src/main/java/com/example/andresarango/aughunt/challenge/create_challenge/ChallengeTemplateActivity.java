@@ -42,15 +42,14 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     private static final int LOCATION_PERMISSION = 1245;
 
     private CameraView mCameraView;
-    private Button mTakePhotoButton;
     private CameraCallback mCameraCallback;
 
-    private final String TAG = "ActivityPicture";
-    private FrameLayout mPhoto;
+    private Button mTakePhotoButton;
     private Button mHint;
     private Button mSubmit;
+    private FrameLayout mPhoto;
+
     private String mHintText = "";
-    private FirebaseEmulator mFirebaseEmulator;
 
 
     @Override
@@ -70,12 +69,9 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     }
 
 
-
-
     private void initializeCamera() {
 
         mCameraCallback = new CameraCallback(this, mPhoto, mTakePhotoButton);
-
 
         if (mCameraView != null) {
             mCameraView.addCallback(mCameraCallback);
@@ -209,15 +205,12 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
                 break;
 
             case R.id.submit_challenge:
-              if(mCameraCallback.getmBitmap()!= null&&!mHintText.equals("")){
-                submitChallenge();
-              }
-                else {
-                  Toast.makeText(this, "Hint or photo is missing", Toast.LENGTH_SHORT)
-                          .show();
-              }
-
-
+                if (mCameraCallback.getmBitmap() != null && !mHintText.equals("")) {
+                    submitChallenge();
+                } else {
+                    Toast.makeText(this, "Hint or photo is missing", Toast.LENGTH_SHORT)
+                            .show();
+                }
 
 
                 break;
@@ -264,10 +257,10 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
         DAMLocation damLocation = new DAMLocation(0.0, 0.0);
         damLocation.setLat(locationResult.getLocation().getLatitude());
         damLocation.setLng(locationResult.getLocation().getLongitude());
-       Challenge<Bitmap> challenge = new Challenge<>(mCameraCallback.getmBitmap(), damLocation);
+        Challenge<Bitmap> challenge = new Challenge<>(mCameraCallback.getmBitmap(), damLocation);
         challenge.setmHint(mHintText);
-       mFirebaseEmulator = new FirebaseEmulator(this);
-       mFirebaseEmulator.saveChallenge(challenge);
+        FirebaseEmulator firebaseEmulator = new FirebaseEmulator(this);
+        firebaseEmulator.saveChallenge(challenge);
 
         Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
                 .show();
