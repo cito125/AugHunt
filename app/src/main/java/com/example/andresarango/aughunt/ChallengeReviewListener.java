@@ -9,7 +9,7 @@ import com.example.andresarango.aughunt.challenge.CompletedChallenge;
  * Created by Millochka on 3/6/17.
  */
 
-public interface ChallengeReviewHelper<T> {
+public interface ChallengeReviewListener<T> {
     void passingChallange(Challenge<T> challenge);
     void passingCompletedChallange(CompletedChallenge<T> completedChallenge, Challenge<Bitmap> challenge);
 }

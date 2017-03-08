@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CreateChallengeActivity extends AppCompatActivity implements ViewGroup.OnClickListener, ChallengeReviewHelper<Bitmap> {
+public class CreateChallengeActivity extends AppCompatActivity implements ViewGroup.OnClickListener, ChallengeReviewListener<Bitmap> {
 
     private FirebaseEmulator mFirebaseEmulator;
     private ChallangeReviewFragment mChallangeReviewFragment;

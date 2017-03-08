@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.ChallengeReviewHelper;
+import com.example.andresarango.aughunt.ChallengeReviewListener;
 
 /**
  * Created by Millochka on 3/6/17.
@@ -31,7 +31,7 @@ public class ChallangeReviewFragment extends Fragment {
     private ImageView mChallengePhoto;
     private TextView mHint;
     private TextView mUsersAccepted;
-    private ChallengeReviewHelper<Bitmap> mListener;
+    private ChallengeReviewListener<Bitmap> mListener;
 
 
     @Nullable
@@ -76,7 +76,7 @@ public class ChallangeReviewFragment extends Fragment {
 
     }
 
-    public void setmListener(ChallengeReviewHelper<Bitmap> mListener) {
+    public void setmListener(ChallengeReviewListener<Bitmap> mListener) {
         this.mListener = mListener;
     }
 }
