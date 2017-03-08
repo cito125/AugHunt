@@ -68,7 +68,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
 
     void initFireBase() {
         mFirebaseEmulator = new FirebaseEmulator(this);
-
         mAllChallenges = new ArrayList<>();
         mAllChallenges = mFirebaseEmulator.getChallenges();
 
