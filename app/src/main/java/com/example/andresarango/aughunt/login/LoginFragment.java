@@ -21,10 +21,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- * Created by Millochka on 2/27/17.
- */
-
 public class LoginFragment extends Fragment{
     private View rootView;
     private EditText emailEtv;

@@ -29,10 +29,10 @@
         </intent-filter>
     </activity>
         <activity android:name=".homescreen.CreateChallengeActivity" />
-        <activity android:name=".homescreen.SearchChallengeActivity" >
+        <activity android:name=".homescreen.SearchChallengeActivity" />
 
-        </activity>
-        <activity android:name=".challenge.ChallengeActivity" />
+
+        <activity android:name=".challenge.ChallengeTemplateActivity" />
 
         <meta-data
             android:name="com.google.android.awareness.API_KEY"
