@@ -32,7 +32,7 @@
         <activity android:name=".homescreen.SearchChallengeActivity" >
 
         </activity>
-        <activity android:name=".challenge.creat_challenge.ChallengeTemplateActivity" />
+        <activity android:name=".challenge.create_challenge.ChallengeTemplateActivity" />
 
         <meta-data
             android:name="com.google.android.awareness.API_KEY"

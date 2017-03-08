@@ -47,4 +47,8 @@ public class SnapshotHelper {
                 });
 
     }
+
+    public interface SnapshotListener {
+        void run(LocationResult locationResult);
+    }
 }

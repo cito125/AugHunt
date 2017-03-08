@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.creat_challenge;
+package com.example.andresarango.aughunt.challenge.create_challenge;
 
 
 import android.content.Context;
