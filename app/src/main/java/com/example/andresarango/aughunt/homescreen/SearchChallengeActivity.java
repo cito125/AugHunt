@@ -15,15 +15,14 @@ import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.andresarango.aughunt.challenge.ChallengeFilter;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.challenge.ChallengeFilter;
 import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
-import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
-import com.example.andresarango.aughunt.challenge.challenges_adapter.ChallengesAdapter;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.DialogFragmentListener;
-import com.example.andresarango.aughunt.location.Location;
+import com.example.andresarango.aughunt.challenge.challenges_adapter.ChallengesAdapter;
+import com.example.andresarango.aughunt.location.DAMLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.challenge_list);
+        setContentView(R.layout.activity_search_challenge);
         mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
         mHint = (TextView) findViewById(R.id.challenge_hint);
         mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
@@ -58,7 +57,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
     }
 
     private void setChallengesToAdaper() {
-        Location userLocation = new Location(40.822827, -73.941979);
+        DAMLocation userLocation = new DAMLocation(40.822827, -73.941979);
         Double radius = 30.0;
         ChallengeFilter<String> challengeFilter = new ChallengeFilter<>();
         List<Challenge<String>> nearbyChallenges = challengeFilter.filterChallengesByProximity(

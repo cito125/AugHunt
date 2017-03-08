@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.creatchallenge;
+package com.example.andresarango.aughunt.challenge.creat_challenge;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;

@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.creatchallenge;
+package com.example.andresarango.aughunt.challenge.creat_challenge;
 
 
 import android.Manifest;
@@ -30,10 +30,7 @@ import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotListener;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
-import com.google.android.gms.awareness.Awareness;
 import com.google.android.gms.awareness.snapshot.LocationResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 
 
 public class ChallengeTemplateActivity extends AppCompatActivity implements
@@ -60,7 +57,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.challenge_template);
+        setContentView(R.layout.activity_challenge_template);
         mPhoto = (FrameLayout) findViewById(R.id.photo);
         mPhoto.setOnClickListener(this);
         mHint = (Button) findViewById(R.id.leave_hint);

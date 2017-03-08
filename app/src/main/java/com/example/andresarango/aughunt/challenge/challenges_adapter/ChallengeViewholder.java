@@ -25,7 +25,7 @@ class ChallengeViewholder<T> extends RecyclerView.ViewHolder {
     }
 
     public void bind(Challenge<T> challenge) {
-        mHintTextView.setText(challenge.getHint());
+        mHintTextView.setText(challenge.getmHint());
         itemView.setOnClickListener(onClick(challenge));
     }
 

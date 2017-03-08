@@ -12,12 +12,12 @@ import android.widget.Button;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.creatchallenge.ChallangeReviewFragment;
-import com.example.andresarango.aughunt.challenge.creatchallenge.ChallengeTemplateActivity;
+import com.example.andresarango.aughunt.challenge.creat_challenge.ChallangeReviewFragment;
+import com.example.andresarango.aughunt.challenge.creat_challenge.ChallengeTemplateActivity;
 import com.example.andresarango.aughunt.challenge.CompletedChallenges;
 import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
-import com.example.andresarango.aughunt.challenge.creatchallenge.CreatedChallengesAdapter;
-import com.example.andresarango.aughunt.challenge.creatchallenge.ReviewFragment;
+import com.example.andresarango.aughunt.challenge.creat_challenge.CreatedChallengesAdapter;
+import com.example.andresarango.aughunt.challenge.creat_challenge.ReviewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
