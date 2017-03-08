@@ -24,8 +24,7 @@ public class CameraCallback extends CameraView.Callback {
     private final Context mContext;
     private Handler mBackgroundHandler;
     private FrameLayout mPhoto;
-    private
-    Button mTakePicture;
+    private Button mTakePicture;
 
     private final String TAG = "ActivityPicture";
     private Bitmap mBitmap;

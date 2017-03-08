@@ -30,7 +30,10 @@ import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotListener;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
+import com.google.android.gms.awareness.Awareness;
 import com.google.android.gms.awareness.snapshot.LocationResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 
 
 public class ChallengeTemplateActivity extends AppCompatActivity implements
@@ -68,8 +71,9 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
         initializeTakePhotoButton();
         initializeCamera();
         requestPermission();
-
     }
+
+
 
 
     private void initializeCamera() {
