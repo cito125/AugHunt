@@ -36,24 +36,36 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
     private TextView mLocation;
     private RecyclerView mRecyclerView;
     private ChallengesAdapter<String> mNearbyChallengesAdapter;
-    private static final String IMAGE_DATA ="image_data" ;
+    private static final String IMAGE_DATA = "image_data";
     private static final String HINT_DATA = "hint_data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_challenge);
-        mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
-        mHint = (TextView) findViewById(R.id.challenge_hint);
-        mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
+        initialize();
+
+    }
+
+    private void initialize() {
+        initializeViews();
+        setUpRecyclerView();
+        mFirebaseEmulator = new FirebaseEmulator(this);
+        makeListofChallenges();
+        setChallengesToAdaper();
+    }
+
+    private void setUpRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mNearbyChallengesAdapter = new ChallengesAdapter<>(this);
         mRecyclerView.setAdapter(mNearbyChallengesAdapter);
-        mFirebaseEmulator =new FirebaseEmulator(this);
-        mLocation=(TextView) findViewById(R.id.challenge_location);
-        makeListofChallenges();
-        setChallengesToAdaper();
+    }
 
+    private void initializeViews() {
+        mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
+        mHint = (TextView) findViewById(R.id.challenge_hint);
+        mLocation = (TextView) findViewById(R.id.challenge_location);
+        mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
     }
 
     private void setChallengesToAdaper() {
@@ -82,7 +94,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
         DAMLocation seventhLocation = new DAMLocation(40.822705, -73.941893);
         DAMLocation wrongLocation = new DAMLocation(40.821349, -73.938213);
 
-        Challenge<String> firstChallenge = new Challenge<>("first Challenge",firstLocation);
+        Challenge<String> firstChallenge = new Challenge<>("first Challenge", firstLocation);
         firstChallenge.setmHint(firstChallenge.getmChallenge());
         Challenge<String> secondChallenge = new Challenge<>("second Challenge", secondLocation);
         secondChallenge.setmHint(secondChallenge.getmChallenge());
@@ -94,7 +106,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
         Challenge<String> fifthChallenge = new Challenge<>("fifth Challenge", fifthLocation);
         fifthChallenge.setmHint(fifthChallenge.getmChallenge());
 
-        Challenge<String> sixthChallenge = new Challenge<>("sixth Challenge",sixthLocation);
+        Challenge<String> sixthChallenge = new Challenge<>("sixth Challenge", sixthLocation);
         sixthChallenge.setmHint(sixthChallenge.getmChallenge());
         Challenge<String> seventhChallenge = new Challenge<>("seventh Challenge", seventhLocation);
         seventhChallenge.setmHint(seventhChallenge.getmChallenge());
@@ -111,7 +123,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
         mChallengeList.add(badChallenge);
 
 
-
     }
 
     @Override
@@ -120,7 +131,8 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
 //        setChallengeImage();
 
         Challenge<Bitmap> challenge = mFirebaseEmulator.getmChallenge();
-        Bitmap image=challenge.getmChallenge();}
+        Bitmap image = challenge.getmChallenge();
+    }
 
     private void setChallengeImage() {
         Bitmap image = getBitmapFromSharedPreferences();
