@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Millochka on 3/5/17.
  */
 
-public class CreatedChallengesAdapter extends RecyclerView.Adapter {
+public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChallengesViewHolder> {
 
     private List<Challenge<Bitmap>> mChallengeList = new ArrayList<>();
     private ChallengeReviewListener<Bitmap> mListener;
@@ -27,7 +27,7 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
+    public CreatedChallengesViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.created_challenge, parent, false);
 
@@ -37,12 +37,11 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(CreatedChallengesViewHolder holder, int position) {
         final int viewHolderPosition = position;
 
-        CreatedChallengesViewHolder createdChallengesViewHolder = (CreatedChallengesViewHolder) holder;
-        createdChallengesViewHolder.bind(mChallengeList.get(viewHolderPosition));
-        createdChallengesViewHolder.getmCreatedChallenge().setOnClickListener(new View.OnClickListener() {
+        holder.bind(mChallengeList.get(viewHolderPosition));
+        holder.getmCreatedChallenge().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.passingChallange(mChallengeList.get(viewHolderPosition));
