@@ -1,6 +1,5 @@
 package com.example.andresarango.aughunt.challenge.create_challenge;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,13 +19,11 @@ import java.util.List;
 
 public class CreatedChallengesAdapter extends RecyclerView.Adapter {
 
-    private List<Challenge<Bitmap>> mChallenges = new ArrayList<>();
+    private List<Challenge<Bitmap>> mChallengeList = new ArrayList<>();
     private ChallengeReviewHelper<Bitmap> mListener;
 
-    public CreatedChallengesAdapter(List<Challenge<Bitmap>> challenges, ChallengeReviewHelper<Bitmap> listener) {
-        this.mChallenges = challenges;
+    public CreatedChallengesAdapter(ChallengeReviewHelper<Bitmap> listener) {
         this.mListener = listener;
-
     }
 
     @Override
@@ -42,12 +39,12 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         CreatedChallengesViewHolder createdChallengesViewHolder = (CreatedChallengesViewHolder) holder;
-        createdChallengesViewHolder.bind(mChallenges.get(position));
+        createdChallengesViewHolder.bind(mChallengeList.get(position));
         createdChallengesViewHolder.getmCreatedChallenge().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                mListener.passingChallange(mChallenges.get(position));
+                mListener.passingChallange(mChallengeList.get(position));
 
 
             }
@@ -57,6 +54,12 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mChallenges.size();
+        return mChallengeList.size();
+    }
+
+    public void setChallengeList(List<Challenge<Bitmap>> challengeList) {
+        this.mChallengeList.clear();
+        this.mChallengeList.addAll(challengeList);
+        notifyDataSetChanged();
     }
 }

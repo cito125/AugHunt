@@ -26,7 +26,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
 
     private List<Challenge<Bitmap>> mAllChallenges;
     private FirebaseEmulator mFirebaseEmulator;
-    private List<Challenge<Bitmap>> mCurrentUserChallenges;
     private ChallangeReviewFragment mChallangeReviewFragment;
     private Boolean mIsInflated;
     private ReviewFragment mReviewFragment;
@@ -43,7 +42,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
     private void initialize() {
         Button mCreateChallenge = (Button) findViewById(R.id.new_challenge);
         mCreateChallenge.setOnClickListener(this);
-        mCurrentUserChallenges = new ArrayList<>();
         mIsInflated = false;
         initFireBase();
         initRecyclerView();
@@ -60,8 +58,11 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
     public void initRecyclerView() {
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.created_challenges);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        historyOfCreatedChalalnges(mAllChallenges, mFirebaseEmulator.getCurrentUser().getUserId());
-        mRecyclerView.setAdapter(new CreatedChallengesAdapter(mCurrentUserChallenges, this));
+        List<Challenge<Bitmap>> currentChallengesList = historyOfCreatedChalalnges(mAllChallenges,
+                mFirebaseEmulator.getCurrentUser().getUserId());
+        CreatedChallengesAdapter challengesAdapter = new CreatedChallengesAdapter(this);
+        challengesAdapter.setChallengeList(currentChallengesList);
+        mRecyclerView.setAdapter(challengesAdapter);
 
     }
 
@@ -72,14 +73,17 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
 
     }
 
-    public void historyOfCreatedChalalnges(List<Challenge<Bitmap>> challengeList, String ownerID) {
+    public List<Challenge<Bitmap>> historyOfCreatedChalalnges(List<Challenge<Bitmap>> challengeList, String ownerID) {
+
+        List<Challenge<Bitmap>> userChallengeList = new ArrayList<>();
 
         for (Challenge<Bitmap> challenge : challengeList) {
             if (challenge.getmOwnerId().equalsIgnoreCase(ownerID)) {
-                mCurrentUserChallenges.add(challenge);
+                userChallengeList.add(challenge);
             }
 
         }
+        return userChallengeList;
 
     }
 
