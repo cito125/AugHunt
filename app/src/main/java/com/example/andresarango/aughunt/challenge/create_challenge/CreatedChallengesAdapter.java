@@ -45,8 +45,6 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChalle
             @Override
             public void onClick(View v) {
                 mListener.passingChallange(mChallengeList.get(viewHolderPosition));
-
-
             }
         });
 

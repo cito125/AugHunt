@@ -31,7 +31,7 @@ class CreatedChallengesViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Challenge<Bitmap> challenge) {
 
-        String status = "";
+        String status;
 
         if (challenge.getStatus()) {
             status = "Active";
