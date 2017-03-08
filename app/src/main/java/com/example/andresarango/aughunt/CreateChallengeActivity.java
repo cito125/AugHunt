@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.homescreen;
+package com.example.andresarango.aughunt;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.create_challenge.ChallangeReviewFragment;
 import com.example.andresarango.aughunt.challenge.create_challenge.ChallengeTemplateActivity;
@@ -62,7 +61,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.created_challenges);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         historyOfCreatedChalalnges(mAllChallenges, mFirebaseEmulator.getCurrentUser().getUserId());
-        mRecyclerView.setAdapter(new CreatedChallengesAdapter(mCurrentUserChallenges, getApplicationContext(), this));
+        mRecyclerView.setAdapter(new CreatedChallengesAdapter(mCurrentUserChallenges, this));
 
     }
 

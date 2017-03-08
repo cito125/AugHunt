@@ -21,15 +21,15 @@
         <activity android:name=".login.StartActivity" >
 
         </activity>
-        <activity android:name=".homescreen.HomeScreenActivity">
+        <activity android:name=".HomeScreenActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-        <activity android:name=".homescreen.CreateChallengeActivity" />
-        <activity android:name=".homescreen.SearchChallengeActivity" >
+        <activity android:name=".CreateChallengeActivity" />
+        <activity android:name=".SearchChallengeActivity" >
 
         </activity>
         <activity android:name=".challenge.create_challenge.ChallengeTemplateActivity" />

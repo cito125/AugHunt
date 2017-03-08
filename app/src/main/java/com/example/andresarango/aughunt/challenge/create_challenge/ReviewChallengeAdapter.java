@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
-import com.example.andresarango.aughunt.homescreen.ChallengeReviewHelper;
+import com.example.andresarango.aughunt.ChallengeReviewHelper;
 
 import java.util.List;
 

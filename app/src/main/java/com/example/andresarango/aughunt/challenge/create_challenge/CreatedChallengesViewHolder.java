@@ -20,26 +20,27 @@ class CreatedChallengesViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView mChallengePicture;
     private TextView mChallengeStatus;
-    private Context mContext;
     private CardView mCreatedChallenge;
-    public CreatedChallengesViewHolder(View itemView, Context context) {
+
+    public CreatedChallengesViewHolder(View itemView) {
         super(itemView);
-        mChallengePicture=(ImageView) itemView.findViewById(R.id.image_of_challenge);
-        mChallengeStatus=(TextView) itemView.findViewById(R.id.status_of_challenge);
-        this.mContext=context;
-        mCreatedChallenge=(CardView) itemView.findViewById(R.id.created_challenge_card);
+        mChallengePicture = (ImageView) itemView.findViewById(R.id.image_of_challenge);
+        mChallengeStatus = (TextView) itemView.findViewById(R.id.status_of_challenge);
+        mCreatedChallenge = (CardView) itemView.findViewById(R.id.created_challenge_card);
     }
 
-    public void bind (Challenge<Bitmap> challenge){
+    public void bind(Challenge<Bitmap> challenge) {
 
-        String status="";
+        String status = "";
 
-        if(challenge.getStatus()){
-            status="Active";
-        }else {status="Completed";}
+        if (challenge.getStatus()) {
+            status = "Active";
+        } else {
+            status = "Completed";
+        }
 
         mChallengeStatus.setText(status);
-        BitmapDrawable d= new BitmapDrawable(mContext.getResources(), challenge.getmChallenge());
+        BitmapDrawable d = new BitmapDrawable(itemView.getContext().getResources(), challenge.getmChallenge());
         mChallengePicture.setImageDrawable(d);
 
     }

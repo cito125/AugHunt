@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.homescreen;
+package com.example.andresarango.aughunt;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;

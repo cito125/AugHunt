@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.homescreen.ChallengeReviewHelper;
+import com.example.andresarango.aughunt.ChallengeReviewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,22 +20,21 @@ import java.util.List;
 
 public class CreatedChallengesAdapter extends RecyclerView.Adapter {
 
-    private List<Challenge<Bitmap>> mChallenges=new ArrayList<>();
-    private Context mContext;
+    private List<Challenge<Bitmap>> mChallenges = new ArrayList<>();
     private ChallengeReviewHelper<Bitmap> mListener;
 
-    public CreatedChallengesAdapter(List<Challenge<Bitmap>> challenges, Context context,ChallengeReviewHelper<Bitmap> listener ){
-        this.mChallenges=challenges;
-        this.mContext= context;
-        this.mListener=listener;
+    public CreatedChallengesAdapter(List<Challenge<Bitmap>> challenges, ChallengeReviewHelper<Bitmap> listener) {
+        this.mChallenges = challenges;
+        this.mListener = listener;
 
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.created_challenge,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.created_challenge, parent, false);
 
-        return new CreatedChallengesViewHolder(view, mContext);
+        return new CreatedChallengesViewHolder(view);
 
 
     }
