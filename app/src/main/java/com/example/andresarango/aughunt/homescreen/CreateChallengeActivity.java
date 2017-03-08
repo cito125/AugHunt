@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CreateChallengeActivity extends AppCompatActivity implements ViewGroup.OnClickListener, ChallengeReviewHelper<Bitmap>{
+public class CreateChallengeActivity extends AppCompatActivity implements ViewGroup.OnClickListener, ChallengeReviewHelper<Bitmap> {
 
     private Button mCreateChallenge;
     private RecyclerView mRecyclerView;
@@ -33,41 +33,53 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
     private ChallangeReviewFragment mChallangeReviewFragment;
     private Boolean mIsInflated;
     private ReviewFragment mReviewFragment;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_challenge);
-        mCreateChallenge=(Button) findViewById(R.id.new_challenge);
+        initialize();
+
+    }
+
+    private void initialize() {
+        mCreateChallenge = (Button) findViewById(R.id.new_challenge);
         mCreateChallenge.setOnClickListener(this);
-        mCurrentUserChallenges=new ArrayList<>();
-        mIsInflated=false;
+        mCurrentUserChallenges = new ArrayList<>();
+        mIsInflated = false;
         initFireBase();
         initRecyclerView();
-
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
         startActivity(intent);
 
 
     }
 
-    public void initRecyclerView(){
-        mRecyclerView=(RecyclerView) findViewById(R.id.created_challenges);
+    public void initRecyclerView() {
+        mRecyclerView = (RecyclerView) findViewById(R.id.created_challenges);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        HistoryOfCreatedChalalnges(mAllChallenges,mFirebaseEmulator.getCurrentUser().getUserId());
-        mRecyclerView.setAdapter(new CreatedChallengesAdapter(mCurrentUserChallenges,getApplicationContext(),this));
+        historyOfCreatedChalalnges(mAllChallenges, mFirebaseEmulator.getCurrentUser().getUserId());
+        mRecyclerView.setAdapter(new CreatedChallengesAdapter(mCurrentUserChallenges, getApplicationContext(), this));
 
     }
 
-    public void HistoryOfCreatedChalalnges(List<Challenge<Bitmap>> challenges, String ownerID){
+    void initFireBase() {
+        mFirebaseEmulator = new FirebaseEmulator(this);
 
+        mAllChallenges = new ArrayList<>();
+        mAllChallenges = mFirebaseEmulator.getChallenges();
 
-        for(Challenge<Bitmap> challenge:challenges){
-            if(challenge.getmOwnerId().equalsIgnoreCase(ownerID)){
+    }
+
+    public void historyOfCreatedChalalnges(List<Challenge<Bitmap>> challengeList, String ownerID) {
+
+        for (Challenge<Bitmap> challenge : challengeList) {
+            if (challenge.getmOwnerId().equalsIgnoreCase(ownerID)) {
                 mCurrentUserChallenges.add(challenge);
             }
 
@@ -75,61 +87,55 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
 
     }
 
- void initFireBase(){
-     mFirebaseEmulator=new FirebaseEmulator(this);
-
-     mAllChallenges=new ArrayList<>();
-     mAllChallenges= mFirebaseEmulator.getChallenges();
-
- }
-
 
     @Override
-    public void passingChallange(Challenge<Bitmap> c) {
+    public void passingChallange(Challenge<Bitmap> challenge) {
         mChallangeReviewFragment = new ChallangeReviewFragment();
-        mChallangeReviewFragment .setmCgallengeToReview(c);
-        mChallangeReviewFragment .setmContext(getApplicationContext());
+        mChallangeReviewFragment.setmCgallengeToReview(challenge);
+        mChallangeReviewFragment.setmContext(getApplicationContext());
         mChallangeReviewFragment.setmListener(this);
-        mIsInflated=!mIsInflated;
+        mIsInflated = !mIsInflated;
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container_for_review,mChallangeReviewFragment ).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container_for_review, mChallangeReviewFragment).commit();
     }
 
     @Override
-    public void passingCompletedChallange(CompletedChallenges<Bitmap> cc, Challenge<Bitmap> c) {
+    public void passingCompletedChallange(CompletedChallenges<Bitmap> completedChallenges, Challenge<Bitmap> challenge) {
 
-        mReviewFragment= new ReviewFragment();
-        mReviewFragment.setmCompletedChallenge(cc);
-        mReviewFragment.setmCurrentChallenge(c);
+        mReviewFragment = new ReviewFragment();
+        mReviewFragment.setmCompletedChallenge(completedChallenges);
+        mReviewFragment.setmCurrentChallenge(challenge);
         mReviewFragment.setmContext(this);
-        getSupportFragmentManager().beginTransaction().add(R.id.container_for_review,mReviewFragment ).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container_for_review, mReviewFragment).commit();
     }
 
 
     @Override
     public void onBackPressed() {
 
-  if(mIsInflated){
-      getSupportFragmentManager().beginTransaction().remove(mChallangeReviewFragment ).commit();
-      mIsInflated=!mIsInflated;
+        if (mIsInflated) {
+            getSupportFragmentManager().beginTransaction().remove(mChallangeReviewFragment).commit();
+            mIsInflated = !mIsInflated;
 
-  }else {
-            super.onBackPressed();}
+        } else {
+            super.onBackPressed();
+        }
 
     }
 
-    public void reviewResult(View view){
+    public void reviewResult(View view) {
 
-        switch (view.getId()){
+        switch (view.getId()) {
 
             case R.id.decline:
 
-                getSupportFragmentManager().beginTransaction().remove(mReviewFragment ).commit();
-
+                getSupportFragmentManager().beginTransaction().remove(mReviewFragment).commit();
                 break;
+
             case R.id.accept:
-                getSupportFragmentManager().beginTransaction().remove(mReviewFragment ).commit();
-            break;
+
+                getSupportFragmentManager().beginTransaction().remove(mReviewFragment).commit();
+                break;
 
         }
 
