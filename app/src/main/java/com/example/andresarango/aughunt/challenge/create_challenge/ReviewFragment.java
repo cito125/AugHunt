@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.CompletedChallenges;
+import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 
 /**
  * Created by Millochka on 3/7/17.
@@ -22,7 +22,7 @@ import com.example.andresarango.aughunt.challenge.CompletedChallenges;
 public class ReviewFragment extends Fragment {
 
     private Challenge<Bitmap> mCurrentChallenge;
-    private CompletedChallenges<Bitmap> mCompletedChallenge;
+    private CompletedChallenge<Bitmap> mCompletedChallenge;
     private ImageView mChallengeCompareWith;
     private ImageView mChallengeToCompare;
     private Context mContext;
@@ -52,7 +52,7 @@ public class ReviewFragment extends Fragment {
 
     }
 
-    public void setmCompletedChallenge(CompletedChallenges<Bitmap> mCompletedChallenge) {
+    public void setmCompletedChallenge(CompletedChallenge<Bitmap> mCompletedChallenge) {
         this.mCompletedChallenge = mCompletedChallenge;
     }
 

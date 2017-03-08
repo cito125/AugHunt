@@ -14,7 +14,7 @@ import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.create_challenge.ChallangeReviewFragment;
 import com.example.andresarango.aughunt.challenge.create_challenge.ChallengeTemplateActivity;
-import com.example.andresarango.aughunt.challenge.CompletedChallenges;
+import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
 import com.example.andresarango.aughunt.challenge.create_challenge.CreatedChallengesAdapter;
 import com.example.andresarango.aughunt.challenge.create_challenge.ReviewFragment;
@@ -97,10 +97,10 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
     }
 
     @Override
-    public void passingCompletedChallange(CompletedChallenges<Bitmap> completedChallenges, Challenge<Bitmap> challenge) {
+    public void passingCompletedChallange(CompletedChallenge<Bitmap> completedChallenge, Challenge<Bitmap> challenge) {
 
         mReviewFragment = new ReviewFragment();
-        mReviewFragment.setmCompletedChallenge(completedChallenges);
+        mReviewFragment.setmCompletedChallenge(completedChallenge);
         mReviewFragment.setmCurrentChallenge(challenge);
         mReviewFragment.setmContext(this);
         getSupportFragmentManager().beginTransaction().add(R.id.container_for_review, mReviewFragment).commit();

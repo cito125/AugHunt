@@ -13,7 +13,7 @@ public interface FirebaseHelper<T> {
      List<Challenge<T>> getChallenges();
     void saveChallenge(Challenge<T> c);
     void updateAcceptedChallenge(String challengeId);
-    void completeChallenge(CompletedChallenges<T> c);
+    void completeChallenge(CompletedChallenge<T> c);
     void updateUserPoints(Integer points);
     User getCurrentUser();
 

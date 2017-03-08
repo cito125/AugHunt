@@ -72,7 +72,7 @@ public class ChallangeReviewFragment extends Fragment {
         BitmapDrawable d= new BitmapDrawable(mContext.getResources(), mChallengeToReview.getmChallenge());
         mChallengePhoto.setImageDrawable(d);
         mHint.setText("Challenge Hint: "+mChallengeToReview.getmHint());
-        mUsersAccepted.setText("Users Accepted: "+String.valueOf(mChallengeToReview.getmUsersAccepted()));
+        mUsersAccepted.setText("Users Accepted: "+String.valueOf(mChallengeToReview.getUsersAccepted()));
 
     }
 

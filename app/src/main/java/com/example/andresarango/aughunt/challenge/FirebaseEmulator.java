@@ -111,40 +111,40 @@ public class FirebaseEmulator implements FirebaseHelper<Bitmap>{
                 R.drawable.cat1);
         Challenge<Bitmap> challenge  =  new Challenge<Bitmap>(icon,null,"Danny");
         challenge.setmHint("Hint");
-        challenge.setmUsersAccepted(4);
+        challenge.setUsersAccepted(4);
         Bitmap icon2=BitmapFactory.decodeResource(mContext.getResources(),
                 R.drawable.cat2);
         Challenge<Bitmap> challenge1 = new Challenge<Bitmap>(icon2,null,"Mila");
         challenge1.setmHint("Hint1");
-        challenge1.setmUsersAccepted(5);
+        challenge1.setUsersAccepted(5);
         Bitmap icon3=BitmapFactory.decodeResource(mContext.getResources(),
                 R.drawable.cat3);
         Challenge<Bitmap> challenge2 = new Challenge<Bitmap>(icon3,null,"Mila");
         challenge2.setmHint("Hint2");
-        challenge2.setmUsersAccepted(6);
+        challenge2.setUsersAccepted(6);
         Bitmap icon4=BitmapFactory.decodeResource(mContext.getResources(),
                 R.drawable.humans);
         Challenge<Bitmap> challenge3 = new Challenge<Bitmap>(icon4,null,"Mila");
         challenge3.setmHint("Hint3");
-        challenge3.setmUsersAccepted(7);
+        challenge3.setUsersAccepted(7);
         challenges.add(challenge);
         challenges.add(challenge1);
         challenges.add(challenge2);
         challenges.add(challenge3);
-        List<CompletedChallenges<Bitmap>> completedchallenges= new ArrayList<CompletedChallenges<Bitmap>>();
-        CompletedChallenges<Bitmap> cc=new CompletedChallenges<>(icon, "Andres");
-        CompletedChallenges<Bitmap> cc2=new CompletedChallenges<>(icon2, "Danny");
-        CompletedChallenges<Bitmap> cc3=new CompletedChallenges<>(icon3, "Lily");
+        List<CompletedChallenge<Bitmap>> completedchallenges= new ArrayList<CompletedChallenge<Bitmap>>();
+        CompletedChallenge<Bitmap> cc=new CompletedChallenge<>(icon, "Andres");
+        CompletedChallenge<Bitmap> cc2=new CompletedChallenge<>(icon2, "Danny");
+        CompletedChallenge<Bitmap> cc3=new CompletedChallenge<>(icon3, "Lily");
         completedchallenges.add(cc);
         completedchallenges.add(cc2);
         completedchallenges.add(cc3);
         completedchallenges.add(cc);
         completedchallenges.add(cc2);
         challenge1.setmCompletedChallenges(completedchallenges);
-        challenge.setmStatus(false);
-        challenge1.setmStatus(true);
-        challenge2.setmStatus(false);
-        challenge3.setmStatus(true);
+        challenge.setStatus(false);
+        challenge1.setStatus(true);
+        challenge2.setStatus(false);
+        challenge3.setStatus(true);
 
 
 
@@ -170,7 +170,7 @@ public class FirebaseEmulator implements FirebaseHelper<Bitmap>{
     }
 
     @Override
-    public void completeChallenge(CompletedChallenges<Bitmap> c) {
+    public void completeChallenge(CompletedChallenge<Bitmap> c) {
 
     }
 

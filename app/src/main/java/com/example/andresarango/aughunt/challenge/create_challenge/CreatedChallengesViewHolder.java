@@ -34,7 +34,7 @@ class CreatedChallengesViewHolder extends RecyclerView.ViewHolder {
 
         String status="";
 
-        if(challenge.getmStatus()){
+        if(challenge.getStatus()){
             status="Active";
         }else {status="Completed";}
 

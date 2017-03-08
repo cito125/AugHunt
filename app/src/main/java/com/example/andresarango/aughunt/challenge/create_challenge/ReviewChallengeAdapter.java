@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.CompletedChallenges;
+import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 import com.example.andresarango.aughunt.homescreen.ChallengeReviewHelper;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 
 class ReviewChallengeAdapter extends RecyclerView.Adapter {
 
-    private List<CompletedChallenges<Bitmap>> mCompletedChallanges;
+    private List<CompletedChallenge<Bitmap>> mCompletedChallanges;
     private Challenge<Bitmap> mCurrentChallenge;
     private ChallengeReviewHelper<Bitmap> mListener;
 
