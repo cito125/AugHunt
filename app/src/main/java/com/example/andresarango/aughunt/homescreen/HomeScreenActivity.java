@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.example.andresarango.aughunt.R;
 
-public class HomeScreenActivity extends AppCompatActivity implements ViewGroup.OnClickListener{
+public class HomeScreenActivity extends AppCompatActivity implements ViewGroup.OnClickListener {
 
     private Button mSearchForChall;
     private Button mCreatChall;
@@ -19,7 +19,7 @@ public class HomeScreenActivity extends AppCompatActivity implements ViewGroup.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        mSearchForChall=(Button) findViewById(R.id.search_for_challenge);
+        mSearchForChall = (Button) findViewById(R.id.search_for_challenge);
         mSearchForChall.setOnClickListener(this);
         mCreatChall = (Button) findViewById(R.id.create_challenge);
         mCreatChall.setOnClickListener(this);
@@ -29,15 +29,15 @@ public class HomeScreenActivity extends AppCompatActivity implements ViewGroup.O
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.search_for_challenge:
 
-               // getSupportFragmentManager().beginTransaction().add(R.id.activity_home_screen,new SearchChallFragment()).commit();
-                Intent intent= new Intent(getApplicationContext(),SearchChallengeActivity.class);
+                // getSupportFragmentManager().beginTransaction().add(R.id.activity_home_screen,new SearchChallFragment()).commit();
+                Intent intent = new Intent(getApplicationContext(), SearchChallengeActivity.class);
                 startActivity(intent);
                 break;
-            case  R.id.create_challenge:
-                Intent otherIntent= new Intent(getApplicationContext(),CreateChallengeActivity.class);
+            case R.id.create_challenge:
+                Intent otherIntent = new Intent(getApplicationContext(), CreateChallengeActivity.class);
                 startActivity(otherIntent);
                 break;
         }
