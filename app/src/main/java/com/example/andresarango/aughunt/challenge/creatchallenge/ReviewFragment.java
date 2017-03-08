@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.homescreen;
+package com.example.andresarango.aughunt.challenge.creatchallenge;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.homescreen;
+package com.example.andresarango.aughunt.challenge.creatchallenge;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.CompletedChallenges;
+import com.example.andresarango.aughunt.homescreen.ChallengeReviewHelper;
 
 import java.util.List;
 

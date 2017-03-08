@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface FirebaseHelper<T> {
 
-List<Challenge<T>> getChallenges();
- void saveChallenge(Challenge<T> c);
+     List<Challenge<T>> getChallenges();
+    void saveChallenge(Challenge<T> c);
     void updateAcceptedChallenge(String challengeId);
     void completeChallenge(CompletedChallenges<T> c);
     void updateUserPoints(Integer points);

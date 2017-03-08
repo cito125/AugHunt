@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.homescreen;
+package com.example.andresarango.aughunt.challenge.creatchallenge;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.homescreen.ChallengeReviewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
  * Created by Millochka on 3/5/17.
  */
 
-class CreatedChallengesAdapter extends RecyclerView.Adapter {
+public class CreatedChallengesAdapter extends RecyclerView.Adapter {
 
     private List<Challenge<Bitmap>> mChallenges=new ArrayList<>();
     private Context mContext;

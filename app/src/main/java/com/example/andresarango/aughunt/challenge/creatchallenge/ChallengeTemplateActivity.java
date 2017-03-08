@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge;
+package com.example.andresarango.aughunt.challenge.creatchallenge;
 
 
 import android.Manifest;
@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
+import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotListener;
@@ -62,16 +64,17 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
         mHint.setOnClickListener(this);
         mSubmit = (Button) findViewById(R.id.submit_challenge);
         mSubmit.setOnClickListener(this);
-        initializeCamera();
+
         initializeTakePhotoButton();
+        initializeCamera();
         requestPermission();
 
     }
 
 
     private void initializeCamera() {
-        mCameraView = (CameraView) findViewById(R.id.activity_main_camera);
-        mCameraCallback = new CameraCallback(this, mPhoto);
+
+        mCameraCallback = new CameraCallback(this, mPhoto, mTakePhotoButton);
 
 
         if (mCameraView != null) {
@@ -80,6 +83,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     }
 
     private void initializeTakePhotoButton() {
+        mCameraView = (CameraView) findViewById(R.id.activity_main_camera);
         mTakePhotoButton = (Button) findViewById(R.id.take_photo);
         mTakePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,6 +199,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
             case R.id.photo:
 
                 mPhoto.setVisibility(View.INVISIBLE);
+                mTakePhotoButton.setEnabled(true);
                 mCameraCallback.setmBitmap(null);
 
                 break;
@@ -205,14 +210,15 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
 
             case R.id.submit_challenge:
               if(mCameraCallback.getmBitmap()!= null&&!mHintText.equals("")){
-                submitChallenge();}
+                submitChallenge();
+              }
                 else {
                   Toast.makeText(this, "Hint or photo is missing", Toast.LENGTH_SHORT)
                           .show();
               }
 
-              submitChallenge();
-//              fileList();
+
+
 
                 break;
         }
