@@ -125,15 +125,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-//        setChallengeImage();
-
-        Challenge<Bitmap> challenge = mFirebaseEmulator.getmChallenge();
-        Bitmap image = challenge.getmChallenge();
-    }
-
     private void setChallengeImage() {
         Bitmap image = getBitmapFromSharedPreferences();
         SharedPreferences shre = PreferenceManager.getDefaultSharedPreferences(this);
