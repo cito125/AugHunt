@@ -211,6 +211,9 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
                           .show();
               }
 
+              submitChallenge();
+//              fileList();
+
                 break;
         }
 
