@@ -8,10 +8,6 @@ import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 
-/**
- * Created by Millochka on 3/1/17.
- */
-
 public class FirebaseEmulator {
 
     private static final String HINT_DATA = "hint_data";

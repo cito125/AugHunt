@@ -70,8 +70,6 @@ public class CameraCallback extends CameraView.Callback {
         }
     }
 
-
-
     public Bitmap getmBitmap() {
         return mBitmap;
     }
