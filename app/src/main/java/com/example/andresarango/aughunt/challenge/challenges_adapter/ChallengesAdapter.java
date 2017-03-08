@@ -5,19 +5,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.DialogFragmentListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChallengesAdapter<T> extends RecyclerView.Adapter<ChallengeViewholder<T>> {
     List<Challenge<T>> mChallengeList = new ArrayList<>();
-    private final DialogFragmentListener mDialogFragmentListener;
+    private final ChallengeViewholderListener mChallengeViewholderListener;
 
-    public ChallengesAdapter(DialogFragmentListener dialogFragmentListener) {
-        mDialogFragmentListener = dialogFragmentListener;
+    public ChallengesAdapter(ChallengeViewholderListener challengeViewholderListener) {
+        mChallengeViewholderListener = challengeViewholderListener;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ChallengesAdapter<T> extends RecyclerView.Adapter<ChallengeViewhold
         return new ChallengeViewholder<>(LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.viewholder_challenge, parent, false),
-                mDialogFragmentListener);
+                mChallengeViewholderListener);
     }
 
     public void setChallengeList(List<Challenge<T>> challengeList) {

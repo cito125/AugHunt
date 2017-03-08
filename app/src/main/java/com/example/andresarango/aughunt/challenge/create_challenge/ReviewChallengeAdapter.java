@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
-import com.example.andresarango.aughunt.ChallengeReviewListener;
+import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
 
 import java.util.List;
 
@@ -21,9 +21,9 @@ class ReviewChallengeAdapter extends RecyclerView.Adapter {
 
     private List<CompletedChallenge<Bitmap>> mCompletedChallanges;
     private Challenge<Bitmap> mCurrentChallenge;
-    private ChallengeReviewListener<Bitmap> mListener;
+    private ChallengeViewholderListener<Bitmap> mListener;
 
-    ReviewChallengeAdapter(Challenge<Bitmap> challenge, ChallengeReviewListener<Bitmap> listener){
+    ReviewChallengeAdapter(Challenge<Bitmap> challenge, ChallengeViewholderListener<Bitmap> listener){
         this.mCurrentChallenge=challenge;
         this.mCompletedChallanges=challenge.getmCompletedChallenges();
         this.mListener=listener;
@@ -46,7 +46,7 @@ class ReviewChallengeAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
 
-                mListener.passingCompletedChallange(mCompletedChallanges.get(position),mCurrentChallenge);
+                mListener.onChallengeClicked(mCompletedChallanges.get(position),mCurrentChallenge);
 
             }
         });

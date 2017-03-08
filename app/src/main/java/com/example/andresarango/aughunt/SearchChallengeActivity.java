@@ -15,19 +15,19 @@ import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.ChallengeFilter;
+import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
-import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.DialogFragmentListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapter.ChallengesAdapter;
 import com.example.andresarango.aughunt.location.DAMLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchChallengeActivity extends AppCompatActivity implements DialogFragmentListener {
+public class SearchChallengeActivity extends AppCompatActivity implements ChallengeViewholderListener {
 
     private ImageView mChallengeImage;
     private TextView mHint;
@@ -149,8 +149,13 @@ public class SearchChallengeActivity extends AppCompatActivity implements Dialog
     }
 
     @Override
-    public <T> void startDialogueFragment(Challenge<T> challenge) {
+    public void onChallengeClicked(Challenge challenge) {
         DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
         dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
+    }
+
+    @Override
+    public void onChallengeClicked(CompletedChallenge completedChallenge, Challenge challenge) {
+
     }
 }

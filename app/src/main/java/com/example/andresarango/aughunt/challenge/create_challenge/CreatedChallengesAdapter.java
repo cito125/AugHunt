@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.ChallengeReviewListener;
+import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +20,9 @@ import java.util.List;
 public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChallengesViewHolder> {
 
     private List<Challenge<Bitmap>> mChallengeList = new ArrayList<>();
-    private ChallengeReviewListener<Bitmap> mListener;
+    private ChallengeViewholderListener<Bitmap> mListener;
 
-    public CreatedChallengesAdapter(ChallengeReviewListener<Bitmap> listener) {
+    public CreatedChallengesAdapter(ChallengeViewholderListener<Bitmap> listener) {
         this.mListener = listener;
     }
 
@@ -44,7 +44,7 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChalle
         holder.getmCreatedChallenge().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.passingChallange(mChallengeList.get(viewHolderPosition));
+                mListener.onChallengeClicked(mChallengeList.get(viewHolderPosition));
             }
         });
 

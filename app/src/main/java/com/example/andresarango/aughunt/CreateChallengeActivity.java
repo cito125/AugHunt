@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.create_challenge.ChallangeReviewFragment;
 import com.example.andresarango.aughunt.challenge.create_challenge.ChallengeTemplateActivity;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
@@ -23,7 +24,7 @@ import java.util.List;
 
 
 public class CreateChallengeActivity extends AppCompatActivity implements
-        ViewGroup.OnClickListener, ChallengeReviewListener<Bitmap> {
+        ViewGroup.OnClickListener, ChallengeViewholderListener<Bitmap> {
 
     private FirebaseEmulator mFirebaseEmulator;
     private ChallangeReviewFragment mChallangeReviewFragment;
@@ -84,7 +85,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements
 
 
     @Override
-    public void passingChallange(Challenge<Bitmap> challenge) {
+    public void onChallengeClicked(Challenge<Bitmap> challenge) {
         mChallangeReviewFragment = new ChallangeReviewFragment();
         mChallangeReviewFragment.setmCgallengeToReview(challenge);
         mChallangeReviewFragment.setmContext(getApplicationContext());
@@ -95,7 +96,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void passingCompletedChallange(CompletedChallenge<Bitmap> completedChallenge, Challenge<Bitmap> challenge) {
+    public void onChallengeClicked(CompletedChallenge<Bitmap> completedChallenge, Challenge<Bitmap> challenge) {
 
         mReviewFragment = new ReviewFragment();
         mReviewFragment.setmCompletedChallenge(completedChallenge);
