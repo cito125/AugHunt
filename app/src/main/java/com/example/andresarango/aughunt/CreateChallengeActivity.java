@@ -24,7 +24,6 @@ import java.util.List;
 
 public class CreateChallengeActivity extends AppCompatActivity implements ViewGroup.OnClickListener, ChallengeReviewHelper<Bitmap> {
 
-    private List<Challenge<Bitmap>> mAllChallenges;
     private FirebaseEmulator mFirebaseEmulator;
     private ChallangeReviewFragment mChallangeReviewFragment;
     private Boolean mIsInflated;
@@ -43,7 +42,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
         Button mCreateChallenge = (Button) findViewById(R.id.new_challenge);
         mCreateChallenge.setOnClickListener(this);
         mIsInflated = false;
-        initFireBase();
+        mFirebaseEmulator = new FirebaseEmulator(this);
         initRecyclerView();
     }
 
@@ -58,7 +57,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
     public void initRecyclerView() {
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.created_challenges);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        List<Challenge<Bitmap>> currentChallengesList = historyOfCreatedChalalnges(mAllChallenges,
+        List<Challenge<Bitmap>> currentChallengesList = historyOfCreatedChalalnges(mFirebaseEmulator.getChallenges(),
                 mFirebaseEmulator.getCurrentUser().getUserId());
         CreatedChallengesAdapter challengesAdapter = new CreatedChallengesAdapter(this);
         challengesAdapter.setChallengeList(currentChallengesList);
@@ -66,12 +65,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements ViewGr
 
     }
 
-    void initFireBase() {
-        mFirebaseEmulator = new FirebaseEmulator(this);
-        mAllChallenges = new ArrayList<>();
-        mAllChallenges = mFirebaseEmulator.getChallenges();
-
-    }
 
     public List<Challenge<Bitmap>> historyOfCreatedChalalnges(List<Challenge<Bitmap>> challengeList, String ownerID) {
 
