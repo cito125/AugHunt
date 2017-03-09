@@ -1,10 +1,12 @@
 package com.example.andresarango.aughunt.location;
 
+import java.io.Serializable;
+
 /**
  * Created by andresarango on 2/26/17.
  */
 
-public class DAMLocation {
+public class DAMLocation implements Serializable {
     private Double mLat;
     private Double mLng;
     private Double mElevation;

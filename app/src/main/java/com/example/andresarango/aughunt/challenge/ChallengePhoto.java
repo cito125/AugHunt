@@ -2,13 +2,15 @@ package com.example.andresarango.aughunt.challenge;
 
 import com.example.andresarango.aughunt.location.DAMLocation;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by dannylui on 3/8/17.
  */
 
-public class ChallengePhoto {
+public class ChallengePhoto implements Serializable {
     private String challengeId;
     private String ownerId;
     private DAMLocation location;
@@ -30,6 +32,7 @@ public class ChallengePhoto {
         this.hint = hint;
         this.timestamp = timestamp;
         this.pursuing = 0;
+        completedPhotoChallenges = new ArrayList<>();
     }
 
     public String getChallengeId() {
@@ -68,7 +71,7 @@ public class ChallengePhoto {
         this.pursuing = pursuing;
     }
 
-    public void setCompletedPhotoChallenges(List<ChallengePhotoCompleted> completedPhotoChallenges) {
-        this.completedPhotoChallenges = completedPhotoChallenges;
+    public void addToCompletedPhotoChallenges(ChallengePhotoCompleted completedPhotoChallenge) {
+        completedPhotoChallenges.add(completedPhotoChallenge);
     }
 }

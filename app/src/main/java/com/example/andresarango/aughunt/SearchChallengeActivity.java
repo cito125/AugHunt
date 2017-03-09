@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SearchChallengeActivity extends AppCompatActivity implements ChallengeViewholderListener {
 
@@ -45,7 +46,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
     private DAMLocation userLocation = new DAMLocation(40.7262399, -73.8641891);
-    private Double radius = 30.0;
+    private Double radius = 100.0;
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
     private List<ChallengePhoto> challengeList = new ArrayList<>();
 
@@ -72,7 +73,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                updateRecyclerView(dataSnapshot);
             }
 
             @Override
@@ -107,6 +108,23 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
         } else {
             System.out.println("NOT WITHIN RADIUS");
         }
+    }
+
+    private void updateRecyclerView(DataSnapshot dataSnapshot) {
+        String challengeKey = dataSnapshot.getKey();
+
+        Set<String> challengeKeys = challengeMap.keySet();
+        if (challengeKeys.contains(challengeKey)) {
+            challengeMap.put(challengeKey, dataSnapshot.getValue(ChallengePhoto.class));
+        }
+
+        challengeList.clear();
+        for (String key : challengeKeys) {
+            challengeList.add(challengeMap.get(key));
+        }
+
+        // update recycler view
+        mNearbyChallengesAdapter.setChallengeList(challengeList);
     }
 
     private void setUpRecyclerView() {

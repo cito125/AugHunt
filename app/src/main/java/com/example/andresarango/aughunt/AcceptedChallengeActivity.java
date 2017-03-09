@@ -16,18 +16,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
+import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.snapshot.LocationResult;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +67,8 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
 
     private ProgressDialog progressDialog;
 
+    private ChallengePhoto mChallengePhoto;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +83,11 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
         requestPermission();
         initializeCamera();
 
+        mChallengePhoto = (ChallengePhoto) getIntent().getSerializableExtra(ChallengeDialogFragment.CHALLENGE);
+        System.out.println("GOT SERIALIZABLE: " + mChallengePhoto.getChallengeId());
+
     }
+
     private void initializeCamera() {
         mCameraCallback = new CameraCallback(this, mPhoto, mTakePhotoBtn);
         if (mCameraView != null) {
@@ -85,14 +101,59 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
         switch (v.getId()) {
             case R.id.btn_accepted_take_photo:
                 System.out.println("TAKING PHOTO");
+                mCameraView.takePicture();
                 break;
             case R.id.accepted_photo:
                 System.out.println("RESETTING PHOTO");
+                mPhoto.setVisibility(View.INVISIBLE);
+                mTakePhotoBtn.setEnabled(true);
+                mCameraCallback.setPicData(null);
                 break;
             case R.id.btn_accepted_submit_challenge:
                 System.out.println("SUBMITTING PHOTO");
+                if (mCameraCallback.getPicData() != null) {
+                    progressDialog.setMessage("Submitting");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.show();
+                    submitCompletedChallenge();
+                } else {
+                    Toast.makeText(this, "No picture taken", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
+    }
+
+    private void submitCompletedChallenge() {
+
+
+        final String pushId = rootRef.child("challenges-completed").push().getKey(); // Get a unique id for the challenge
+        UploadTask uploadTask = storageRef.child("challenges").child(mChallengePhoto.getChallengeId()).child(pushId).putBytes(mCameraCallback.getPicData()); // Upload photo taken to firebase storage
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                String url = taskSnapshot.getDownloadUrl().toString();
+                final ChallengePhotoCompleted completedChallenge = new ChallengePhotoCompleted(mChallengePhoto.getChallengeId(), auth.getCurrentUser().getUid(), url);
+
+                rootRef.child("challenges").child(mChallengePhoto.getChallengeId()).runTransaction(new Transaction.Handler() {
+                    @Override
+                    public Transaction.Result doTransaction(MutableData mutableData) {
+                        ChallengePhoto challengePhoto = mutableData.getValue(ChallengePhoto.class);
+                        challengePhoto.addToCompletedPhotoChallenges(completedChallenge);
+                        mutableData.setValue(challengePhoto);
+                        return Transaction.success(mutableData);
+                    }
+
+                    @Override
+                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                        Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
+                                .show();
+                        progressDialog.dismiss();
+                        finish();
+                    }
+                });
+
+            }
+        });
     }
 
     private void requestPermission() {

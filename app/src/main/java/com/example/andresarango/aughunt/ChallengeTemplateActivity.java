@@ -106,7 +106,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
                 break;
             case R.id.btn_submit_challenge:
                 if (mCameraCallback.getPicData() != null && !TextUtils.isEmpty(mHintText)) {
-                    progressDialog.setTitle("Submitting");
+                    progressDialog.setMessage("Submitting");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
                     submitChallenge();
