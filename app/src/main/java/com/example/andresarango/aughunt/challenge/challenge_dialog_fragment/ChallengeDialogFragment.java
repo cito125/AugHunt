@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
-import com.example.andresarango.aughunt.ChallengeTemplateActivity;
+import com.example.andresarango.aughunt.AcceptedChallengeActivity;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 
 
@@ -34,7 +34,7 @@ public class ChallengeDialogFragment extends DialogFragment {
         alertDialogBuilder.setPositiveButton("START CHALLENGE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(getContext(), ChallengeTemplateActivity.class);
+                Intent intent = new Intent(getContext(), AcceptedChallengeActivity.class);
                 startActivity(intent);
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

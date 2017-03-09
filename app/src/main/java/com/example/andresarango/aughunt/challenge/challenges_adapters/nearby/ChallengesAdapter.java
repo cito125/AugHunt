@@ -22,7 +22,7 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengeViewholder>
 
     @Override
     public ChallengeViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ChallengeViewholder<>(LayoutInflater
+        return new ChallengeViewholder(LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.viewholder_challenge, parent, false),
                 mChallengeViewholderListener);

@@ -129,19 +129,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements
         }
     }
 
-//    public void initRecyclerView() {
-//        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.created_challenges);
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        List<Challenge<Bitmap>> currentChallengesList = historyOfCreatedChalalnges(
-//                mFirebaseEmulator.getChallenges(),
-//                mFirebaseEmulator.getCurrentUser().getUserId());
-//        CreatedChallengesAdapter challengesAdapter = new CreatedChallengesAdapter(this);
-//        challengesAdapter.setChallengeList(currentChallengesList);
-//        mRecyclerView.setAdapter(challengesAdapter);
-//
-//    }
-
-
     public List<Challenge<Bitmap>> historyOfCreatedChalalnges(List<Challenge<Bitmap>> challengeList, String ownerID) {
 
         List<Challenge<Bitmap>> userChallengeList = new ArrayList<>();
