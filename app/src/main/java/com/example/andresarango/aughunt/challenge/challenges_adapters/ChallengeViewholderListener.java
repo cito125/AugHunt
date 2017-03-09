@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.challenges_adapters.nearby;
+package com.example.andresarango.aughunt.challenge.challenges_adapters;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
 

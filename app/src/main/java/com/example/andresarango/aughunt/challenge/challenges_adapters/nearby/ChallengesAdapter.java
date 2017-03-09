@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,7 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.create_challenge.ChallengeTemplateActivity;
+import com.example.andresarango.aughunt.ChallengeTemplateActivity;
 
 
 public class ChallengeDialogFragment<T> extends DialogFragment {

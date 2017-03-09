@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 
 class ChallengeViewholder<T> extends RecyclerView.ViewHolder {
 
