@@ -25,7 +25,6 @@ import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
 
 public class ChallangeReviewFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
     private Challenge<Bitmap> mChallengeToReview;
     private ChallengeViewholderListener<Bitmap> mListener;
 
@@ -33,8 +32,7 @@ public class ChallangeReviewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_review, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_review, container, false);
     }
 
     @Override
@@ -52,7 +50,7 @@ public class ChallangeReviewFragment extends Fragment {
 
 
     public void initializeRecyclerView(View view) {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.challanges_for_review);
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.challanges_for_review);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(new ReviewChallengeAdapter(mChallengeToReview, mListener));
 
