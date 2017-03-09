@@ -1,6 +1,5 @@
 package com.example.andresarango.aughunt.challenge.create_challenge;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.CardView;
@@ -40,7 +39,7 @@ class CreatedChallengesViewHolder extends RecyclerView.ViewHolder {
         }
 
         mChallengeStatus.setText(status);
-        BitmapDrawable d = new BitmapDrawable(itemView.getContext().getResources(), challenge.getmChallenge());
+        BitmapDrawable d = new BitmapDrawable(itemView.getContext().getResources(), challenge.getChallenge());
         mChallengePicture.setImageDrawable(d);
 
     }

@@ -149,7 +149,7 @@ public class FirebaseEmulator implements FirebaseHelper<Bitmap> {
     public void saveChallenge(Challenge<Bitmap> c) {
 
         this.mChallenge = c;
-        Bitmap tempBitmap = (Bitmap) c.getmChallenge();
+        Bitmap tempBitmap = (Bitmap) c.getChallenge();
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         tempBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);

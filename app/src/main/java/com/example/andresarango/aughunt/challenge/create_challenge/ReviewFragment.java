@@ -36,13 +36,13 @@ public class ReviewFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view,savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
 
-        mChallengeCompareWith=(ImageView)view.findViewById(R.id.initial_challenge);
-        mChallengeToCompare=(ImageView)view.findViewById(R.id.completed_challenge);
-        BitmapDrawable d= new BitmapDrawable(mContext.getResources(), mCurrentChallenge.getmChallenge());
+        mChallengeCompareWith = (ImageView) view.findViewById(R.id.initial_challenge);
+        mChallengeToCompare = (ImageView) view.findViewById(R.id.completed_challenge);
+        BitmapDrawable d = new BitmapDrawable(mContext.getResources(), mCurrentChallenge.getChallenge());
         mChallengeCompareWith.setImageDrawable(d);
-        BitmapDrawable d1= new BitmapDrawable(mContext.getResources(), mCompletedChallenge.getCompletedChallenge());
+        BitmapDrawable d1 = new BitmapDrawable(mContext.getResources(), mCompletedChallenge.getCompletedChallenge());
         mChallengeToCompare.setImageDrawable(d1);
 
     }

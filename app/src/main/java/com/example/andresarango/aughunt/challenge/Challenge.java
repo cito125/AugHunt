@@ -34,7 +34,7 @@ public final class Challenge<T> {
     }
 
 
-    public T getmChallenge() {
+    public T getChallenge() {
         return mChallenge;
     }
 

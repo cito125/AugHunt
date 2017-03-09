@@ -95,21 +95,21 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
         DAMLocation wrongLocation = new DAMLocation(40.821349, -73.938213);
 
         Challenge<String> firstChallenge = new Challenge<>("first Challenge", firstLocation);
-        firstChallenge.setmHint(firstChallenge.getmChallenge());
+        firstChallenge.setmHint(firstChallenge.getChallenge());
         Challenge<String> secondChallenge = new Challenge<>("second Challenge", secondLocation);
-        secondChallenge.setmHint(secondChallenge.getmChallenge());
+        secondChallenge.setmHint(secondChallenge.getChallenge());
         Challenge<String> thirdChallenge = new Challenge<>("third Challenge", thirdLocation);
-        thirdChallenge.setmHint(thirdChallenge.getmChallenge());
+        thirdChallenge.setmHint(thirdChallenge.getChallenge());
         Challenge<String> fourthChallenge = new Challenge<>("fourth Challenge", fourthLocation);
-        fourthChallenge.setmHint(fourthChallenge.getmChallenge());
+        fourthChallenge.setmHint(fourthChallenge.getChallenge());
 
         Challenge<String> fifthChallenge = new Challenge<>("fifth Challenge", fifthLocation);
-        fifthChallenge.setmHint(fifthChallenge.getmChallenge());
+        fifthChallenge.setmHint(fifthChallenge.getChallenge());
 
         Challenge<String> sixthChallenge = new Challenge<>("sixth Challenge", sixthLocation);
-        sixthChallenge.setmHint(sixthChallenge.getmChallenge());
+        sixthChallenge.setmHint(sixthChallenge.getChallenge());
         Challenge<String> seventhChallenge = new Challenge<>("seventh Challenge", seventhLocation);
-        seventhChallenge.setmHint(seventhChallenge.getmChallenge());
+        seventhChallenge.setmHint(seventhChallenge.getChallenge());
 
         Challenge<String> badChallenge = new Challenge<>("wrong", wrongLocation);
 
