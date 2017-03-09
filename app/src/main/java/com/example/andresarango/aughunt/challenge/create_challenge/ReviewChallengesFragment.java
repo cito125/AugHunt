@@ -16,7 +16,8 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.review_challenges.ReviewChallengeAdapter;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.review.ReviewChallengeAdapter;
 
 /**
  * Created by Millochka on 3/6/17.

@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.create_challenge;
+package com.example.andresarango.aughunt.challenge.challenges_adapters.created;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengeViewholderListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChalle
         final int viewHolderPosition = position;
 
         holder.bind(mChallengeList.get(viewHolderPosition));
-        holder.getmCreatedChallenge().setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onChallengeClicked(mChallengeList.get(viewHolderPosition));

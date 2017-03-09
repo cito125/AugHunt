@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.challenges_adapters.review_challenges;
+package com.example.andresarango.aughunt.challenge.challenges_adapters.review;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
-import com.example.andresarango.aughunt.challenge.create_challenge.CompletedChallengeViewholderListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +16,12 @@ import java.util.List;
  * Created by Millochka on 3/7/17.
  */
 
-class ReviewChallengeAdapter extends RecyclerView.Adapter<ReviewChallengeViewHolder> {
+public class ReviewChallengeAdapter extends RecyclerView.Adapter<ReviewChallengeViewHolder> {
 
     private List<CompletedChallenge<Bitmap>> mCompletedChallangesList = new ArrayList<>();
     private CompletedChallengeViewholderListener<Bitmap> mListener;
 
-    ReviewChallengeAdapter(CompletedChallengeViewholderListener<Bitmap> listener) {
+    public ReviewChallengeAdapter(CompletedChallengeViewholderListener<Bitmap> listener) {
         this.mListener = listener;
 
     }

@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.challenges_adapters;
+package com.example.andresarango.aughunt.challenge.challenges_adapters.nearby;
 
 
 import android.support.v7.widget.RecyclerView;

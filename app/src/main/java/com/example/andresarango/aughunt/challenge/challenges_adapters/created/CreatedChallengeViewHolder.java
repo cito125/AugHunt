@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.create_challenge;
+package com.example.andresarango.aughunt.challenge.challenges_adapters.created;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,13 +19,11 @@ class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView mChallengePicture;
     private TextView mChallengeStatus;
-    private CardView mCreatedChallenge;
 
     public CreatedChallengeViewHolder(View itemView) {
         super(itemView);
         mChallengePicture = (ImageView) itemView.findViewById(R.id.image_of_challenge);
         mChallengeStatus = (TextView) itemView.findViewById(R.id.status_of_challenge);
-        mCreatedChallenge = (CardView) itemView.findViewById(R.id.created_challenge_card);
     }
 
     public void bind(Challenge<Bitmap> challenge) {
@@ -44,7 +42,4 @@ class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public CardView getmCreatedChallenge() {
-        return mCreatedChallenge;
-    }
 }

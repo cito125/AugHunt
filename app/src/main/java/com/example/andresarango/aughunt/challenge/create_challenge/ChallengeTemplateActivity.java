@@ -24,7 +24,7 @@ import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
+import com.example.andresarango.aughunt.FirebaseEmulator;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
 import com.google.android.cameraview.AspectRatio;

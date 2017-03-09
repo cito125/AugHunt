@@ -1,7 +1,6 @@
-package com.example.andresarango.aughunt.challenge.create_challenge;
+package com.example.andresarango.aughunt.challenge.challenges_adapters.review;
 
 
-import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 
 public interface CompletedChallengeViewholderListener<T> {

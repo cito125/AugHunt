@@ -11,13 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
-import com.example.andresarango.aughunt.challenge.create_challenge.CompletedChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.create_challenge.ReviewChallengesFragment;
 import com.example.andresarango.aughunt.challenge.create_challenge.ChallengeTemplateActivity;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
-import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
-import com.example.andresarango.aughunt.challenge.create_challenge.CreatedChallengesAdapter;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengesAdapter;
 import com.example.andresarango.aughunt.challenge.create_challenge.CompareChallengesFragment;
 
 import java.util.ArrayList;
@@ -107,7 +106,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements
                 .add(R.id.container_for_review, mReviewChallengesFragment)
                 .commit();
     }
-
 
 
     private void startCompareChallengeFragment(CompletedChallenge<Bitmap> completedChallenge, Challenge<Bitmap> challenge) {

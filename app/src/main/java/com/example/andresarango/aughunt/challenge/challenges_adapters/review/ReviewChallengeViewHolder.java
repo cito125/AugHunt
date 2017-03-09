@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.challenges_adapters.review_challenges;
+package com.example.andresarango.aughunt.challenge.challenges_adapters.review;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;

@@ -1,5 +1,7 @@
-package com.example.andresarango.aughunt.challenge;
+package com.example.andresarango.aughunt;
 
+import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 import com.example.andresarango.aughunt.user.User;
 
 import java.util.List;

@@ -1,9 +1,6 @@
-package com.example.andresarango.aughunt.challenge.challenges_adapters;
-
-import android.graphics.Bitmap;
+package com.example.andresarango.aughunt.challenge.challenges_adapters.nearby;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 
 /**
  * Created by Millochka on 3/6/17.
