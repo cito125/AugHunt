@@ -87,7 +87,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements
     @Override
     public void onChallengeClicked(Challenge<Bitmap> challenge) {
         mChallangeReviewFragment = new ChallangeReviewFragment();
-        mChallangeReviewFragment.setmCgallengeToReview(challenge);
+        mChallangeReviewFragment.setChallengeToReview(challenge);
         mChallangeReviewFragment.setmContext(getApplicationContext());
         mChallangeReviewFragment.setmListener(this);
         mIsInflated = !mIsInflated;

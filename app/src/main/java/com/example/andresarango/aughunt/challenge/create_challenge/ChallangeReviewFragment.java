@@ -27,9 +27,6 @@ public class ChallangeReviewFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private Challenge<Bitmap> mChallengeToReview;
-    private ImageView mChallengePhoto;
-    private TextView mHint;
-    private TextView mUsersAccepted;
     private ChallengeViewholderListener<Bitmap> mListener;
 
 
@@ -49,8 +46,8 @@ public class ChallangeReviewFragment extends Fragment {
 
     }
 
-    public void setmCgallengeToReview(Challenge<Bitmap> cgallengeToReview) {
-        this.mChallengeToReview = cgallengeToReview;
+    public void setChallengeToReview(Challenge<Bitmap> challengeToReview) {
+        mChallengeToReview = challengeToReview;
     }
 
 
@@ -62,9 +59,9 @@ public class ChallangeReviewFragment extends Fragment {
     }
 
     public void initializeViews(View view) {
-        mChallengePhoto = (ImageView) view.findViewById(R.id.review_challenge_picture);
-        mHint = (TextView) view.findViewById(R.id.review_challenge_hit);
-        mUsersAccepted = (TextView) view.findViewById(R.id.usersaccepted);
+        ImageView mChallengePhoto = (ImageView) view.findViewById(R.id.review_challenge_picture);
+        TextView mHint = (TextView) view.findViewById(R.id.review_challenge_hit);
+        TextView mUsersAccepted = (TextView) view.findViewById(R.id.usersaccepted);
         BitmapDrawable d = new BitmapDrawable(getContext().getResources(), mChallengeToReview.getChallenge());
         mChallengePhoto.setImageDrawable(d);
         mHint.setText("Challenge Hint: " + mChallengeToReview.getmHint());
