@@ -55,7 +55,6 @@ public class FirebaseEmulator implements FirebaseHelper<Bitmap> {
         Challenge<Bitmap> challenge = new Challenge<Bitmap>(retrieveBFrSh(), location, "userid");
         challenge.setmHint(retrieveHFrSh());
 
-
         return challenge;
     }
 

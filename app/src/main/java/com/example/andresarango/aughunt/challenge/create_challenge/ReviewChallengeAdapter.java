@@ -42,7 +42,7 @@ class ReviewChallengeAdapter extends RecyclerView.Adapter {
 
         ReviewChallengeViewHolder reviewChallengeViewHolder=(ReviewChallengeViewHolder) holder;
         reviewChallengeViewHolder.bind(mCompletedChallanges.get(position));
-        reviewChallengeViewHolder.getmCompletedChallenge().setOnClickListener(new View.OnClickListener() {
+        reviewChallengeViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

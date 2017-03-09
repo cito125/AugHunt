@@ -14,11 +14,11 @@ public class CompletedChallenge<T> {
         this.mOwnerId = mOwnerId;
     }
 
-    public T getmCompletedChallenge() {
+    public T getCompletedChallenge() {
         return mCompletedChallenge;
     }
 
-    public String getmOwnerId() {
+    public String getOwnerId() {
         return mOwnerId;
     }
 }

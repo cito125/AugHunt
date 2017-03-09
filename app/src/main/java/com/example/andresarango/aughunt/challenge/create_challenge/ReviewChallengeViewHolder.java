@@ -16,23 +16,17 @@ import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 class ReviewChallengeViewHolder extends RecyclerView.ViewHolder {
 
     private TextView mPlayerName;
-    private CardView mCompletedChallenge;
 
 
     public ReviewChallengeViewHolder(View itemView) {
         super(itemView);
 
         mPlayerName=(TextView) itemView.findViewById(R.id.player_name);
-        mCompletedChallenge=(CardView) itemView.findViewById(R.id.completed_challenge);
 
     }
 
     public void bind (CompletedChallenge<Bitmap> challenge){
-      mPlayerName.setText(challenge.getmOwnerId());
+      mPlayerName.setText(challenge.getOwnerId());
 
-    }
-
-    public CardView getmCompletedChallenge() {
-        return mCompletedChallenge;
     }
 }

@@ -42,7 +42,7 @@ public class ReviewFragment extends Fragment {
         mChallengeToCompare=(ImageView)view.findViewById(R.id.completed_challenge);
         BitmapDrawable d= new BitmapDrawable(mContext.getResources(), mCurrentChallenge.getmChallenge());
         mChallengeCompareWith.setImageDrawable(d);
-        BitmapDrawable d1= new BitmapDrawable(mContext.getResources(), mCompletedChallenge.getmCompletedChallenge());
+        BitmapDrawable d1= new BitmapDrawable(mContext.getResources(), mCompletedChallenge.getCompletedChallenge());
         mChallengeToCompare.setImageDrawable(d1);
 
     }
