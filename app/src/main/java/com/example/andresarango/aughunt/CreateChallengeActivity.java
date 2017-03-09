@@ -3,20 +3,19 @@ package com.example.andresarango.aughunt;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeViewholderListener;
-import com.example.andresarango.aughunt.challenge.create_challenge.ReviewChallengesFragment;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengesAdapter;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.create_challenge.CompareChallengesFragment;
+import com.example.andresarango.aughunt.challenge.create_challenge.ReviewChallengesFragment;
 import com.example.andresarango.aughunt.firebase.FirebaseEmulator;
 
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ import java.util.List;
 
 
 public class CreateChallengeActivity extends AppCompatActivity implements
-        ViewGroup.OnClickListener,
         ChallengeViewholderListener<Bitmap>,
         CompletedChallengeViewholderListener<Bitmap> {
 
@@ -43,19 +41,17 @@ public class CreateChallengeActivity extends AppCompatActivity implements
     }
 
     private void initialize() {
-        Button mCreateChallenge = (Button) findViewById(R.id.new_challenge);
-        mCreateChallenge.setOnClickListener(this);
+        FloatingActionButton createChallengeBtn = (FloatingActionButton) findViewById(R.id.fab_create_challenge);
+        createChallengeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                startActivity(intent);
+            }
+        });
         mIsInflated = false;
         mFirebaseEmulator = new FirebaseEmulator(this);
         initRecyclerView();
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
-        startActivity(intent);
-
-
     }
 
     public void initRecyclerView() {

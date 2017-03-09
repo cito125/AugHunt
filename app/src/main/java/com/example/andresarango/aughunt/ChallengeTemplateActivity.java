@@ -3,9 +3,9 @@ package com.example.andresarango.aughunt;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,13 +23,22 @@ import android.widget.Toast;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
-import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.firebase.FirebaseEmulator;
+import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.snapshot.LocationResult;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class ChallengeTemplateActivity extends AppCompatActivity implements
@@ -40,77 +50,73 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
 
     private static final int LOCATION_PERMISSION = 1245;
 
-    private CameraView mCameraView;
+    @BindView(R.id.cam_create_challenge) CameraView mCameraView;
+    @BindView(R.id.btn_take_photo) Button mTakePhotoButton;
+    @BindView(R.id.btn_leave_hint) Button mHint;
+    @BindView(R.id.btn_submit_challenge) Button mSubmit;
+    @BindView(R.id.photo) FrameLayout mPhoto;
+
     private CameraCallback mCameraCallback;
 
-    private Button mTakePhotoButton;
-    private Button mHint;
-    private Button mSubmit;
-    private FrameLayout mPhoto;
+    private String mHintText;
 
-    private String mHintText = "";
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+    private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
+    private ProgressDialog progressDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge_template);
-        mPhoto = (FrameLayout) findViewById(R.id.photo);
+        ButterKnife.bind(this);
+        progressDialog = new ProgressDialog(this);
+
+        mTakePhotoButton.setOnClickListener(this);
         mPhoto.setOnClickListener(this);
-        mHint = (Button) findViewById(R.id.leave_hint);
         mHint.setOnClickListener(this);
-        mSubmit = (Button) findViewById(R.id.submit_challenge);
         mSubmit.setOnClickListener(this);
 
-        initializeTakePhotoButton();
         initializeCamera();
         requestPermission();
     }
 
 
     private void initializeCamera() {
-
         mCameraCallback = new CameraCallback(this, mPhoto, mTakePhotoButton);
-
         if (mCameraView != null) {
             mCameraView.addCallback(mCameraCallback);
         }
     }
 
-    private void initializeTakePhotoButton() {
-        mCameraView = (CameraView) findViewById(R.id.activity_main_camera);
-        mTakePhotoButton = (Button) findViewById(R.id.take_photo);
-        mTakePhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_take_photo:
                 mCameraView.takePicture();
-            }
-        });
-    }
-
-    @Override
-    public void onAspectRatioSelected(@NonNull AspectRatio ratio) {
-        if (mCameraView != null) {
-            mCameraView.setAspectRatio(ratio);
+                break;
+            case R.id.photo:
+                mPhoto.setVisibility(View.INVISIBLE);
+                mTakePhotoButton.setEnabled(true);
+                mCameraCallback.setPicData(null);
+                break;
+            case R.id.btn_leave_hint:
+                createDialog();
+                break;
+            case R.id.btn_submit_challenge:
+                if (mCameraCallback.getPicData() != null && !TextUtils.isEmpty(mHintText)) {
+                    progressDialog.setTitle("Submitting");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.show();
+                    submitChallenge();
+                } else {
+                    Toast.makeText(this, "Hint or photo is missing", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkCameraPermission();
-    }
-
-    @Override
-    protected void onPause() {
-        mCameraView.stop();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mCameraCallback.destroyHandler();
     }
 
 
@@ -186,47 +192,13 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     }
 
 
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-
-            case R.id.photo:
-
-                mPhoto.setVisibility(View.INVISIBLE);
-                mTakePhotoButton.setEnabled(true);
-                mCameraCallback.setmBitmap(null);
-
-                break;
-            case R.id.leave_hint:
-
-                createDialog();
-                break;
-
-            case R.id.submit_challenge:
-                if (mCameraCallback.getmBitmap() != null && !mHintText.equals("")) {
-                    submitChallenge();
-                } else {
-                    Toast.makeText(this, "Hint or photo is missing", Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-
-                break;
-        }
-
-    }
-
     private void submitChallenge() {
         SnapshotHelper snapshotHelper = new SnapshotHelper(this);
         snapshotHelper.runSnapshot(getApplicationContext());
-
     }
 
     public void createDialog() {
-
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
 
         final EditText edittext = new EditText(getApplicationContext());
         alert.setMessage("Enter Your Hint");
@@ -253,17 +225,51 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
 
     @Override
     public void run(LocationResult locationResult) {
-        DAMLocation damLocation = new DAMLocation(0.0, 0.0);
-        damLocation.setLat(locationResult.getLocation().getLatitude());
-        damLocation.setLng(locationResult.getLocation().getLongitude());
-        Challenge<Bitmap> challenge = new Challenge<>(mCameraCallback.getmBitmap(), damLocation);
-        challenge.setmHint(mHintText);
-        FirebaseEmulator firebaseEmulator = new FirebaseEmulator(this);
-        firebaseEmulator.saveChallenge(challenge);
+        double latitude = locationResult.getLocation().getLatitude();
+        double longitude = locationResult.getLocation().getLongitude();
+        final DAMLocation damLocation = new DAMLocation(latitude, longitude);
 
-        Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
-                .show();
+        final String pushId = rootRef.child("challenges").push().getKey(); // Get a unique id for the challenge
+        UploadTask uploadTask = storageRef.child("challenges").child(pushId).putBytes(mCameraCallback.getPicData()); // Upload photo taken to firebase storage
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                String url = taskSnapshot.getDownloadUrl().toString();
+                ChallengePhoto challenge = new ChallengePhoto(pushId, auth.getCurrentUser().getUid(), damLocation, url, mHintText, System.currentTimeMillis()/1000);
+                rootRef.child("challenges").child(pushId).setValue(challenge); // Upload challenge object to firebase database
 
-        finish();
+
+                Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
+                        .show();
+                progressDialog.dismiss();
+                finish();
+            }
+        });
+    }
+
+
+    @Override
+    public void onAspectRatioSelected(@NonNull AspectRatio ratio) {
+        if (mCameraView != null) {
+            mCameraView.setAspectRatio(ratio);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkCameraPermission();
+    }
+
+    @Override
+    protected void onPause() {
+        mCameraView.stop();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCameraCallback.destroyHandler();
     }
 }
