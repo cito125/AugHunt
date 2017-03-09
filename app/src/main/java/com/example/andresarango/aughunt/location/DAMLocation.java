@@ -1,14 +1,21 @@
 package com.example.andresarango.aughunt.location;
 
-public class Location {
+/**
+ * Created by andresarango on 2/26/17.
+ */
+
+public class DAMLocation {
     private Double mLat;
     private Double mLng;
     private Double mElevation;
 
-    public Location(Double lat, Double lng) {
+
+    public DAMLocation(Double lat, Double lng ) {
         this(lat,lng,0.0);
+
     }
-    public Location(Double lat, Double lng, Double elevation) {
+
+    public DAMLocation(Double lat, Double lng, Double elevation) {
         this.mLat = lat;
         this.mLng = lng;
         this.mElevation = elevation;
@@ -38,6 +45,7 @@ public class Location {
         this.mElevation = elevation;
     }
 
+
     public boolean isWithinRadius(DAMLocation secondLocation, Double radius){
         return isWithinRadius(getLat(), getLng(), getElevation(),
                 secondLocation.getLat(),
@@ -46,7 +54,7 @@ public class Location {
                 radius);
     }
 
-    public Double distanceTo(DAMLocation secondLocation){
+    public Double distanceTo(Location secondLocation){
         return getDistance(getLat(), getLng(), getElevation(),
                 secondLocation.getLat(),
                 secondLocation.getLng(),
@@ -88,4 +96,5 @@ public class Location {
 
         return Math.sqrt(distance); // returns distance in meters
     }
-}
+
+    }

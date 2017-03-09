@@ -10,7 +10,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.ChallengeActivity;
+import com.example.andresarango.aughunt.ChallengeTemplateActivity;
+
 
 public class ChallengeDialogFragment<T> extends DialogFragment {
 
@@ -19,7 +20,7 @@ public class ChallengeDialogFragment<T> extends DialogFragment {
     public static <T> ChallengeDialogFragment<T> getInstance(Challenge<T> challenge) {
         ChallengeDialogFragment<T> fragment = new ChallengeDialogFragment<>();
         Bundle bundle = new Bundle();
-        bundle.putCharSequence(CHALLENGE_HINT, challenge.getHint());
+        bundle.putCharSequence(CHALLENGE_HINT, challenge.getmHint());
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -33,7 +34,7 @@ public class ChallengeDialogFragment<T> extends DialogFragment {
         alertDialogBuilder.setPositiveButton("START CHALLENGE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(getContext(), ChallengeActivity.class);
+                Intent intent = new Intent(getContext(), ChallengeTemplateActivity.class);
                 startActivity(intent);
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
