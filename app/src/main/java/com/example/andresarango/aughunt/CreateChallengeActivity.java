@@ -18,13 +18,16 @@ import com.example.andresarango.aughunt.challenge.create_challenge.ChallengeTemp
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengesAdapter;
 import com.example.andresarango.aughunt.challenge.create_challenge.CompareChallengesFragment;
+import com.example.andresarango.aughunt.firebase.FirebaseEmulator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CreateChallengeActivity extends AppCompatActivity implements
-        ViewGroup.OnClickListener, ChallengeViewholderListener<Bitmap>, CompletedChallengeViewholderListener<Bitmap> {
+        ViewGroup.OnClickListener,
+        ChallengeViewholderListener<Bitmap>,
+        CompletedChallengeViewholderListener<Bitmap> {
 
     private FirebaseEmulator mFirebaseEmulator;
     private ReviewChallengesFragment mReviewChallengesFragment;
@@ -123,7 +126,10 @@ public class CreateChallengeActivity extends AppCompatActivity implements
     public void onBackPressed() {
 
         if (mIsInflated) {
-            getSupportFragmentManager().beginTransaction().remove(mReviewChallengesFragment).commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(mReviewChallengesFragment)
+                    .commit();
             mIsInflated = !mIsInflated;
 
         } else {
@@ -138,12 +144,18 @@ public class CreateChallengeActivity extends AppCompatActivity implements
 
             case R.id.decline:
 
-                getSupportFragmentManager().beginTransaction().remove(mCompareChallengesFragment).commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .remove(mCompareChallengesFragment)
+                        .commit();
                 break;
 
             case R.id.accept:
 
-                getSupportFragmentManager().beginTransaction().remove(mCompareChallengesFragment).commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .remove(mCompareChallengesFragment)
+                        .commit();
                 break;
 
         }

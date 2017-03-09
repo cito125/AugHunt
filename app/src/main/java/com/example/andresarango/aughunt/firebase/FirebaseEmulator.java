@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt;
+package com.example.andresarango.aughunt.firebase;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.util.Base64;
 
+import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 import com.example.andresarango.aughunt.location.DAMLocation;

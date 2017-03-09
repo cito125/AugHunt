@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt;
+package com.example.andresarango.aughunt.firebase;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
