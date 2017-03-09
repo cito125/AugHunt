@@ -20,7 +20,7 @@ import com.example.andresarango.aughunt.challenge.CompletedChallenge;
  * Created by Millochka on 3/7/17.
  */
 
-public class ReviewFragment extends Fragment {
+public class CompareChallengesFragment extends Fragment {
 
     private Challenge<Bitmap> mCurrentChallenge;
     private CompletedChallenge<Bitmap> mCompletedChallenge;

@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge;
+package com.example.andresarango.aughunt.challenge.challenges_adapters;
 
 import android.graphics.Bitmap;
 
@@ -11,6 +11,4 @@ import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 
 public interface ChallengeViewholderListener<T> {
     void onChallengeClicked(Challenge<T> challenge);
-
-    void onChallengeClicked(CompletedChallenge<T> completedChallenge, Challenge<Bitmap> challenge);
 }

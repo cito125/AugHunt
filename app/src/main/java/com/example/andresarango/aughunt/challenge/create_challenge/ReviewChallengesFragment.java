@@ -1,7 +1,6 @@
 package com.example.andresarango.aughunt.challenge.create_challenge;
 
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -17,16 +16,16 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.review_challenges.ReviewChallengeAdapter;
 
 /**
  * Created by Millochka on 3/6/17.
  */
 
-public class ChallangeReviewFragment extends Fragment {
+public class ReviewChallengesFragment extends Fragment {
 
     private Challenge<Bitmap> mChallengeToReview;
-    private ChallengeViewholderListener<Bitmap> mListener;
+    private CompletedChallengeViewholderListener<Bitmap> mListener;
 
 
     @Nullable
@@ -38,7 +37,6 @@ public class ChallangeReviewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initializeViews(view);
         initializeRecyclerView(view);
 
@@ -52,22 +50,24 @@ public class ChallangeReviewFragment extends Fragment {
     public void initializeRecyclerView(View view) {
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.challanges_for_review);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(new ReviewChallengeAdapter(mChallengeToReview, mListener));
+        ReviewChallengeAdapter reviewChallengesAdapter = new ReviewChallengeAdapter(mListener);
+        reviewChallengesAdapter.setCompletedChallangesList(mChallengeToReview.getmCompletedChallenges());
+        mRecyclerView.setAdapter(reviewChallengesAdapter);
 
     }
 
     public void initializeViews(View view) {
-        ImageView mChallengePhoto = (ImageView) view.findViewById(R.id.review_challenge_picture);
-        TextView mHint = (TextView) view.findViewById(R.id.review_challenge_hit);
-        TextView mUsersAccepted = (TextView) view.findViewById(R.id.usersaccepted);
-        BitmapDrawable d = new BitmapDrawable(getContext().getResources(), mChallengeToReview.getChallenge());
-        mChallengePhoto.setImageDrawable(d);
-        mHint.setText("Challenge Hint: " + mChallengeToReview.getmHint());
-        mUsersAccepted.setText("Users Accepted: " + String.valueOf(mChallengeToReview.getUsersAccepted()));
+        ImageView challengePhoto = (ImageView) view.findViewById(R.id.review_challenge_picture);
+        TextView hint = (TextView) view.findViewById(R.id.review_challenge_hit);
+        TextView usersAccepted = (TextView) view.findViewById(R.id.usersaccepted);
+        BitmapDrawable bitmapDrawable = new BitmapDrawable(getContext().getResources(), mChallengeToReview.getChallenge());
+        challengePhoto.setImageDrawable(bitmapDrawable);
+        hint.setText("Challenge Hint: " + mChallengeToReview.getmHint());
+        usersAccepted.setText("Users Accepted: " + String.valueOf(mChallengeToReview.getUsersAccepted()));
 
     }
 
-    public void setmListener(ChallengeViewholderListener<Bitmap> mListener) {
+    public void setmListener(CompletedChallengeViewholderListener<Bitmap> mListener) {
         this.mListener = mListener;
     }
 }

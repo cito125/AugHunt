@@ -1,7 +1,6 @@
-package com.example.andresarango.aughunt.challenge.create_challenge;
+package com.example.andresarango.aughunt.challenge.challenges_adapters.review_challenges;
 
 import android.graphics.Bitmap;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -20,13 +19,12 @@ class ReviewChallengeViewHolder extends RecyclerView.ViewHolder {
 
     public ReviewChallengeViewHolder(View itemView) {
         super(itemView);
-
-        mPlayerName=(TextView) itemView.findViewById(R.id.player_name);
+        mPlayerName = (TextView) itemView.findViewById(R.id.player_name);
 
     }
 
-    public void bind (CompletedChallenge<Bitmap> challenge){
-      mPlayerName.setText(challenge.getOwnerId());
+    public void bind(CompletedChallenge<Bitmap> challenge) {
+        mPlayerName.setText(challenge.getOwnerId());
 
     }
 }

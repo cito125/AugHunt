@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Millochka on 3/5/17.
  */
 
-public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChallengesViewHolder> {
+public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChallengeViewHolder> {
 
     private List<Challenge<Bitmap>> mChallengeList = new ArrayList<>();
     private ChallengeViewholderListener<Bitmap> mListener;
@@ -27,17 +27,17 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChalle
     }
 
     @Override
-    public CreatedChallengesViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
+    public CreatedChallengeViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.created_challenge, parent, false);
 
-        return new CreatedChallengesViewHolder(view);
+        return new CreatedChallengeViewHolder(view);
 
 
     }
 
     @Override
-    public void onBindViewHolder(CreatedChallengesViewHolder holder, int position) {
+    public void onBindViewHolder(CreatedChallengeViewHolder holder, int position) {
         final int viewHolderPosition = position;
 
         holder.bind(mChallengeList.get(viewHolderPosition));

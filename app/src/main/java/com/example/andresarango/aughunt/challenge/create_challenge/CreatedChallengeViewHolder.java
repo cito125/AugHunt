@@ -15,13 +15,13 @@ import com.example.andresarango.aughunt.challenge.Challenge;
  * Created by Millochka on 3/5/17.
  */
 
-class CreatedChallengesViewHolder extends RecyclerView.ViewHolder {
+class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
 
     private ImageView mChallengePicture;
     private TextView mChallengeStatus;
     private CardView mCreatedChallenge;
 
-    public CreatedChallengesViewHolder(View itemView) {
+    public CreatedChallengeViewHolder(View itemView) {
         super(itemView);
         mChallengePicture = (ImageView) itemView.findViewById(R.id.image_of_challenge);
         mChallengeStatus = (TextView) itemView.findViewById(R.id.status_of_challenge);

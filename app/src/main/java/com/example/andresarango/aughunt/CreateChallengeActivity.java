@@ -11,28 +11,29 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
-import com.example.andresarango.aughunt.challenge.create_challenge.ChallangeReviewFragment;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.create_challenge.CompletedChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.create_challenge.ReviewChallengesFragment;
 import com.example.andresarango.aughunt.challenge.create_challenge.ChallengeTemplateActivity;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
 import com.example.andresarango.aughunt.challenge.create_challenge.CreatedChallengesAdapter;
-import com.example.andresarango.aughunt.challenge.create_challenge.ReviewFragment;
+import com.example.andresarango.aughunt.challenge.create_challenge.CompareChallengesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CreateChallengeActivity extends AppCompatActivity implements
-        ViewGroup.OnClickListener, ChallengeViewholderListener<Bitmap> {
+        ViewGroup.OnClickListener, ChallengeViewholderListener<Bitmap>, CompletedChallengeViewholderListener<Bitmap> {
 
     private FirebaseEmulator mFirebaseEmulator;
-    private ChallangeReviewFragment mChallangeReviewFragment;
+    private ReviewChallengesFragment mReviewChallengesFragment;
     private Boolean mIsInflated;
-    private ReviewFragment mReviewFragment;
+    private CompareChallengesFragment mCompareChallengesFragment;
+    private Challenge<Bitmap> mSelectedChallenge;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_challenge);
@@ -86,22 +87,37 @@ public class CreateChallengeActivity extends AppCompatActivity implements
 
     @Override
     public void onChallengeClicked(Challenge<Bitmap> challenge) {
-        mChallangeReviewFragment = new ChallangeReviewFragment();
-        mChallangeReviewFragment.setChallengeToReview(challenge);
-        mChallangeReviewFragment.setmContext(getApplicationContext());
-        mChallangeReviewFragment.setmListener(this);
-        mIsInflated = !mIsInflated;
-
-        getSupportFragmentManager().beginTransaction().add(R.id.container_for_review, mChallangeReviewFragment).commit();
+        mSelectedChallenge = challenge;
+        startReviewChallengeFragment(challenge);
     }
 
     @Override
-    public void onChallengeClicked(CompletedChallenge<Bitmap> completedChallenge, Challenge<Bitmap> challenge) {
+    public void onCompletedChallengeClicked(CompletedChallenge<Bitmap> completedChallenge) {
+        startCompareChallengeFragment(completedChallenge, mSelectedChallenge);
+    }
 
-        mReviewFragment = new ReviewFragment();
-        mReviewFragment.setCompletedChallenge(completedChallenge);
-        mReviewFragment.setCurrentChallenge(challenge);
-        getSupportFragmentManager().beginTransaction().add(R.id.container_for_review, mReviewFragment).commit();
+    private void startReviewChallengeFragment(Challenge<Bitmap> challenge) {
+        mReviewChallengesFragment = new ReviewChallengesFragment();
+        mReviewChallengesFragment.setChallengeToReview(challenge);
+        mReviewChallengesFragment.setmListener(this);
+        mIsInflated = !mIsInflated;
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container_for_review, mReviewChallengesFragment)
+                .commit();
+    }
+
+
+
+    private void startCompareChallengeFragment(CompletedChallenge<Bitmap> completedChallenge, Challenge<Bitmap> challenge) {
+        mCompareChallengesFragment = new CompareChallengesFragment();
+        mCompareChallengesFragment.setCompletedChallenge(completedChallenge);
+        mCompareChallengesFragment.setCurrentChallenge(challenge);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container_for_review, mCompareChallengesFragment)
+                .commit();
     }
 
 
@@ -109,7 +125,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements
     public void onBackPressed() {
 
         if (mIsInflated) {
-            getSupportFragmentManager().beginTransaction().remove(mChallangeReviewFragment).commit();
+            getSupportFragmentManager().beginTransaction().remove(mReviewChallengesFragment).commit();
             mIsInflated = !mIsInflated;
 
         } else {
@@ -124,16 +140,18 @@ public class CreateChallengeActivity extends AppCompatActivity implements
 
             case R.id.decline:
 
-                getSupportFragmentManager().beginTransaction().remove(mReviewFragment).commit();
+                getSupportFragmentManager().beginTransaction().remove(mCompareChallengesFragment).commit();
                 break;
 
             case R.id.accept:
 
-                getSupportFragmentManager().beginTransaction().remove(mReviewFragment).commit();
+                getSupportFragmentManager().beginTransaction().remove(mCompareChallengesFragment).commit();
                 break;
 
         }
 
 
     }
+
+
 }

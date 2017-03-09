@@ -17,11 +17,10 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.ChallengeFilter;
-import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
-import com.example.andresarango.aughunt.challenge.CompletedChallenge;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.FirebaseEmulator;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
-import com.example.andresarango.aughunt.challenge.challenges_adapter.ChallengesAdapter;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengesAdapter;
 import com.example.andresarango.aughunt.location.DAMLocation;
 
 import java.util.ArrayList;
@@ -154,8 +153,4 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
         dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
     }
 
-    @Override
-    public void onChallengeClicked(CompletedChallenge completedChallenge, Challenge challenge) {
-
-    }
 }

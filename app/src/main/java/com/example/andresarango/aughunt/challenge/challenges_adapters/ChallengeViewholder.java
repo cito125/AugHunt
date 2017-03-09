@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.challenges_adapter;
+package com.example.andresarango.aughunt.challenge.challenges_adapters;
 
 
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.andresarango.aughunt.challenge.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.Challenge;
 
