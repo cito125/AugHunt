@@ -47,16 +47,6 @@ public class ReviewChallengesFragment extends Fragment {
         mChallengeToReview = challengeToReview;
     }
 
-
-    public void initializeRecyclerView(View view) {
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.challanges_for_review);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ReviewChallengeAdapter reviewChallengesAdapter = new ReviewChallengeAdapter(mListener);
-        reviewChallengesAdapter.setCompletedChallangesList(mChallengeToReview.getCompletedPhotoChallenges());
-        mRecyclerView.setAdapter(reviewChallengesAdapter);
-
-    }
-
     public void initializeViews(View view) {
         ImageView challengePhoto = (ImageView) view.findViewById(R.id.review_challenge_picture);
         TextView hint = (TextView) view.findViewById(R.id.review_challenge_hit);
@@ -67,6 +57,20 @@ public class ReviewChallengesFragment extends Fragment {
         Glide.with(mRootView.getContext()).load(mChallengeToReview.getPhotoUrl()).into(challengePhoto);
         hint.setText("Challenge Hint: " + mChallengeToReview.getHint());
         usersAccepted.setText("Users Accepted: " + String.valueOf(mChallengeToReview.getPursuing()));
+
+    }
+
+    public void initializeRecyclerView(View view) {
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.challanges_for_review);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mRootView.getContext()));
+        ReviewChallengeAdapter reviewChallengesAdapter = new ReviewChallengeAdapter(mListener);
+
+        if (mChallengeToReview.getCompletedPhotoChallenges() == null) {
+            System.out.println("NULL COMPLETED CHALLENGES");
+        } else {
+            reviewChallengesAdapter.setCompletedChallangesList(mChallengeToReview.getCompletedPhotoChallenges());
+        }
+        mRecyclerView.setAdapter(reviewChallengesAdapter);
 
     }
 

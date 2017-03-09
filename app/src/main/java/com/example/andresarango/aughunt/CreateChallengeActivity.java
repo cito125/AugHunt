@@ -165,7 +165,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements
 
     @Override
     public void onCompletedChallengeClicked(ChallengePhotoCompleted completedChallenge) {
-        // startCompareChallengeFragment(completedChallenge, mSelectedChallenge);
+//        startCompareChallengeFragment(completedChallenge, mSelectedChallenge);
     }
 
     private void startReviewChallengeFragment(ChallengePhoto challenge) {
