@@ -3,6 +3,7 @@ package com.example.andresarango.aughunt.challenge.create_challenge;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,9 +24,6 @@ public class ReviewFragment extends Fragment {
 
     private Challenge<Bitmap> mCurrentChallenge;
     private CompletedChallenge<Bitmap> mCompletedChallenge;
-    private ImageView mChallengeCompareWith;
-    private ImageView mChallengeToCompare;
-    private Context mContext;
 
     @Nullable
     @Override
@@ -38,25 +36,21 @@ public class ReviewFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mChallengeCompareWith = (ImageView) view.findViewById(R.id.initial_challenge);
-        mChallengeToCompare = (ImageView) view.findViewById(R.id.completed_challenge);
-        BitmapDrawable d = new BitmapDrawable(mContext.getResources(), mCurrentChallenge.getChallenge());
+        ImageView mChallengeCompareWith = (ImageView) view.findViewById(R.id.initial_challenge);
+        ImageView mChallengeToCompare = (ImageView) view.findViewById(R.id.completed_challenge);
+        BitmapDrawable d = new BitmapDrawable(view.getContext().getResources(), mCurrentChallenge.getChallenge());
         mChallengeCompareWith.setImageDrawable(d);
-        BitmapDrawable d1 = new BitmapDrawable(mContext.getResources(), mCompletedChallenge.getCompletedChallenge());
+        BitmapDrawable d1 = new BitmapDrawable(view.getContext().getResources(), mCompletedChallenge.getCompletedChallenge());
         mChallengeToCompare.setImageDrawable(d1);
 
     }
 
-    public void setmCurrentChallenge(Challenge<Bitmap> mCurrentChallenge) {
+    public void setCurrentChallenge(Challenge<Bitmap> mCurrentChallenge) {
         this.mCurrentChallenge = mCurrentChallenge;
 
     }
 
-    public void setmCompletedChallenge(CompletedChallenge<Bitmap> mCompletedChallenge) {
+    public void setCompletedChallenge(CompletedChallenge<Bitmap> mCompletedChallenge) {
         this.mCompletedChallenge = mCompletedChallenge;
-    }
-
-    public void setmContext(Context mContext) {
-        this.mContext = mContext;
     }
 }

@@ -99,9 +99,8 @@ public class CreateChallengeActivity extends AppCompatActivity implements
     public void onChallengeClicked(CompletedChallenge<Bitmap> completedChallenge, Challenge<Bitmap> challenge) {
 
         mReviewFragment = new ReviewFragment();
-        mReviewFragment.setmCompletedChallenge(completedChallenge);
-        mReviewFragment.setmCurrentChallenge(challenge);
-        mReviewFragment.setmContext(this);
+        mReviewFragment.setCompletedChallenge(completedChallenge);
+        mReviewFragment.setCurrentChallenge(challenge);
         getSupportFragmentManager().beginTransaction().add(R.id.container_for_review, mReviewFragment).commit();
     }
 
