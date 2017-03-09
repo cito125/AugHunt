@@ -9,18 +9,18 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
-import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.ChallengeTemplateActivity;
+import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 
 
-public class ChallengeDialogFragment<T> extends DialogFragment {
+public class ChallengeDialogFragment extends DialogFragment {
 
     private static final String CHALLENGE_HINT = "challenge hint";
 
-    public static <T> ChallengeDialogFragment<T> getInstance(Challenge<T> challenge) {
-        ChallengeDialogFragment<T> fragment = new ChallengeDialogFragment<>();
+    public static ChallengeDialogFragment getInstance(ChallengePhoto challenge) {
+        ChallengeDialogFragment fragment = new ChallengeDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putCharSequence(CHALLENGE_HINT, challenge.getmHint());
+        bundle.putCharSequence(CHALLENGE_HINT, challenge.getHint());
         fragment.setArguments(bundle);
         return fragment;
     }

@@ -6,10 +6,24 @@ package com.example.andresarango.aughunt.challenge;
 
 public class ChallengePhotoCompleted {
     private String challengeId;
-    private String ownerId;
+    private String playerId;
+    private String photoUrl;
 
-    public ChallengePhotoCompleted(String challengeId, String ownerId) {
+    public ChallengePhotoCompleted(String challengeId, String playerId, String photoUrl) {
         this.challengeId = challengeId;
-        this.ownerId = ownerId;
+        this.playerId = playerId;
+        this.photoUrl = photoUrl;
+    }
+
+    public String getChallengeId() {
+        return challengeId;
+    }
+
+    public String getPlayerId() {
+        return playerId;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 }

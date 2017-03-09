@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt.challenge.CompletedChallenge;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengesAdapter;
@@ -37,8 +38,8 @@ import butterknife.ButterKnife;
 
 
 public class CreateChallengeActivity extends AppCompatActivity implements
-        ChallengeViewholderListener<Bitmap>,
-        CompletedChallengeViewholderListener<Bitmap> {
+        ChallengeViewholderListener,
+        CompletedChallengeViewholderListener {
 
     @BindView(R.id.created_challenges) RecyclerView mRecyclerView;
 
@@ -46,7 +47,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements
     private ReviewChallengesFragment mReviewChallengesFragment;
     private Boolean mIsInflated;
     private CompareChallengesFragment mCompareChallengesFragment;
-    private Challenge<Bitmap> mSelectedChallenge;
+    private ChallengePhoto mSelectedChallenge;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -157,17 +158,17 @@ public class CreateChallengeActivity extends AppCompatActivity implements
 
 
     @Override
-    public void onChallengeClicked(Challenge<Bitmap> challenge) {
+    public void onChallengeClicked(ChallengePhoto challenge) {
         mSelectedChallenge = challenge;
         startReviewChallengeFragment(challenge);
     }
 
     @Override
-    public void onCompletedChallengeClicked(CompletedChallenge<Bitmap> completedChallenge) {
-        startCompareChallengeFragment(completedChallenge, mSelectedChallenge);
+    public void onCompletedChallengeClicked(ChallengePhotoCompleted completedChallenge) {
+        // startCompareChallengeFragment(completedChallenge, mSelectedChallenge);
     }
 
-    private void startReviewChallengeFragment(Challenge<Bitmap> challenge) {
+    private void startReviewChallengeFragment(ChallengePhoto challenge) {
         mReviewChallengesFragment = new ReviewChallengesFragment();
         mReviewChallengesFragment.setChallengeToReview(challenge);
         mReviewChallengesFragment.setmListener(this);
@@ -231,6 +232,5 @@ public class CreateChallengeActivity extends AppCompatActivity implements
 
 
     }
-
 
 }

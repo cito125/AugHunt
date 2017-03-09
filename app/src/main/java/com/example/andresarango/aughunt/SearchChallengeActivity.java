@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.ChallengeFilter;
+import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengesAdapter;
@@ -34,7 +35,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
     private FirebaseEmulator mFirebaseEmulator;
     private TextView mLocation;
     private RecyclerView mRecyclerView;
-    private ChallengesAdapter<String> mNearbyChallengesAdapter;
+    private ChallengesAdapter mNearbyChallengesAdapter;
     private static final String IMAGE_DATA = "image_data";
     private static final String HINT_DATA = "hint_data";
 
@@ -56,7 +57,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
 
     private void setUpRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mNearbyChallengesAdapter = new ChallengesAdapter<>(this);
+        mNearbyChallengesAdapter = new ChallengesAdapter(this);
         mRecyclerView.setAdapter(mNearbyChallengesAdapter);
     }
 
@@ -71,12 +72,12 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
         DAMLocation userLocation = new DAMLocation(40.822827, -73.941979);
         Double radius = 30.0;
         ChallengeFilter<String> challengeFilter = new ChallengeFilter<>();
-        List<Challenge<String>> nearbyChallenges = challengeFilter.filterChallengesByProximity(
-                mChallengeList,
-                userLocation,
-                radius
-        );
-        mNearbyChallengesAdapter.setChallengeList(nearbyChallenges);
+//        List<Challenge<String>> nearbyChallenges = challengeFilter.filterChallengesByProximity(
+//                mChallengeList,
+//                userLocation,
+//                radius
+//        );
+//        mNearbyChallengesAdapter.setChallengeList(nearbyChallenges);
 
 
     }
@@ -148,9 +149,8 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
     }
 
     @Override
-    public void onChallengeClicked(Challenge challenge) {
+    public void onChallengeClicked(ChallengePhoto challenge) {
         DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
         dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
     }
-
 }

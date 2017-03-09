@@ -1,13 +1,12 @@
 package com.example.andresarango.aughunt.challenge.challenges_adapters.review;
 
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.CompletedChallenge;
+import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +17,11 @@ import java.util.List;
 
 public class ReviewChallengeAdapter extends RecyclerView.Adapter<ReviewChallengeViewHolder> {
 
-    private List<CompletedChallenge<Bitmap>> mCompletedChallangesList = new ArrayList<>();
-    private CompletedChallengeViewholderListener<Bitmap> mListener;
+    private List<ChallengePhotoCompleted> mCompletedChallangesList = new ArrayList<>();
+    private CompletedChallengeViewholderListener mListener;
 
-    public ReviewChallengeAdapter(CompletedChallengeViewholderListener<Bitmap> listener) {
+    public ReviewChallengeAdapter(CompletedChallengeViewholderListener listener) {
         this.mListener = listener;
-
     }
 
     @Override
@@ -54,9 +52,10 @@ public class ReviewChallengeAdapter extends RecyclerView.Adapter<ReviewChallenge
         return mCompletedChallangesList.size();
     }
 
-    public void setCompletedChallangesList(List<CompletedChallenge<Bitmap>> completedChallangesList) {
-        mCompletedChallangesList.clear();
-        mCompletedChallangesList.addAll(completedChallangesList);
-        notifyDataSetChanged();
+    public void setCompletedChallangesList(List<ChallengePhotoCompleted> completedChallangesList) {
+
+//        mCompletedChallangesList.clear();
+//        mCompletedChallangesList.addAll(completedChallangesList);
+//        notifyDataSetChanged();
     }
 }
