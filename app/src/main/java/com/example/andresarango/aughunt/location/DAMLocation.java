@@ -9,6 +9,9 @@ public class DAMLocation {
     private Double mLng;
     private Double mElevation;
 
+    public DAMLocation() {
+
+    }
 
     public DAMLocation(Double lat, Double lng ) {
         this(lat,lng,0.0);

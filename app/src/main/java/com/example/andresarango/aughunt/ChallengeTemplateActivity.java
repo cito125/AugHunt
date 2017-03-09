@@ -47,7 +47,6 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
         SnapshotHelper.SnapshotListener {
 
     private static final int REQUEST_CAMERA_PERMISSION = 1;
-
     private static final int LOCATION_PERMISSION = 1245;
 
     @BindView(R.id.cam_create_challenge) CameraView mCameraView;
