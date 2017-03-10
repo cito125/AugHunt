@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,7 +90,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                updateRecyclerView(dataSnapshot);
             }
 
             @Override
@@ -107,6 +108,24 @@ public class CreateChallengeActivity extends AppCompatActivity implements
 
             }
         });
+    }
+
+    private void updateRecyclerView(DataSnapshot dataSnapshot) {
+        String challengeKey = dataSnapshot.getKey();
+
+        Set<String> challengeKeys = challengeMap.keySet();
+        if (challengeKeys.contains(challengeKey)) {
+            challengeMap.put(challengeKey, dataSnapshot.getValue(ChallengePhoto.class));
+        }
+
+        challengeList.clear();
+        for (String key : challengeKeys) {
+            challengeList.add(challengeMap.get(key));
+        }
+
+        // update recycler view
+        CreatedChallengesAdapter adapter = (CreatedChallengesAdapter) mRecyclerView.getAdapter();
+        adapter.setChallengeList(challengeList);
     }
 
     private void addChallengeToRecyclerView(DataSnapshot dataSnapshot) {
@@ -216,8 +235,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements
                 break;
 
         }
-
-
     }
 
 }

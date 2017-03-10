@@ -15,18 +15,42 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.ReviewChallengeAdapter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import butterknife.BindView;
 
 /**
  * Created by Millochka on 3/6/17.
  */
 
 public class ReviewChallengesFragment extends Fragment {
+    @BindView(R.id.challanges_for_review)
+    RecyclerView mRecyclerView;
+
     private View mRootView;
     private ChallengePhoto mChallengeToReview;
     private CompletedChallengeViewholderListener mListener;
 
+    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+    private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
+    private Map<String, ChallengePhotoCompleted> challengeMap = new HashMap<>();
+    private List<ChallengePhotoCompleted> challengeList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -61,16 +85,72 @@ public class ReviewChallengesFragment extends Fragment {
     }
 
     public void initializeRecyclerView(View view) {
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.challanges_for_review);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.challanges_for_review);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRootView.getContext()));
         ReviewChallengeAdapter reviewChallengesAdapter = new ReviewChallengeAdapter(mListener);
 
-        if (mChallengeToReview.getCompletedPhotoChallenges() == null) {
-            System.out.println("NULL COMPLETED CHALLENGES");
-        } else {
-            reviewChallengesAdapter.setCompletedChallangesList(mChallengeToReview.getCompletedPhotoChallenges());
-        }
+        rootRef.child("completed-challenges").child(mChallengeToReview.getChallengeId()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                addChallengeToRecyclerView(dataSnapshot);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                updateRecyclerView(dataSnapshot);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        
         mRecyclerView.setAdapter(reviewChallengesAdapter);
+
+    }
+
+    private void updateRecyclerView(DataSnapshot dataSnapshot) {
+        String challengeKey = dataSnapshot.getKey();
+
+        Set<String> challengeKeys = challengeMap.keySet();
+        if (challengeKeys.contains(challengeKey)) {
+            challengeMap.put(challengeKey, dataSnapshot.getValue(ChallengePhotoCompleted.class));
+        }
+
+        challengeList.clear();
+        for (String key : challengeKeys) {
+            challengeList.add(challengeMap.get(key));
+        }
+
+        // update recycler view
+        ReviewChallengeAdapter adapter = (ReviewChallengeAdapter) mRecyclerView.getAdapter();
+        adapter.setCompletedChallangesList(challengeList);
+    }
+
+    private void addChallengeToRecyclerView(DataSnapshot dataSnapshot) {
+        // Key - value
+        String challengeKey = dataSnapshot.getKey();
+        ChallengePhotoCompleted challenge = dataSnapshot.getValue(ChallengePhotoCompleted.class);
+
+
+        System.out.println("BOOM BOOM");
+        // Put in challenge map
+        challengeMap.put(challengeKey, challenge);
+        challengeList.add(challengeMap.get(challengeKey));
+
+        ReviewChallengeAdapter adapter = (ReviewChallengeAdapter) mRecyclerView.getAdapter();
+        adapter.setCompletedChallangesList(challengeList);
 
     }
 

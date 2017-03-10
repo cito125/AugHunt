@@ -18,13 +18,12 @@ import butterknife.ButterKnife;
 
 class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
 
-    private ImageView mChallengePicture;
-    private TextView mChallengeStatus;
     @BindView(R.id.iv_created_challenge_image) ImageView mChallengeImageIv;
     @BindView(R.id.tv_created_challenge_id) TextView mChallengeIdTv;
     @BindView(R.id.tv_created_challenge_owner_id) TextView mOwnerIdTv;
     @BindView(R.id.tv_created_challenge_hint) TextView mHintTv;
     @BindView(R.id.tv_created_challenge_pursuing) TextView mPursuingTv;
+    @BindView(R.id.tv_created_challenge_completed) TextView mCompletedTv;
 
     public CreatedChallengeViewHolder(View itemView) {
         super(itemView);
@@ -37,7 +36,7 @@ class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
         mOwnerIdTv.setText("Owner ID: " + challenge.getOwnerId());
         mHintTv.setText("Hint: " + challenge.getHint());
         mPursuingTv.setText("Pursuing: " + challenge.getPursuing());
-
+        mCompletedTv.setText("Completed: " + challenge.getCompleted());
     }
 
 }

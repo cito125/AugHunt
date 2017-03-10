@@ -3,8 +3,6 @@ package com.example.andresarango.aughunt.challenge;
 import com.example.andresarango.aughunt.location.DAMLocation;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dannylui on 3/8/17.
@@ -17,7 +15,7 @@ public class ChallengePhoto implements Serializable {
     private String photoUrl;
     private String hint;
     private int pursuing;
-    private List<ChallengePhotoCompleted> completedPhotoChallenges;
+    private int completed;
     private long timestamp;
 
     public ChallengePhoto() {
@@ -32,7 +30,7 @@ public class ChallengePhoto implements Serializable {
         this.hint = hint;
         this.timestamp = timestamp;
         this.pursuing = 0;
-        completedPhotoChallenges = new ArrayList<>();
+        this.completed = 0;
     }
 
     public String getChallengeId() {
@@ -59,19 +57,19 @@ public class ChallengePhoto implements Serializable {
         return pursuing;
     }
 
-    public List<ChallengePhotoCompleted> getCompletedPhotoChallenges() {
-        return completedPhotoChallenges;
-    }
-
     public long getTimestamp() {
         return timestamp;
+    }
+
+    public int getCompleted() {
+        return completed;
     }
 
     public void setPursuing(int pursuing) {
         this.pursuing = pursuing;
     }
 
-    public void addToCompletedPhotoChallenges(ChallengePhotoCompleted completedPhotoChallenge) {
-        completedPhotoChallenges.add(completedPhotoChallenge);
+    public void setCompleted(int completed) {
+        this.completed = completed;
     }
 }

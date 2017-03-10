@@ -126,32 +126,38 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
     private void submitCompletedChallenge() {
 
 
-        final String pushId = rootRef.child("challenges-completed").push().getKey(); // Get a unique id for the challenge
+        final String pushId = rootRef.child("completed-challenges").push().getKey(); // Get a unique id for the challenge
+
+
         UploadTask uploadTask = storageRef.child("challenges").child(mChallengePhoto.getChallengeId()).child(pushId).putBytes(mCameraCallback.getPicData()); // Upload photo taken to firebase storage
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 String url = taskSnapshot.getDownloadUrl().toString();
                 final ChallengePhotoCompleted completedChallenge = new ChallengePhotoCompleted(mChallengePhoto.getChallengeId(), auth.getCurrentUser().getUid(), url);
+                rootRef.child("completed-challenges").child(mChallengePhoto.getChallengeId()).child(pushId).setValue(completedChallenge);
+                updateCompletedCounter();
 
-                rootRef.child("challenges").child(mChallengePhoto.getChallengeId()).runTransaction(new Transaction.Handler() {
-                    @Override
-                    public Transaction.Result doTransaction(MutableData mutableData) {
-                        ChallengePhoto challengePhoto = mutableData.getValue(ChallengePhoto.class);
-                        challengePhoto.addToCompletedPhotoChallenges(completedChallenge);
-                        mutableData.setValue(challengePhoto);
-                        return Transaction.success(mutableData);
-                    }
+            }
+        });
+    }
 
-                    @Override
-                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                        Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
-                                .show();
-                        progressDialog.dismiss();
-                        finish();
-                    }
-                });
+    private void updateCompletedCounter() {
+        rootRef.child("challenges").child(mChallengePhoto.getChallengeId()).runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                ChallengePhoto challenge = mutableData.getValue(ChallengePhoto.class);
+                challenge.setCompleted(challenge.getCompleted() + 1);
+                mutableData.setValue(challenge);
+                return Transaction.success(mutableData);
+            }
 
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
+                        .show();
+                progressDialog.dismiss();
+                finish();
             }
         });
     }
