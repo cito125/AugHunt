@@ -15,6 +15,7 @@ import com.example.andresarango.aughunt.ChallengeTemplateActivity;
 import com.example.andresarango.aughunt.CreateChallengeActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengesAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -37,20 +38,21 @@ import butterknife.ButterKnife;
  */
 
 public class CreatedChallengesFragment extends Fragment {
-    private View mRootView;
-    @BindView(R.id.created_challenges) RecyclerView mRecyclerView;
-    @BindView(R.id.fab_create_challenge) FloatingActionButton fab;
+    @BindView(R.id.created_challenges)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.fab_create_challenge)
+    FloatingActionButton mFloatingActionButton;
 
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
-    private List<ChallengePhoto> challengeList = new ArrayList<>();
+    private ChallengeViewholderListener mListener;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_created_challenges, container, false);
-        return mRootView;
+        return inflater.inflate(R.layout.fragment_created_challenges, container, false);
+
     }
 
     @Override
@@ -59,9 +61,9 @@ public class CreatedChallengesFragment extends Fragment {
         ButterKnife.bind(this, view.getRootView());
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new CreatedChallengesAdapter((CreateChallengeActivity) getActivity()));
+        mRecyclerView.setAdapter(new CreatedChallengesAdapter(mListener));
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(view.getContext(), ChallengeTemplateActivity.class));
@@ -105,13 +107,11 @@ public class CreatedChallengesFragment extends Fragment {
 
         // Check location
         if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-            // Put in challenge map
             challengeMap.put(challengeKey, challenge);
-            challengeList.add(challengeMap.get(challengeKey));
 
             CreatedChallengesAdapter adapter = (CreatedChallengesAdapter) mRecyclerView.getAdapter();
-            adapter.setChallengeList(challengeList);
-            //System.out.println(challenge.getUserId() + " " + challenge.getLocation().getLat() + " " + challenge.getLocation().getLng());
+            adapter.addChallengeToList(challenge);
+
         } else {
             System.out.println("NOT THE RIGHT USER");
         }
@@ -119,8 +119,9 @@ public class CreatedChallengesFragment extends Fragment {
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
         String challengeKey = dataSnapshot.getKey();
-
+        List<ChallengePhoto> challengeList = new ArrayList<>();
         Set<String> challengeKeys = challengeMap.keySet();
+
         if (challengeKeys.contains(challengeKey)) {
             challengeMap.put(challengeKey, dataSnapshot.getValue(ChallengePhoto.class));
         }
@@ -138,11 +139,11 @@ public class CreatedChallengesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         challengeMap.clear();
-        challengeList.clear();
-
         callFirebase();
     }
 
+    public void setListener(ChallengeViewholderListener mListener) {
+        this.mListener = mListener;
+    }
 }

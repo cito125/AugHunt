@@ -60,7 +60,6 @@ public class ChallengeDialogFragment extends DialogFragment {
                 });
 
 
-
                 Intent intent = new Intent(getContext(), AcceptedChallengeActivity.class);
                 intent.putExtra(CHALLENGE, mChallengePhoto);
                 startActivity(intent);

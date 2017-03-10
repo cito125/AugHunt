@@ -42,28 +42,24 @@ public class ReviewChallengesFragment extends Fragment {
     @BindView(R.id.challanges_for_review)
     RecyclerView mRecyclerView;
 
-    private View mRootView;
     private ChallengePhoto mChallengeToReview;
     private CompletedChallengeViewholderListener mListener;
 
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-    private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
     private Map<String, ChallengePhotoCompleted> challengeMap = new HashMap<>();
-    private List<ChallengePhotoCompleted> challengeList = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_review, container, false);
-        return mRootView;
+        return inflater.inflate(R.layout.fragment_review, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initializeViews(view);
-        initializeRecyclerView(view);
+        initializeViews();
+        initializeRecyclerView();
 
     }
 
@@ -71,22 +67,20 @@ public class ReviewChallengesFragment extends Fragment {
         mChallengeToReview = challengeToReview;
     }
 
-    public void initializeViews(View view) {
-        ImageView challengePhoto = (ImageView) view.findViewById(R.id.review_challenge_picture);
-        TextView hint = (TextView) view.findViewById(R.id.review_challenge_hit);
-        TextView usersAccepted = (TextView) view.findViewById(R.id.usersaccepted);
+    public void initializeViews() {
+        ImageView challengePhoto = (ImageView) getView().findViewById(R.id.review_challenge_picture);
+        TextView hint = (TextView) getView().findViewById(R.id.review_challenge_hit);
+        TextView usersAccepted = (TextView) getView().findViewById(R.id.usersaccepted);
 
-//        BitmapDrawable bitmapDrawable = new BitmapDrawable(getContext().getResources(), mChallengeToReview.getChallenge());
-//        challengePhoto.setImageDrawable(bitmapDrawable);
-        Glide.with(mRootView.getContext()).load(mChallengeToReview.getPhotoUrl()).into(challengePhoto);
+        Glide.with(getContext()).load(mChallengeToReview.getPhotoUrl()).into(challengePhoto);
         hint.setText("Challenge Hint: " + mChallengeToReview.getHint());
         usersAccepted.setText("Users Accepted: " + String.valueOf(mChallengeToReview.getPursuing()));
 
     }
 
-    public void initializeRecyclerView(View view) {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.challanges_for_review);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mRootView.getContext()));
+    public void initializeRecyclerView() {
+        mRecyclerView = (RecyclerView) getView().findViewById(R.id.challanges_for_review);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ReviewChallengeAdapter reviewChallengesAdapter = new ReviewChallengeAdapter(mListener);
 
         rootRef.child("completed-challenges").child(mChallengeToReview.getChallengeId()).addChildEventListener(new ChildEventListener() {
@@ -115,13 +109,14 @@ public class ReviewChallengesFragment extends Fragment {
 
             }
         });
-        
+
         mRecyclerView.setAdapter(reviewChallengesAdapter);
 
     }
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
         String challengeKey = dataSnapshot.getKey();
+        List<ChallengePhotoCompleted> challengeList = new ArrayList<>();
 
         Set<String> challengeKeys = challengeMap.keySet();
         if (challengeKeys.contains(challengeKey)) {
@@ -147,10 +142,9 @@ public class ReviewChallengesFragment extends Fragment {
         System.out.println("BOOM BOOM");
         // Put in challenge map
         challengeMap.put(challengeKey, challenge);
-        challengeList.add(challengeMap.get(challengeKey));
-
         ReviewChallengeAdapter adapter = (ReviewChallengeAdapter) mRecyclerView.getAdapter();
-        adapter.setCompletedChallangesList(challengeList);
+        adapter.addChallengeToList(challenge);
+
 
     }
 

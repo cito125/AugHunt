@@ -30,6 +30,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
 
         mCreatedChallengesFragment = new CreatedChallengesFragment();
+        mCreatedChallengesFragment.setListener(this);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_for_review, mCreatedChallengesFragment)
                 .commit();
