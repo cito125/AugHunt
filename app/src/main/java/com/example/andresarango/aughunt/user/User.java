@@ -10,6 +10,9 @@ public class User {
     private int userPoints;
     private String profilePicUrl;
 
+    public User() {
+
+    }
 
     public User(String userId, String profileName) {
         this.userId = userId;
