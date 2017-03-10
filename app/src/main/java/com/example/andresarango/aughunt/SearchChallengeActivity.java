@@ -1,7 +1,15 @@
 package com.example.andresarango.aughunt;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +22,8 @@ import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.Chal
 import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengesAdapter;
 import com.example.andresarango.aughunt.location.DAMLocation;
+import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
+import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +39,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class SearchChallengeActivity extends AppCompatActivity implements ChallengeViewholderListener {
+public class SearchChallengeActivity extends AppCompatActivity implements ChallengeViewholderListener, SnapshotHelper.SnapshotListener {
+    private static final int LOCATION_PERMISSION = 1245;
 
     private ImageView mChallengeImage;
     private TextView mHint;
@@ -45,7 +56,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
-    private DAMLocation userLocation = new DAMLocation(40.7262399, -73.8641891);
+    private DAMLocation userLocation;
     private Double radius = 100.0;
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
     private List<ChallengePhoto> challengeList = new ArrayList<>();
@@ -54,16 +65,18 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_challenge);
-        initialize();
+
+        // Calls run method which will initialize the recycler view once we get user location from the snapshot api
+        SnapshotHelper snapshotHelper = new SnapshotHelper(this);
+        snapshotHelper.runSnapshot(getApplicationContext());
+
+        requestPermission();
 
     }
 
     private void initialize() {
         initializeViews();
         setUpRecyclerView();
-//        mFirebaseEmulator = new FirebaseEmulator(this);
-//        makeListofChallenges();
-        //setChallengesToAdaper();
 
         rootRef.child("challenges").addChildEventListener(new ChildEventListener() {
             @Override
@@ -144,5 +157,53 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
     public void onChallengeClicked(ChallengePhoto challenge) {
         DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
         dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
+    }
+
+    private void requestPermission() {
+        int locationPermission = ContextCompat.checkSelfPermission(SearchChallengeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        boolean locationPermissionIsNotGranted = locationPermission != PackageManager.PERMISSION_GRANTED;
+        boolean APILevelIsTwentyThreeOrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+        if (locationPermissionIsNotGranted && APILevelIsTwentyThreeOrHigher) {
+            marshamallowRequestPermission();
+        }
+        if (locationPermissionIsNotGranted) {
+            ActivityCompat.requestPermissions(SearchChallengeActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION);
+        }
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void marshamallowRequestPermission() {
+        boolean userHasAlreadyRejectedPermission = !shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION);
+        if (userHasAlreadyRejectedPermission) {
+            showMessageOKCancel("We need your location to find nearby challenges, is this too much trouble ?",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(SearchChallengeActivity.this,
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    LOCATION_PERMISSION);
+                        }
+                    });
+        }
+
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
+        new AlertDialog.Builder(SearchChallengeActivity.this)
+                .setMessage(message)
+                .setPositiveButton("NO", onClickListener)
+                .setNegativeButton("YES", null)
+                .create()
+                .show();
+    }
+
+    @Override
+    public void run(LocationResult locationResult) {
+        userLocation = new DAMLocation(locationResult.getLocation().getLatitude(), locationResult.getLocation().getLongitude());
+        System.out.println(userLocation.getLat() + " " + userLocation.getLng() + " <--- USER LOCATION");
+        initialize();
     }
 }
