@@ -70,9 +70,7 @@ public class CreateAccountFragment extends Fragment {
                 if (task.isSuccessful()) {
                     Toast.makeText(rootView.getContext(), "Register success!", Toast.LENGTH_SHORT).show();
 
-                    String userId = auth.getCurrentUser().getUid();
-                    System.out.println("USER ID: " + userId);
-                    rootRef.child("users").child(userId).setValue(new User(userId, name));
+                    storeUserInFirebaseDatabase(name);
 
                     // Go back to login fragment
                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -84,5 +82,10 @@ public class CreateAccountFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void storeUserInFirebaseDatabase(String name) {
+        String userId = auth.getCurrentUser().getUid();
+        rootRef.child("users").child(userId).setValue(new User(userId, name));
     }
 }
