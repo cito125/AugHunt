@@ -15,6 +15,7 @@ import com.example.andresarango.aughunt.ChallengeTemplateActivity;
 import com.example.andresarango.aughunt.CreateChallengeActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengesAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -45,6 +46,7 @@ public class CreatedChallengesFragment extends Fragment {
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
+    private ChallengeViewholderListener mListener;
 
     @Nullable
     @Override
@@ -59,7 +61,7 @@ public class CreatedChallengesFragment extends Fragment {
         ButterKnife.bind(this, view.getRootView());
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new CreatedChallengesAdapter((CreateChallengeActivity) getActivity()));
+        mRecyclerView.setAdapter(new CreatedChallengesAdapter(mListener));
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,4 +143,7 @@ public class CreatedChallengesFragment extends Fragment {
         callFirebase();
     }
 
+    public void setListener(ChallengeViewholderListener mListener) {
+        this.mListener = mListener;
+    }
 }
