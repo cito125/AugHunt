@@ -6,14 +6,14 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChallengesAdapter<T> extends RecyclerView.Adapter<ChallengeViewholder<T>> {
-    List<Challenge<T>> mChallengeList = new ArrayList<>();
+public class ChallengesAdapter extends RecyclerView.Adapter<ChallengeViewholder> {
+    List<ChallengePhoto> mChallengeList = new ArrayList<>();
     private final ChallengeViewholderListener mChallengeViewholderListener;
 
     public ChallengesAdapter(ChallengeViewholderListener challengeViewholderListener) {
@@ -21,21 +21,21 @@ public class ChallengesAdapter<T> extends RecyclerView.Adapter<ChallengeViewhold
     }
 
     @Override
-    public ChallengeViewholder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ChallengeViewholder<>(LayoutInflater
+    public ChallengeViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ChallengeViewholder(LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.viewholder_challenge, parent, false),
                 mChallengeViewholderListener);
     }
 
-    public void setChallengeList(List<Challenge<T>> challengeList) {
+    public void setChallengeList(List<ChallengePhoto> challengeList) {
         mChallengeList.clear();
         mChallengeList.addAll(challengeList);
         notifyDataSetChanged();
     }
 
     @Override
-    public void onBindViewHolder(ChallengeViewholder<T> holder, int position) {
+    public void onBindViewHolder(ChallengeViewholder holder, int position) {
         holder.bind(mChallengeList.get(position));
     }
 

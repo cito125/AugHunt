@@ -1,13 +1,12 @@
 package com.example.andresarango.aughunt.challenge.challenges_adapters.created;
 
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.Challenge;
+import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 
 import java.util.ArrayList;
@@ -19,21 +18,17 @@ import java.util.List;
 
 public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChallengeViewHolder> {
 
-    private List<Challenge<Bitmap>> mChallengeList = new ArrayList<>();
-    private ChallengeViewholderListener<Bitmap> mListener;
+    private List<ChallengePhoto> mChallengeList = new ArrayList<>();
+    private ChallengeViewholderListener mListener;
 
-    public CreatedChallengesAdapter(ChallengeViewholderListener<Bitmap> listener) {
+    public CreatedChallengesAdapter(ChallengeViewholderListener listener) {
         this.mListener = listener;
     }
 
     @Override
     public CreatedChallengeViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
-
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.created_challenge, parent, false);
-
-        return new CreatedChallengeViewHolder(view);
-
-
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.created_challenge, parent, false);
+        return new CreatedChallengeViewHolder(itemView);
     }
 
     @Override
@@ -47,7 +42,6 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChalle
                 mListener.onChallengeClicked(mChallengeList.get(viewHolderPosition));
             }
         });
-
     }
 
     @Override
@@ -55,7 +49,7 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChalle
         return mChallengeList.size();
     }
 
-    public void setChallengeList(List<Challenge<Bitmap>> challengeList) {
+    public void setChallengeList(List<ChallengePhoto> challengeList) {
         this.mChallengeList.clear();
         this.mChallengeList.addAll(challengeList);
         notifyDataSetChanged();
