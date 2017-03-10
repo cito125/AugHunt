@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
@@ -197,18 +198,17 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     }
 
     public void createDialog() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.AboutDialog);
 
         final EditText edittext = new EditText(getApplicationContext());
+        alert.setView(edittext);
+
         alert.setMessage("Enter Your Hint");
 
-        alert.setView(edittext);
 
         alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-
-                mHintText = edittext.getText().toString();
-
+                mHintText = edittext.getText().toString().trim();
             }
         });
 

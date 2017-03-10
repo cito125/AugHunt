@@ -1,29 +1,34 @@
 package com.example.andresarango.aughunt.challenge.create_challenge;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.CompletedChallenge;
+import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Millochka on 3/7/17.
  */
 
 public class CompareChallengesFragment extends Fragment {
+    @BindView(R.id.initial_challenge) ImageView mChallengeCompareWith;
+    @BindView(R.id.completed_challenge) ImageView mChallengeToCompare;
+    @BindView(R.id.accept) Button acceptBtn;
+    @BindView(R.id.decline) Button declineBtn;
 
-    private Challenge<Bitmap> mCurrentChallenge;
-    private CompletedChallenge<Bitmap> mCompletedChallenge;
+    private ChallengePhoto mCurrentChallenge;
+    private ChallengePhotoCompleted mCompletedChallenge;
 
     @Nullable
     @Override
@@ -35,22 +40,20 @@ public class CompareChallengesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
-        ImageView mChallengeCompareWith = (ImageView) view.findViewById(R.id.initial_challenge);
-        ImageView mChallengeToCompare = (ImageView) view.findViewById(R.id.completed_challenge);
-        BitmapDrawable d = new BitmapDrawable(view.getContext().getResources(), mCurrentChallenge.getChallenge());
-        mChallengeCompareWith.setImageDrawable(d);
-        BitmapDrawable d1 = new BitmapDrawable(view.getContext().getResources(), mCompletedChallenge.getCompletedChallenge());
-        mChallengeToCompare.setImageDrawable(d1);
+        Glide.with(view.getContext()).load(mCurrentChallenge.getPhotoUrl()).into(mChallengeCompareWith);
+        Glide.with(view.getContext()).load(mCompletedChallenge.getPhotoUrl()).into(mChallengeToCompare);
+
 
     }
 
-    public void setCurrentChallenge(Challenge<Bitmap> mCurrentChallenge) {
+    public void setCurrentChallenge(ChallengePhoto mCurrentChallenge) {
         this.mCurrentChallenge = mCurrentChallenge;
 
     }
 
-    public void setCompletedChallenge(CompletedChallenge<Bitmap> mCompletedChallenge) {
+    public void setCompletedChallenge(ChallengePhotoCompleted mCompletedChallenge) {
         this.mCompletedChallenge = mCompletedChallenge;
     }
 }
