@@ -37,9 +37,8 @@ import butterknife.ButterKnife;
  */
 
 public class CreatedChallengesFragment extends Fragment {
-    private View mRootView;
     @BindView(R.id.created_challenges) RecyclerView mRecyclerView;
-    @BindView(R.id.fab_create_challenge) FloatingActionButton fab;
+    @BindView(R.id.fab_create_challenge) FloatingActionButton floatingActionButton;
 
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -49,8 +48,8 @@ public class CreatedChallengesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_created_challenges, container, false);
-        return mRootView;
+        return inflater.inflate(R.layout.fragment_created_challenges, container, false);
+
     }
 
     @Override
@@ -61,7 +60,7 @@ public class CreatedChallengesFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(new CreatedChallengesAdapter((CreateChallengeActivity) getActivity()));
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(view.getContext(), ChallengeTemplateActivity.class));
