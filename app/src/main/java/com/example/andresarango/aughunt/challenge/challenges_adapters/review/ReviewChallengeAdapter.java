@@ -57,4 +57,10 @@ public class ReviewChallengeAdapter extends RecyclerView.Adapter<ReviewChallenge
         mCompletedChallangesList.addAll(completedChallangesList);
         notifyDataSetChanged();
     }
+
+
+    public void addChallengeToList(ChallengePhotoCompleted challenge) {
+        mCompletedChallangesList.add(challenge);
+        notifyItemInserted(mCompletedChallangesList.size() - 1);
+    }
 }
