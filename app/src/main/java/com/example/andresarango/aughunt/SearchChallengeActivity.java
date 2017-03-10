@@ -45,7 +45,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
     private ImageView mChallengeImage;
     private TextView mHint;
     private List<Challenge<String>> mChallengeList;
-//    private FirebaseEmulator mFirebaseEmulator;
     private TextView mLocation;
     private RecyclerView mRecyclerView;
     private ChallengesAdapter mNearbyChallengesAdapter;

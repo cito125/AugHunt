@@ -13,18 +13,26 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.andresarango.aughunt.R;
+import com.example.andresarango.aughunt.user.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class CreateAccountFragment extends Fragment {
     private View rootView;
-    private EditText emailEtv;
-    private EditText passEtv;
-    private Button registerBtn;
+    @BindView(R.id.tv_create_profile_name) EditText profileNameEtv;
+    @BindView(R.id.etv_create_email) EditText emailEtv;
+    @BindView(R.id.etv_create_password) EditText passEtv;
+    @BindView(R.id.btn_register_account) Button registerBtn;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     @Nullable
     @Override
@@ -36,9 +44,7 @@ public class CreateAccountFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        emailEtv = (EditText) view.findViewById(R.id.etv_create_email);
-        passEtv = (EditText) view.findViewById(R.id.etv_create_password);
-        registerBtn = (Button) view.findViewById(R.id.btn_register_account);
+        ButterKnife.bind(this, view);
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,11 +55,12 @@ public class CreateAccountFragment extends Fragment {
     }
 
     private void registerUser() {
+        final String name = profileNameEtv.getText().toString().trim();
         String email = emailEtv.getText().toString().trim();
         String pass = passEtv.getText().toString().trim();
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
-            Toast.makeText(rootView.getContext(), "Invalid credentials", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
+            Toast.makeText(rootView.getContext(), "Invalid fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -63,10 +70,15 @@ public class CreateAccountFragment extends Fragment {
                 if (task.isSuccessful()) {
                     Toast.makeText(rootView.getContext(), "Register success!", Toast.LENGTH_SHORT).show();
 
+                    String userId = auth.getCurrentUser().getUid();
+                    System.out.println("USER ID: " + userId);
+                    rootRef.child("users").child(userId).setValue(new User(userId, name));
+
                     // Go back to login fragment
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.activity_start, new LoginFragment())
                             .commit();
+
                 } else {
                     Toast.makeText(rootView.getContext(), "Register failed.", Toast.LENGTH_SHORT).show();
                 }

@@ -20,13 +20,14 @@
         android:theme="@style/AppTheme">
         <activity android:name=".login.SplashScreen" />
         <activity android:name=".login.StartActivity">
-        </activity>
-        <activity android:name=".HomeScreenActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".HomeScreenActivity">
         </activity>
         <activity android:name=".CreateChallengeActivity" />
         <activity android:name=".SearchChallengeActivity">
