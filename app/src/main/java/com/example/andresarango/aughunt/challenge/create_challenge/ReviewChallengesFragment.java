@@ -48,13 +48,11 @@ public class ReviewChallengesFragment extends Fragment {
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     private Map<String, ChallengePhotoCompleted> challengeMap = new HashMap<>();
-    private List<ChallengePhotoCompleted> challengeList = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_review, container, false);
-
     }
 
     @Override
@@ -118,6 +116,7 @@ public class ReviewChallengesFragment extends Fragment {
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
         String challengeKey = dataSnapshot.getKey();
+        List<ChallengePhotoCompleted> challengeList = new ArrayList<>();
 
         Set<String> challengeKeys = challengeMap.keySet();
         if (challengeKeys.contains(challengeKey)) {
@@ -143,10 +142,9 @@ public class ReviewChallengesFragment extends Fragment {
         System.out.println("BOOM BOOM");
         // Put in challenge map
         challengeMap.put(challengeKey, challenge);
-        challengeList.add(challengeMap.get(challengeKey));
-
         ReviewChallengeAdapter adapter = (ReviewChallengeAdapter) mRecyclerView.getAdapter();
-        adapter.setCompletedChallangesList(challengeList);
+        adapter.addChallengeToList(challenge);
+
 
     }
 
