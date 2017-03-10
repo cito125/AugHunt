@@ -64,7 +64,6 @@ public class HomeScreenActivity extends AppCompatActivity implements ViewGroup.O
 
         switch (v.getId()) {
             case R.id.search_for_challenge:
-
                 // getSupportFragmentManager().beginTransaction().add(R.id.activity_home_screen,new SearchChallFragment()).commit();
                 Intent intent = new Intent(getApplicationContext(), SearchChallengeActivity.class);
                 startActivity(intent);
