@@ -1,35 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="NAME" />
 
         <EditText
             android:id="@+id/tv_create_profile_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter profile name"/>
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp"
+            android:text="EMAIL" />
 
         <EditText
             android:id="@+id/etv_create_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter an email"/>
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp"
+            android:text="PASSWORD" />
+
         <EditText
             android:id="@+id/etv_create_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Enter a password"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/btn_register_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Register"/>
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="#455A64"
+            android:text="SIGN UP" />
 
     </LinearLayout>
 
