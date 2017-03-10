@@ -30,7 +30,7 @@ class ReviewChallengeViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(ChallengePhotoCompleted challengePhotoCompleted) {
         Glide.with(itemView.getContext()).load(challengePhotoCompleted.getPhotoUrl()).into(mReviewPhotoIv);
-        mChallengeIdTv.setText("Challenge ID: " + challengePhotoCompleted.getChallengeId());
+        mChallengeIdTv.setText("Challenge ID: " + challengePhotoCompleted.getCompletedChallengeId());
         mPlayerIdTv.setText("Player ID: " + challengePhotoCompleted.getPlayerId());
     }
 }

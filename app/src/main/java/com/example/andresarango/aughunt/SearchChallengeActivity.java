@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengesAdapter;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;

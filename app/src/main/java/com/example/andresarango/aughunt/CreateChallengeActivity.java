@@ -1,20 +1,15 @@
 package com.example.andresarango.aughunt;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.create_challenge.CompareChallengesFragment;
 import com.example.andresarango.aughunt.challenge.create_challenge.CreatedChallengesFragment;
 import com.example.andresarango.aughunt.challenge.create_challenge.ReviewChallengesFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -40,21 +35,6 @@ public class CreateChallengeActivity extends AppCompatActivity implements
                 .commit();
 
     }
-
-    public List<Challenge<Bitmap>> historyOfCreatedChalalnges(List<Challenge<Bitmap>> challengeList, String ownerID) {
-
-        List<Challenge<Bitmap>> userChallengeList = new ArrayList<>();
-
-        for (Challenge<Bitmap> challenge : challengeList) {
-            if (challenge.getmOwnerId().equalsIgnoreCase(ownerID)) {
-                userChallengeList.add(challenge);
-            }
-
-        }
-        return userChallengeList;
-
-    }
-
 
     @Override
     public void onChallengeClicked(ChallengePhoto challenge) {
@@ -91,27 +71,8 @@ public class CreateChallengeActivity extends AppCompatActivity implements
                 .commit();
     }
 
-//    public void reviewResult(View view) {
-//
-//        switch (view.getId()) {
-//
-//            case R.id.decline:
-//
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .remove(mCompareChallengesFragment)
-//                        .commit();
-//                break;
-//
-//            case R.id.accept:
-//
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .remove(mCompareChallengesFragment)
-//                        .commit();
-//                break;
-//
-//        }
-//    }
+    public void popFragmentFromBackStack() {
+        getSupportFragmentManager().popBackStack();
+    }
 
 }

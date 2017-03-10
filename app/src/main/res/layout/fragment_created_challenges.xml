@@ -5,10 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/created_challenges"
+    <FrameLayout
+        android:id="@+id/rv_container_created_challenges"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/created_challenges"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+    </FrameLayout>
+
 
 
     <android.support.design.widget.FloatingActionButton
@@ -17,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        app:layout_anchor="@id/created_challenges"
+        app:layout_anchor="@id/rv_container_created_challenges"
         app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>

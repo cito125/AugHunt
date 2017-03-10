@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

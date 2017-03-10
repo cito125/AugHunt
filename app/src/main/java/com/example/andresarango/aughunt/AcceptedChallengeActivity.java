@@ -126,7 +126,7 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
     private void submitCompletedChallenge() {
 
 
-        final String pushId = rootRef.child("completed-challenges").push().getKey(); // Get a unique id for the challenge
+        final String pushId = rootRef.child("completed-challenges").child(mChallengePhoto.getChallengeId()).push().getKey(); // Get a unique id for the completed challenge
 
 
         UploadTask uploadTask = storageRef.child("challenges").child(mChallengePhoto.getChallengeId()).child(pushId).putBytes(mCameraCallback.getPicData()); // Upload photo taken to firebase storage
@@ -134,7 +134,7 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 String url = taskSnapshot.getDownloadUrl().toString();
-                final ChallengePhotoCompleted completedChallenge = new ChallengePhotoCompleted(mChallengePhoto.getChallengeId(), auth.getCurrentUser().getUid(), url);
+                final ChallengePhotoCompleted completedChallenge = new ChallengePhotoCompleted(pushId, auth.getCurrentUser().getUid(), url);
                 rootRef.child("completed-challenges").child(mChallengePhoto.getChallengeId()).child(pushId).setValue(completedChallenge);
                 updateCompletedCounter();
 
