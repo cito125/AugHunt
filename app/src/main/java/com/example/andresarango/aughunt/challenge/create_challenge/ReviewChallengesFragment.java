@@ -58,8 +58,8 @@ public class ReviewChallengesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initializeViews(view);
-        initializeRecyclerView(view);
+        initializeViews();
+        initializeRecyclerView();
 
     }
 
@@ -67,10 +67,10 @@ public class ReviewChallengesFragment extends Fragment {
         mChallengeToReview = challengeToReview;
     }
 
-    public void initializeViews(View view) {
-        ImageView challengePhoto = (ImageView) view.findViewById(R.id.review_challenge_picture);
-        TextView hint = (TextView) view.findViewById(R.id.review_challenge_hit);
-        TextView usersAccepted = (TextView) view.findViewById(R.id.usersaccepted);
+    public void initializeViews() {
+        ImageView challengePhoto = (ImageView) getView().findViewById(R.id.review_challenge_picture);
+        TextView hint = (TextView) getView().findViewById(R.id.review_challenge_hit);
+        TextView usersAccepted = (TextView) getView().findViewById(R.id.usersaccepted);
 
         Glide.with(getContext()).load(mChallengeToReview.getPhotoUrl()).into(challengePhoto);
         hint.setText("Challenge Hint: " + mChallengeToReview.getHint());
@@ -78,8 +78,8 @@ public class ReviewChallengesFragment extends Fragment {
 
     }
 
-    public void initializeRecyclerView(View view) {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.challanges_for_review);
+    public void initializeRecyclerView() {
+        mRecyclerView = (RecyclerView) getView().findViewById(R.id.challanges_for_review);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ReviewChallengeAdapter reviewChallengesAdapter = new ReviewChallengeAdapter(mListener);
 
