@@ -26,7 +26,7 @@ public class ReviewChallengeAdapter extends RecyclerView.Adapter<ReviewChallenge
 
     @Override
     public ReviewChallengeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review_challenge, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.vh_review_challenge, parent, false);
 
         return new ReviewChallengeViewHolder(view);
     }

@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 
 public class ChallengePhotoCompleted implements Serializable {
-    private String challengeId;
+    private String completedChallengeId;
     private String playerId;
     private String photoUrl;
 
@@ -15,14 +15,14 @@ public class ChallengePhotoCompleted implements Serializable {
 
     }
 
-    public ChallengePhotoCompleted(String challengeId, String playerId, String photoUrl) {
-        this.challengeId = challengeId;
+    public ChallengePhotoCompleted(String completedChallengeId, String playerId, String photoUrl) {
+        this.completedChallengeId = completedChallengeId;
         this.playerId = playerId;
         this.photoUrl = photoUrl;
     }
 
-    public String getChallengeId() {
-        return challengeId;
+    public String getCompletedChallengeId() {
+        return completedChallengeId;
     }
 
     public String getPlayerId() {

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengeViewholder>
     public ChallengeViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ChallengeViewholder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.viewholder_challenge, parent, false),
+                .inflate(R.layout.vh_searched_challenge, parent, false),
                 mChallengeViewholderListener);
     }
 

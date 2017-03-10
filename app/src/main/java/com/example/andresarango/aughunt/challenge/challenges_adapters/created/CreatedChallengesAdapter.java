@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.ChallengeViewholderListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChalle
 
     @Override
     public CreatedChallengeViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.created_challenge, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vh_created_challenge, parent, false);
         return new CreatedChallengeViewHolder(itemView);
     }
 

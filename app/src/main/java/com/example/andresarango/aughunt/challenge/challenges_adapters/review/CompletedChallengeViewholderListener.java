@@ -5,5 +5,4 @@ import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 
 public interface CompletedChallengeViewholderListener {
     void onCompletedChallengeClicked(ChallengePhotoCompleted completedChallenge);
-
 }
