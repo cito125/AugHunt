@@ -45,7 +45,6 @@ public class CreatedChallengesFragment extends Fragment {
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
-    private List<ChallengePhoto> challengeList = new ArrayList<>();
     private ChallengeViewholderListener mListener;
 
     @Nullable
@@ -121,12 +120,12 @@ public class CreatedChallengesFragment extends Fragment {
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
         String challengeKey = dataSnapshot.getKey();
         Set<String> challengeKeys = challengeMap.keySet();
+        List<ChallengePhoto> challengeList = new ArrayList<>();
 
         if (challengeKeys.contains(challengeKey)) {
             challengeMap.put(challengeKey, dataSnapshot.getValue(ChallengePhoto.class));
         }
 
-        challengeList.clear();
         for (String key : challengeKeys) {
             challengeList.add(challengeMap.get(key));
         }
