@@ -45,6 +45,7 @@ public class CreatedChallengesFragment extends Fragment {
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
+    private List<ChallengePhoto> challengeList = new ArrayList<>();
     private ChallengeViewholderListener mListener;
 
     @Nullable
@@ -61,6 +62,7 @@ public class CreatedChallengesFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(new CreatedChallengesAdapter(mListener));
+        callFirebase();
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +120,6 @@ public class CreatedChallengesFragment extends Fragment {
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
         String challengeKey = dataSnapshot.getKey();
-        List<ChallengePhoto> challengeList = new ArrayList<>();
         Set<String> challengeKeys = challengeMap.keySet();
 
         if (challengeKeys.contains(challengeKey)) {
@@ -133,15 +134,6 @@ public class CreatedChallengesFragment extends Fragment {
         // update recycler view
         CreatedChallengesAdapter adapter = (CreatedChallengesAdapter) mRecyclerView.getAdapter();
         adapter.setChallengeList(challengeList);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        challengeMap.clear();
-        CreatedChallengesAdapter adapter = (CreatedChallengesAdapter) mRecyclerView.getAdapter();
-        adapter.clearChallengeList();
-        callFirebase();
     }
 
     public void setListener(ChallengeViewholderListener mListener) {

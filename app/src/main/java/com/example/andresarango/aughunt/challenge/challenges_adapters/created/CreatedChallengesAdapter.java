@@ -58,9 +58,4 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChalle
         mChallengeList.add(challenge);
         notifyItemInserted(mChallengeList.size() - 1);
     }
-
-    public void clearChallengeList() {
-        mChallengeList.clear();
-        notifyDataSetChanged();
-    }
 }
