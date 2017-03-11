@@ -36,7 +36,7 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengeViewholder>
 
     @Override
     public void onBindViewHolder(ChallengeViewholder holder, int position) {
-        holder.bind(mChallengeList.get(position));
+        holder.getUserName(mChallengeList.get(position));
     }
 
     @Override

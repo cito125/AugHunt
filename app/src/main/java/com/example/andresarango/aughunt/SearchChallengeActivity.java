@@ -23,6 +23,7 @@ import com.example.andresarango.aughunt.challenge.challenges_adapters.created.Cr
 import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengesAdapter;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
+import com.example.andresarango.aughunt.user.User;
 import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -38,6 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class SearchChallengeActivity extends AppCompatActivity implements CreatedChallengeListener, SnapshotHelper.SnapshotListener {
     private static final int LOCATION_PERMISSION = 1245;
@@ -51,26 +56,45 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     private static final String IMAGE_DATA = "image_data";
     private static final String HINT_DATA = "hint_data";
 
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
-    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
     private DAMLocation userLocation;
     private Double radius = 100.0;
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
     private List<ChallengePhoto> challengeList = new ArrayList<>();
+    @BindView(R.id.tv_user_points) TextView mUserPointsTv;
+    @BindView(R.id.tv_profile_name) TextView mProfileNameTv;
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_challenge);
-
+        ButterKnife.bind(this);
         // Calls run method which will initialize the recycler view once we get user location from the snapshot api
         SnapshotHelper snapshotHelper = new SnapshotHelper(this);
         snapshotHelper.runSnapshot(getApplicationContext());
-
+        retrieveUserFromFirebaseAndSetProfile();
         requestPermission();
 
+    }
+
+    private void retrieveUserFromFirebaseAndSetProfile() {
+        rootRef.child("users").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                System.out.println("USER: " + user.getProfileName());
+                mUserPointsTv.setText(user.getUserPoints() + " PTS");
+                mProfileNameTv.setText(user.getProfileName());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void initialize() {
@@ -121,6 +145,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
             System.out.println("NOT WITHIN RADIUS");
         }
     }
+
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
         String challengeKey = dataSnapshot.getKey();
