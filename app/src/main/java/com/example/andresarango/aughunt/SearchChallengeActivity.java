@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengesAdapter;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class SearchChallengeActivity extends AppCompatActivity implements ChallengeViewholderListener, SnapshotHelper.SnapshotListener {
+public class SearchCreatedChallengeActivity extends AppCompatActivity implements CreatedChallengeListener, SnapshotHelper.SnapshotListener {
     private static final int LOCATION_PERMISSION = 1245;
 
     private ImageView mChallengeImage;
@@ -153,20 +153,20 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
     }
 
     @Override
-    public void onChallengeClicked(ChallengePhoto challenge) {
+    public void onCreatedChallengeClicked(ChallengePhoto challenge) {
         DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
         dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
     }
 
     private void requestPermission() {
-        int locationPermission = ContextCompat.checkSelfPermission(SearchChallengeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int locationPermission = ContextCompat.checkSelfPermission(SearchCreatedChallengeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
         boolean locationPermissionIsNotGranted = locationPermission != PackageManager.PERMISSION_GRANTED;
         boolean APILevelIsTwentyThreeOrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
         if (locationPermissionIsNotGranted && APILevelIsTwentyThreeOrHigher) {
             marshamallowRequestPermission();
         }
         if (locationPermissionIsNotGranted) {
-            ActivityCompat.requestPermissions(SearchChallengeActivity.this,
+            ActivityCompat.requestPermissions(SearchCreatedChallengeActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION);
         }
@@ -181,7 +181,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(SearchChallengeActivity.this,
+                            ActivityCompat.requestPermissions(SearchCreatedChallengeActivity.this,
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     LOCATION_PERMISSION);
                         }
@@ -191,7 +191,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Challe
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
-        new AlertDialog.Builder(SearchChallengeActivity.this)
+        new AlertDialog.Builder(SearchCreatedChallengeActivity.this)
                 .setMessage(message)
                 .setPositiveButton("NO", onClickListener)
                 .setNegativeButton("YES", null)
