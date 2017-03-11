@@ -5,6 +5,7 @@
     android:id="@+id/activity_home_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
     tools:context="com.example.andresarango.aughunt.HomeScreenActivity">
 
     <RelativeLayout
@@ -30,26 +31,34 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/search_for_challenge"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/home_page_buttons"
-        android:layout_below="@id/upper_button_menu"
-        android:text="search for challenge" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/upper_button_menu">
 
-    <Button
-        android:id="@+id/create_challenge"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/home_page_buttons"
-        android:layout_below="@id/search_for_challenge"
-        android:text="create challenge" />
+        <Button
+            android:id="@+id/search_for_challenge"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_page_buttons"
+            android:layout_below="@id/upper_button_menu"
+            android:text="search for challenge" />
 
-    <Button
-        android:id="@+id/challenge_history"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/home_page_buttons"
-        android:layout_below="@id/create_challenge"
-        android:text="challenge history" />
+        <Button
+            android:id="@+id/create_challenge"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_page_buttons"
+            android:text="create challenge" />
+
+        <Button
+            android:id="@+id/challenge_history"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_page_buttons"
+            android:text="challenge history" />
+
+    </LinearLayout>
+
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
