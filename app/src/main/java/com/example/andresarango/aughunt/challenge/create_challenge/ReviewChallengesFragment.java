@@ -16,13 +16,15 @@ import com.bumptech.glide.Glide;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.ReviewChallengeAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +43,7 @@ public class ReviewChallengesFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     private ChallengePhoto mChallengeToReview;
-    private CompletedChallengeListener mListener;
+    private CompletedChallengeViewholderListener mListener;
 
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -146,7 +148,7 @@ public class ReviewChallengesFragment extends Fragment {
 
     }
 
-    public void setmListener(CompletedChallengeListener mListener) {
+    public void setmListener(CompletedChallengeViewholderListener mListener) {
         this.mListener = mListener;
     }
 }

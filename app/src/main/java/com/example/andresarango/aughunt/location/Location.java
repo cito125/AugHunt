@@ -38,7 +38,7 @@ public class Location {
         this.mElevation = elevation;
     }
 
-    public boolean isWithinRadius(Location secondLocation, Double radius){
+    public boolean isWithinRadius(DAMLocation secondLocation, Double radius){
         return isWithinRadius(getLat(), getLng(), getElevation(),
                 secondLocation.getLat(),
                 secondLocation.getLng(),
@@ -46,7 +46,7 @@ public class Location {
                 radius);
     }
 
-    public Double distanceTo(Location secondLocation){
+    public Double distanceTo(DAMLocation secondLocation){
         return getDistance(getLat(), getLng(), getElevation(),
                 secondLocation.getLat(),
                 secondLocation.getLng(),

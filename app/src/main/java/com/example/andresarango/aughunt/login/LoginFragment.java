@@ -11,11 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.HomeScreenActivity;
+import com.example.andresarango.aughunt.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,7 +25,7 @@ public class LoginFragment extends Fragment{
     private EditText emailEtv;
     private EditText passEtv;
     private Button registerBtn;
-    private TextView createAccountTv;
+    private Button createAccountTv;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -43,7 +42,7 @@ public class LoginFragment extends Fragment{
         emailEtv = (EditText) view.findViewById(R.id.etv_login_email);
         passEtv = (EditText) view.findViewById(R.id.etv_login_password);
         registerBtn = (Button) view.findViewById(R.id.btn_login_account);
-        createAccountTv = (TextView) view.findViewById(R.id.tv_create_account);
+        createAccountTv = (Button) view.findViewById(R.id.btn_login_create_account);
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override

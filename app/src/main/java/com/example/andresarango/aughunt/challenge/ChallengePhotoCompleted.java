@@ -7,26 +7,29 @@ import java.io.Serializable;
  */
 
 public class ChallengePhotoCompleted implements Serializable {
-    private String mCompletedChallengeId;
-    private String mPlayerId;
-    private String mPhotoUrl;
+    private String completedChallengeId;
+    private String playerId;
+    private String photoUrl;
 
+    public ChallengePhotoCompleted() {
+
+    }
 
     public ChallengePhotoCompleted(String completedChallengeId, String playerId, String photoUrl) {
-        this.mCompletedChallengeId = completedChallengeId;
-        this.mPlayerId = playerId;
-        this.mPhotoUrl = photoUrl;
+        this.completedChallengeId = completedChallengeId;
+        this.playerId = playerId;
+        this.photoUrl = photoUrl;
     }
 
     public String getCompletedChallengeId() {
-        return mCompletedChallengeId;
+        return completedChallengeId;
     }
 
     public String getPlayerId() {
-        return mPlayerId;
+        return playerId;
     }
 
     public String getPhotoUrl() {
-        return mPhotoUrl;
+        return photoUrl;
     }
 }

@@ -9,69 +9,67 @@ import java.io.Serializable;
  */
 
 public class ChallengePhoto implements Serializable {
-    private String mChallengeId;
-    private String mOwnerId;
-    private DAMLocation mLocation;
-    private String mPhotoUrl;
-    private String mHint;
-    private int mPursuing;
-
-    private int mCompleted;
-    private long mTimestamp;
-
+    private String challengeId;
+    private String ownerId;
+    private DAMLocation location;
+    private String photoUrl;
+    private String hint;
+    private int pursuing;
+    private int completed;
+    private long timestamp;
 
     public ChallengePhoto() {
 
     }
 
     public ChallengePhoto(String challengeId, String ownerId, DAMLocation location, String photoUrl, String hint, long timestamp) {
-        this.mChallengeId = challengeId;
-        this.mOwnerId = ownerId;
-        this.mLocation = location;
-        this.mPhotoUrl = photoUrl;
-        this.mHint = hint;
-        this.mTimestamp = timestamp;
-        this.mPursuing = 0;
-        this.mCompleted = 0;
+        this.challengeId = challengeId;
+        this.ownerId = ownerId;
+        this.location = location;
+        this.photoUrl = photoUrl;
+        this.hint = hint;
+        this.timestamp = timestamp;
+        this.pursuing = 0;
+        this.completed = 0;
     }
 
     public String getChallengeId() {
-        return mChallengeId;
+        return challengeId;
     }
 
     public String getOwnerId() {
-        return mOwnerId;
+        return ownerId;
     }
 
     public DAMLocation getLocation() {
-        return mLocation;
+        return location;
     }
 
     public String getPhotoUrl() {
-        return mPhotoUrl;
+        return photoUrl;
     }
 
     public String getHint() {
-        return mHint;
+        return hint;
     }
 
     public int getPursuing() {
-        return mPursuing;
+        return pursuing;
     }
 
     public long getTimestamp() {
-        return mTimestamp;
+        return timestamp;
     }
 
     public int getCompleted() {
-        return mCompleted;
+        return completed;
     }
 
     public void setPursuing(int pursuing) {
-        this.mPursuing = pursuing;
+        this.pursuing = pursuing;
     }
 
     public void setCompleted(int completed) {
-        this.mCompleted = completed;
+        this.completed = completed;
     }
 }

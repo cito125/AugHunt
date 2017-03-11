@@ -18,9 +18,9 @@ import java.util.List;
 public class ReviewChallengeAdapter extends RecyclerView.Adapter<ReviewChallengeViewHolder> {
 
     private List<ChallengePhotoCompleted> mCompletedChallangesList = new ArrayList<>();
-    private CompletedChallengeListener mListener;
+    private CompletedChallengeViewholderListener mListener;
 
-    public ReviewChallengeAdapter(CompletedChallengeListener listener) {
+    public ReviewChallengeAdapter(CompletedChallengeViewholderListener listener) {
         this.mListener = listener;
     }
 

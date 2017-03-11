@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,9 @@ import java.util.List;
 public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChallengeViewHolder> {
 
     private List<ChallengePhoto> mChallengeList = new ArrayList<>();
-    private CreatedChallengeListener mListener;
+    private ChallengeViewholderListener mListener;
 
-    public CreatedChallengesAdapter(CreatedChallengeListener listener) {
+    public CreatedChallengesAdapter(ChallengeViewholderListener listener) {
         this.mListener = listener;
     }
 
@@ -38,7 +39,7 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChalle
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onCreatedChallengeClicked(mChallengeList.get(viewHolderPosition));
+                mListener.onChallengeClicked(mChallengeList.get(viewHolderPosition));
             }
         });
     }

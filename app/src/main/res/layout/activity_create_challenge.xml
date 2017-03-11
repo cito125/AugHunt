@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.andresarango.aughunt.CreatedChallengeActivity">
+    tools:context="com.example.andresarango.aughunt.CreateChallengeActivity">
 
     <FrameLayout
         android:id="@+id/container_for_review"

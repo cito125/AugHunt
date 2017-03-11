@@ -12,9 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.ChallengeTemplateActivity;
+import com.example.andresarango.aughunt.CreateChallengeActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengesAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -45,7 +46,7 @@ public class CreatedChallengesFragment extends Fragment {
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
-    private CreatedChallengeListener mListener;
+    private ChallengeViewholderListener mListener;
 
     @Nullable
     @Override
@@ -142,7 +143,7 @@ public class CreatedChallengesFragment extends Fragment {
         callFirebase();
     }
 
-    public void setListener(CreatedChallengeListener mListener) {
+    public void setListener(ChallengeViewholderListener mListener) {
         this.mListener = mListener;
     }
 }
