@@ -7,9 +7,9 @@ import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeViewholderListener;
-import com.example.andresarango.aughunt.challenge.create_challenge.CompareChallengesFragment;
-import com.example.andresarango.aughunt.challenge.create_challenge.CreatedChallengesFragment;
-import com.example.andresarango.aughunt.challenge.create_challenge.ReviewChallengesFragment;
+import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CompareChallengesFragment;
+import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CreatedChallengesFragment;
+import com.example.andresarango.aughunt.challenge.challenge_review_fragments.ReviewChallengesFragment;
 
 import butterknife.ButterKnife;
 

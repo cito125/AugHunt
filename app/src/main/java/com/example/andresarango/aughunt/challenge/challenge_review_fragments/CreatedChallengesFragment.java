@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.create_challenge;
+package com.example.andresarango.aughunt.challenge.challenge_review_fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
