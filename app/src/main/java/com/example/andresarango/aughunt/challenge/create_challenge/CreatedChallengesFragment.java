@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.ChallengeTemplateActivity;
-import com.example.andresarango.aughunt.CreateChallengeActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
@@ -140,6 +139,8 @@ public class CreatedChallengesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         challengeMap.clear();
+        CreatedChallengesAdapter adapter = (CreatedChallengesAdapter) mRecyclerView.getAdapter();
+        adapter.clearChallengeList();
         callFirebase();
     }
 
