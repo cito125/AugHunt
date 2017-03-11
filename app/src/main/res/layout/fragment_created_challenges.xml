@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/rv_container_created_challenges"
@@ -13,10 +13,12 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/created_challenges"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:background="#395d91b6">
+
+        </android.support.v7.widget.RecyclerView>
 
     </FrameLayout>
-
 
 
     <android.support.design.widget.FloatingActionButton

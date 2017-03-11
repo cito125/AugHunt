@@ -8,7 +8,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFCCCB">
+        android:background="#7e5d91b6">
 
         <ImageView
             android:id="@+id/iv_review_challenge_image"

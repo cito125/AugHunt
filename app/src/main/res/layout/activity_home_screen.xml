@@ -5,6 +5,7 @@
     android:id="@+id/activity_home_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#395d91b6"
     tools:context="com.example.andresarango.aughunt.HomeScreenActivity">
 
     <RelativeLayout

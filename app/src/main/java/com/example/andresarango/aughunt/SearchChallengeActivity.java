@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class SearchCreatedChallengeActivity extends AppCompatActivity implements CreatedChallengeListener, SnapshotHelper.SnapshotListener {
+public class SearchChallengeActivity extends AppCompatActivity implements CreatedChallengeListener, SnapshotHelper.SnapshotListener {
     private static final int LOCATION_PERMISSION = 1245;
 
     private ImageView mChallengeImage;
@@ -159,14 +159,14 @@ public class SearchCreatedChallengeActivity extends AppCompatActivity implements
     }
 
     private void requestPermission() {
-        int locationPermission = ContextCompat.checkSelfPermission(SearchCreatedChallengeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int locationPermission = ContextCompat.checkSelfPermission(SearchChallengeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
         boolean locationPermissionIsNotGranted = locationPermission != PackageManager.PERMISSION_GRANTED;
         boolean APILevelIsTwentyThreeOrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
         if (locationPermissionIsNotGranted && APILevelIsTwentyThreeOrHigher) {
             marshamallowRequestPermission();
         }
         if (locationPermissionIsNotGranted) {
-            ActivityCompat.requestPermissions(SearchCreatedChallengeActivity.this,
+            ActivityCompat.requestPermissions(SearchChallengeActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION);
         }
@@ -181,7 +181,7 @@ public class SearchCreatedChallengeActivity extends AppCompatActivity implements
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(SearchCreatedChallengeActivity.this,
+                            ActivityCompat.requestPermissions(SearchChallengeActivity.this,
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     LOCATION_PERMISSION);
                         }
@@ -191,7 +191,7 @@ public class SearchCreatedChallengeActivity extends AppCompatActivity implements
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
-        new AlertDialog.Builder(SearchCreatedChallengeActivity.this)
+        new AlertDialog.Builder(SearchChallengeActivity.this)
                 .setMessage(message)
                 .setPositiveButton("NO", onClickListener)
                 .setNegativeButton("YES", null)
