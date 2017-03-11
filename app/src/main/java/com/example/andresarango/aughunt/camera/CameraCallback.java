@@ -2,15 +2,11 @@ package com.example.andresarango.aughunt.camera;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.google.android.cameraview.CameraView;
 
@@ -23,15 +19,17 @@ public class CameraCallback extends CameraView.Callback {
     private final Context mContext;
     private Handler mBackgroundHandler;
     private FrameLayout mPhoto;
+    private Button mTakePicture;
 
-    private final String TAG="ActivityPicture";
+    private final String TAG = "ActivityPicture";
     private Bitmap mBitmap;
+    private byte[] picData;
 
 
-
-    public CameraCallback(Context context, FrameLayout photo) {
+    public CameraCallback(Context context, FrameLayout photo, Button takepicture) {
         mContext = context;
-        this.mPhoto=photo;
+        this.mPhoto = photo;
+        this.mTakePicture = takepicture;
     }
 
     @Override
@@ -48,17 +46,20 @@ public class CameraCallback extends CameraView.Callback {
     public void onPictureTaken(CameraView cameraView, final byte[] data) {
 
         Log.d(TAG, "onPictureTaken " + data.length);
-        mBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-
-        Toast.makeText(cameraView.getContext(), "Took a picture", Toast.LENGTH_SHORT)
-                .show();
-        Drawable d = new BitmapDrawable(mContext.getResources(), mBitmap);
-
-
-        mPhoto.setVisibility(View.VISIBLE);
-        mPhoto.setBackground(d);
+        picData = data;
+//        mBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+//
+//        Toast.makeText(cameraView.getContext(), "Took a picture", Toast.LENGTH_SHORT)
+//                .show();
+//        Drawable d = new BitmapDrawable(mContext.getResources(), mBitmap);
+//
+//
+//        mPhoto.setVisibility(View.VISIBLE);
+//        mPhoto.setBackground(d);
+        mTakePicture.setEnabled(false);
 
     }
+
     public void destroyHandler() {
         if (mBackgroundHandler != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -70,9 +71,20 @@ public class CameraCallback extends CameraView.Callback {
         }
     }
 
+
     public Bitmap getmBitmap() {
         return mBitmap;
     }
 
+    public void setmBitmap(Bitmap mBitmap) {
+        this.mBitmap = mBitmap;
+    }
 
+    public byte[] getPicData() {
+        return picData;
+    }
+
+    public void setPicData(byte[] data) {
+        picData = data;
+    }
 }

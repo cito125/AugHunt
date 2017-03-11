@@ -1,32 +1,18 @@
 package com.example.andresarango.aughunt.location;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-
-import com.google.android.gms.awareness.Awareness;
-import com.google.android.gms.awareness.snapshot.LocationResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
+import java.io.Serializable;
 
 /**
  * Created by andresarango on 2/26/17.
  */
 
-public class DAMLocation {
+public class DAMLocation implements Serializable {
     private Double mLat;
     private Double mLng;
     private Double mElevation;
-    private Context mContext;
-    private Location mLocation;
 
+    public DAMLocation() {
 
-    public DAMLocation( Context context) {
-        this.mContext=context;
-        getLocation();
     }
 
     public DAMLocation(Double lat, Double lng ) {
@@ -64,39 +50,56 @@ public class DAMLocation {
         this.mElevation = elevation;
     }
 
-    public void setmContext(Context mContext) {
-        this.mContext = mContext;
+
+    public boolean isWithinRadius(DAMLocation secondLocation, Double radius){
+        return isWithinRadius(getLat(), getLng(), getElevation(),
+                secondLocation.getLat(),
+                secondLocation.getLng(),
+                secondLocation.getElevation(),
+                radius);
     }
 
-    private void getLocation() {
+    public Double distanceTo(Location secondLocation){
+        return getDistance(getLat(), getLng(), getElevation(),
+                secondLocation.getLat(),
+                secondLocation.getLng(),
+                secondLocation.getElevation());
+    }
 
-        GoogleApiClient client = new GoogleApiClient.Builder(mContext)
-                .addApi(Awareness.API)
-                .build();
-        client.connect();
+    private boolean isWithinRadius(Double firstLat,
+                                   Double firstLng,
+                                   Double firstHeight,
+                                   Double secondLat,
+                                   Double secondLng,
+                                   Double secondHeight,
+                                   Double radius) {
 
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        double distance = getDistance(firstLat, firstLng, firstHeight, secondLat, secondLng, secondHeight);
 
-            return;
-        }
-        Awareness.SnapshotApi.getLocation(client)
-                .setResultCallback(new ResultCallback<LocationResult>() {
-                    @Override
-                    public void onResult(@NonNull LocationResult locationResult) {
-                       // System.out.println(locationResult.getStatus().getStatusMessage());
-                        if (!locationResult.getStatus().isSuccess()) {
-                            System.out.println("dont work");
-                            return;
-                        }
-                       mLocation = locationResult.getLocation();
+        return distance <= radius;
+    }
 
-                        setLat(mLocation.getLatitude());
-                        setLng(mLocation.getLongitude());
-                        System.out.println("Lat: " + mLocation.getLatitude() + ", Lng: " + mLocation.getLongitude());
-                    }
-                });
+    private double getDistance(Double firstLat,
+                               Double firstLng,
+                               Double firstHeight,
+                               Double secondLat,
+                               Double secondLng,
+                               Double secondHeight) {
+        final Double R = 6371.0; // Radius of the earth in km
 
-        System.out.println("made it");
+        Double latDistance = Math.toRadians(firstLat - secondLat);
+        Double lonDistance = Math.toRadians(firstLng - secondLng);
+        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(secondLat)) * Math.cos(Math.toRadians(firstLat))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        Double distance = R * c * 1000; // convert to meters
+
+        Double height = secondHeight - firstHeight;
+
+        distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+        return Math.sqrt(distance); // returns distance in meters
     }
 
     }

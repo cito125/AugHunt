@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/activity_accepted_challenge"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:weightSum="7"
-    tools:context="com.example.andresarango.aughunt.ChallengeTemplateActivity">
+    tools:context="com.example.andresarango.aughunt.AcceptedChallengeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,14 +18,14 @@
         android:layout_weight="6">
 
         <com.google.android.cameraview.CameraView
-            android:id="@+id/cam_create_challenge"
+            android:id="@+id/cam_accepted_challenge"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:keepScreenOn="true" />
 
         <FrameLayout
-            android:id="@+id/photo"
+            android:id="@+id/accepted_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -40,23 +40,15 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_take_photo"
+            android:id="@+id/btn_accepted_take_photo"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="take photo" />
 
         <Button
-            android:id="@+id/btn_leave_hint"
+            android:id="@+id/btn_accepted_submit_challenge"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-
-            android:text="hint" />
-
-        <Button
-            android:id="@+id/btn_submit_challenge"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-
             android:text="submit" />
     </LinearLayout>
 
