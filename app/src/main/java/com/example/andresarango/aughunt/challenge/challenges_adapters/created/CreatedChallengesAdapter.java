@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 
 import java.util.ArrayList;
 import java.util.List;
