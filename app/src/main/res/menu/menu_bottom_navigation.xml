@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_favorites"
+        android:enabled="true"
+        android:icon="@drawable/ic_search_black_48dp"
+        android:title="@string/text_search_challenges"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_schedules"
+        android:enabled="true"
+        android:icon="@drawable/ic_add_a_photo_black_48dp"
+        android:title="@string/text_create_challenges"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_music"
+        android:enabled="true"
+        android:icon="@drawable/ic_face_black_48dp"
+        android:title="@string/text_profile"
+        app:showAsAction="ifRoom" />
+</menu>
