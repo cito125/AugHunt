@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.create_challenge;
+package com.example.andresarango.aughunt.challenge.challenge_review_fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.ChallengeTemplateActivity;
-import com.example.andresarango.aughunt.CreateChallengeActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
@@ -62,6 +61,7 @@ public class CreatedChallengesFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(new CreatedChallengesAdapter(mListener));
+        callFirebase();
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,14 +119,13 @@ public class CreatedChallengesFragment extends Fragment {
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
         String challengeKey = dataSnapshot.getKey();
-        List<ChallengePhoto> challengeList = new ArrayList<>();
         Set<String> challengeKeys = challengeMap.keySet();
+        List<ChallengePhoto> challengeList = new ArrayList<>();
 
         if (challengeKeys.contains(challengeKey)) {
             challengeMap.put(challengeKey, dataSnapshot.getValue(ChallengePhoto.class));
         }
 
-        challengeList.clear();
         for (String key : challengeKeys) {
             challengeList.add(challengeMap.get(key));
         }
@@ -134,13 +133,6 @@ public class CreatedChallengesFragment extends Fragment {
         // update recycler view
         CreatedChallengesAdapter adapter = (CreatedChallengesAdapter) mRecyclerView.getAdapter();
         adapter.setChallengeList(challengeList);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        challengeMap.clear();
-        callFirebase();
     }
 
     public void setListener(ChallengeViewholderListener mListener) {

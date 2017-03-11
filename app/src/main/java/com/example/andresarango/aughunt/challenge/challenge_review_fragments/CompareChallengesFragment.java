@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge.create_challenge;
+package com.example.andresarango.aughunt.challenge.challenge_review_fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
