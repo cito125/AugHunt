@@ -37,13 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:text="swipe right" />
-
-    <CheckBox
-        android:id="@+id/checkbox_drag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
-        android:checked="true"
-        android:text="Drag enabled"/>
+    
 
 </com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>
