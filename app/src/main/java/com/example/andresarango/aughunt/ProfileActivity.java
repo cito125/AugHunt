@@ -1,10 +1,14 @@
 package com.example.andresarango.aughunt;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
@@ -25,6 +29,7 @@ import butterknife.ButterKnife;
 public class ProfileActivity extends AppCompatActivity implements CreatedChallengeListener, CompletedChallengeListener {
     @BindView(R.id.tab_layout) TabLayout tablayout; // Import design in build.gradle
     @BindView(R.id.viewpager) ViewPager pager;
+    @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
 
     private CreatedChallengesFragment mCreatedChallengesFragment;
     private ReviewChallengesFragment mReviewChallengesFragment;
@@ -32,6 +37,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     private ChallengePhoto mSelectedChallenge;
 
     @Override
+
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -40,6 +46,28 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         setupTabLayout(tablayout);
         setupViewPager(pager);
         tablayout.setupWithViewPager(pager);
+        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+
+                    case R.id.create_challenge:
+                        Intent createChallenge=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                        startActivity(createChallenge);
+                        break;
+                    case R.id.homepage:
+                        Intent homePage=new Intent(getApplicationContext(), SearchChallengeActivity.class);
+                        startActivity(homePage);
+                        break;
+                    case R.id.user_profile:
+                        Intent userProfile=new Intent(getApplicationContext(),ProfileActivity.class);
+                        startActivity(userProfile);
+                        break;
+                }
+                return true;
+            }
+        });
 
     }
 

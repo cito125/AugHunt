@@ -89,17 +89,18 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
                switch (item.getItemId()){
 
                    case R.id.create_challenge:
-                       Intent intent=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
-                       startActivity(intent);
+                       Intent createChallenge=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                       startActivity(createChallenge);
                        break;
                    case R.id.homepage:
+                       Intent homePage=new Intent(getApplicationContext(), SearchChallengeActivity.class);
+                       startActivity(homePage);
                        break;
                    case R.id.user_profile:
+                       Intent userProfile=new Intent(getApplicationContext(),ProfileActivity.class);
+                       startActivity(userProfile);
                        break;
                 }
-                // handle desired action here
-                // One possibility of action is to replace the contents above the nav bar
-                // return true if you want the item to be displayed as the selected item
                 return true;
             }
         });
