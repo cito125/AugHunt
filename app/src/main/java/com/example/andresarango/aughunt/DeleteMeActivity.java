@@ -27,14 +27,12 @@ public class DeleteMeActivity extends AppCompatActivity {
     private Context context = this;
     private ReviewSwipeAdapter adapter;
     private ArrayList<String> testData;
-    private CheckBox dragCheckbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_me);
         cardStack = (SwipeDeck) findViewById(R.id.swipe_deck);
-        dragCheckbox = (CheckBox) findViewById(R.id.checkbox_drag);
 
         testData = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
