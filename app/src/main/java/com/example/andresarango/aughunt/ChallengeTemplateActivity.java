@@ -30,6 +30,7 @@ import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.snapshot.LocationResult;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -246,6 +247,14 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
             }
 
 
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+
+                progressDialog.dismiss();
+                Toast.makeText(ChallengeTemplateActivity.this, "Failed to save image.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
