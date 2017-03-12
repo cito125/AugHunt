@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
@@ -27,13 +26,17 @@ import com.example.andresarango.aughunt.camera.CameraCallback;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
+import com.example.andresarango.aughunt.user.User;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -237,6 +240,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
                 ChallengePhoto challenge = new ChallengePhoto(pushId, auth.getCurrentUser().getUid(), damLocation, url, mHintText, System.currentTimeMillis()/1000);
                 rootRef.child("challenges").child(pushId).setValue(challenge); // Upload challenge object to firebase database
 
+                updateNumberOfCompletedChallenges();
 
                 Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
                         .show();
@@ -246,6 +250,21 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
         });
     }
 
+    private void updateNumberOfCompletedChallenges() {
+        rootRef.child("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+                currentUser.setNumberOfCreatedChallenges(currentUser.getNumberOfSubmittedChallenges() + 1);
+                rootRef.child("users").child(auth.getCurrentUser().getUid()).setValue(currentUser);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     @Override
     public void onAspectRatioSelected(@NonNull AspectRatio ratio) {

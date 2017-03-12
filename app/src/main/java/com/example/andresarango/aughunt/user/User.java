@@ -9,6 +9,8 @@ public class User {
     private String profileName;
     private int userPoints;
     private String profilePicUrl;
+    private int numberOfCreatedChallenges;
+    private int numberOfSubmittedChallenges;
 
     public User() {
 
@@ -18,6 +20,8 @@ public class User {
         this.userId = userId;
         this.profileName = profileName;
         this.userPoints = 0;
+        this.numberOfCreatedChallenges = 0;
+        this.numberOfSubmittedChallenges = 0;
     }
 
     public String getUserId() {
@@ -36,6 +40,14 @@ public class User {
         return profilePicUrl;
     }
 
+    public int getNumberOfCreatedChallenges() {
+        return numberOfCreatedChallenges;
+    }
+
+    public int getNumberOfSubmittedChallenges() {
+        return numberOfSubmittedChallenges;
+    }
+
     public void setUserPoints(int userPoints) {
         this.userPoints = userPoints;
     }
@@ -46,5 +58,13 @@ public class User {
 
     public void setProfilePicUrl(String profilePicUrl) {
         this.profilePicUrl = profilePicUrl;
+    }
+
+    public void setNumberOfCreatedChallenges(int numberOfCreatedChallenges) {
+        this.numberOfCreatedChallenges = numberOfCreatedChallenges;
+    }
+
+    public void setNumberOfSubmittedChallenges(int numberOfSubmittedChallenges) {
+        this.numberOfSubmittedChallenges = numberOfSubmittedChallenges;
     }
 }

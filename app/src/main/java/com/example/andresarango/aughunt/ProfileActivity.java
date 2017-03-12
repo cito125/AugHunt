@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -24,6 +25,13 @@ import com.example.andresarango.aughunt.challenge.challenge_review_fragments.Rev
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
 import com.example.andresarango.aughunt.profile.ViewPagerAdapter;
+import com.example.andresarango.aughunt.user.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,12 +45,18 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     @BindView(R.id.viewpager) ViewPager pager;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
     @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
+    @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
+    @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
+    @BindView(R.id.tv_main_profile_total_submitted) TextView totalSubmittedChallengesTv;
 
 
     private CreatedChallengesFragment mCreatedChallengesFragment;
     private ReviewChallengesFragment mReviewChallengesFragment;
     private CompareChallengesFragment mCompareChallengesFragment;
     private ChallengePhoto mSelectedChallenge;
+
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     @Override
 
@@ -54,6 +68,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         setupTabLayout(tablayout);
         setupViewPager(pager);
         tablayout.setupWithViewPager(pager);
+
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -90,6 +105,29 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                         profilePicIv.setImageDrawable(circularBitmapDrawable);
                     }
                 });
+
+        setupProfileStatusBar();
+
+    }
+
+    private void setupProfileStatusBar() {
+        rootRef.child("users").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+
+
+                userPointsTv.setText(String.valueOf(currentUser.getUserPoints()));
+                totalCreatedChallengesTv.setText(String.valueOf(currentUser.getNumberOfCreatedChallenges()));
+                totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
