@@ -55,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                     case R.id.create_challenge:
                         Intent createChallenge=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
                         startActivity(createChallenge);
+
                         break;
                     case R.id.homepage:
                         Intent homePage=new Intent(getApplicationContext(), SearchChallengeActivity.class);
@@ -120,9 +121,6 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                 .replace(R.id.profile_activity, mCompareChallengesFragment)
                 .addToBackStack(null)
                 .commit();
-    }
-    public void popFragmentFromBackStack() {
-        getSupportFragmentManager().popBackStack();
     }
 }
 

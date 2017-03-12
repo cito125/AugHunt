@@ -1,48 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="9"
-    android:background="#395d91b6"
-    >
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="130dp"
+        android:weightSum="2"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:layout_marginTop="15dp">
+
         <ImageView
             android:id="@+id/initial_challenge"
             android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"/>
+
         <ImageView
             android:id="@+id/completed_challenge"
             android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"/>
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="15dp">
+
         <Button
             android:id="@+id/decline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Decline"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:onClick="reviewResult"
-            />
+            android:text="Decline"
+            android:background="#DDF48FB1"
+            android:layout_weight="1"
+            android:layout_margin="5dp"/>
+
         <Button
             android:id="@+id/accept"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Accept"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:text="Accept"
+            android:background="#DDC5E1A5"
+            android:layout_weight="1"
+            android:layout_margin="5dp"/>
 
-            />
-    </RelativeLayout>
+    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

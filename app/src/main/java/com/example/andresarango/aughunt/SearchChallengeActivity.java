@@ -5,6 +5,9 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -57,8 +60,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     private TextView mLocation;
     private RecyclerView mRecyclerView;
     private ChallengesAdapter mNearbyChallengesAdapter;
-    private static final String IMAGE_DATA = "image_data";
-    private static final String HINT_DATA = "hint_data";
 
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -67,8 +68,9 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
     private List<ChallengePhoto> challengeList = new ArrayList<>();
     @BindView(R.id.tv_user_points) TextView mUserPointsTv;
-    @BindView(R.id.tv_profile_name) TextView mProfileNameTv;
+    @BindView(R.id.review_number) TextView mPendingReview;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
+    @BindView(R.id.pending_review) TextView mPending;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -77,7 +79,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_challenge);
         ButterKnife.bind(this);
-        // Calls run method which will initialize the recycler view once we get user location from the snapshot api
         SnapshotHelper snapshotHelper = new SnapshotHelper(this);
         snapshotHelper.runSnapshot(getApplicationContext());
         retrieveUserFromFirebaseAndSetProfile();
@@ -91,19 +92,28 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
                    case R.id.create_challenge:
                        Intent createChallenge=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
                        startActivity(createChallenge);
+                       mBottomNav.setItemTextColor(ColorStateList.valueOf(Color.parseColor("#D81B60")));
+                       mBottomNav.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#D81B60")));
+
                        break;
                    case R.id.homepage:
                        Intent homePage=new Intent(getApplicationContext(), SearchChallengeActivity.class);
                        startActivity(homePage);
+                       mBottomNav.setItemTextColor(ColorStateList.valueOf(Color.parseColor("#D81B60")));
+                       mBottomNav.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#D81B60")));
                        break;
                    case R.id.user_profile:
                        Intent userProfile=new Intent(getApplicationContext(),ProfileActivity.class);
                        startActivity(userProfile);
+                       mBottomNav.setItemTextColor(ColorStateList.valueOf(Color.parseColor("#D81B60")));
+                       mBottomNav.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#D81B60")));
                        break;
                 }
                 return true;
             }
         });
+
+
 
     }
 
@@ -114,7 +124,13 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
                 User user = dataSnapshot.getValue(User.class);
                 System.out.println("USER: " + user.getProfileName());
                 mUserPointsTv.setText(user.getUserPoints() + " PTS");
-                mProfileNameTv.setText(user.getProfileName());
+                mUserPointsTv.setTextColor(Color.parseColor("#D81B60"));
+                mPendingReview.setTypeface(mPendingReview.getTypeface(), Typeface.BOLD);
+                mPendingReview.setText("2");
+                mPendingReview.setTextColor(Color.parseColor("#D81B60"));
+                mPending.setTextColor(Color.parseColor("#D81B60"));
+                mPending.setTypeface(mPending.getTypeface(), Typeface.BOLD);
+                mPending.setText("Pending review: ");
             }
 
             @Override
