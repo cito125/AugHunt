@@ -3,9 +3,12 @@ package com.example.andresarango.aughunt;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
@@ -13,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,6 +68,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     private List<ChallengePhoto> challengeList = new ArrayList<>();
     @BindView(R.id.tv_user_points) TextView mUserPointsTv;
     @BindView(R.id.tv_profile_name) TextView mProfileNameTv;
+    @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -77,6 +82,27 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         snapshotHelper.runSnapshot(getApplicationContext());
         retrieveUserFromFirebaseAndSetProfile();
         requestPermission();
+        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+               switch (item.getItemId()){
+
+                   case R.id.create_challenge:
+                       Intent intent=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                       startActivity(intent);
+                       break;
+                   case R.id.homepage:
+                       break;
+                   case R.id.user_profile:
+                       break;
+                }
+                // handle desired action here
+                // One possibility of action is to replace the contents above the nav bar
+                // return true if you want the item to be displayed as the selected item
+                return true;
+            }
+        });
 
     }
 
@@ -230,4 +256,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         System.out.println(userLocation.getLat() + " " + userLocation.getLng() + " <--- USER LOCATION");
         initialize();
     }
+
+
 }
