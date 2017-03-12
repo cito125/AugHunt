@@ -40,28 +40,15 @@ public class ReviewSwipeAdapter extends BaseAdapter {
 
         View view = convertView;
         if (view == null) {
-
-            // normally use a viewholder
             view = LayoutInflater
                     .from(parent.getContext())
                     .inflate(R.layout.vh_review_challenge_swipe, parent, false);
         }
-        //((TextView) v.findViewById(R.id.textView2)).setText(mDataList.get(position));
         ImageView imageView = (ImageView) view.findViewById(R.id.offer_image);
         Glide.with(view.getContext()).load(R.drawable.cat2).centerCrop().into(imageView);
         TextView textView = (TextView) view.findViewById(R.id.sample_text);
         String item = (String)getItem(position);
         textView.setText(item);
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("Layer type: ", Integer.toString(v.getLayerType()));
-                Log.i("Hardware Accel type:", Integer.toString(View.LAYER_TYPE_HARDWARE));
-                    /*Intent i = new Intent(v.getContext(), BlankActivity.class);
-                    v.getContext().startActivity(i);*/
-            }
-        });
         return view;
     }
 
