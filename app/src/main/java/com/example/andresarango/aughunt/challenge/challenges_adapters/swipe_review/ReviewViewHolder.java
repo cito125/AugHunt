@@ -2,16 +2,26 @@ package com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_rev
 
 
 import android.content.Context;
+import android.view.View;
+import android.widget.TextView;
 
+import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.swipe_adapter.SwipeAdapter;
 
 class ReviewViewHolder<T> extends SwipeAdapter.ViewHolder<Integer> {
-    public ReviewViewHolder(Context context) {
-        super(context);
+
+    private final TextView mTextView;
+
+    public ReviewViewHolder(View view) {
+        super(view);
+        mTextView = (TextView) view.findViewById(R.id.textview_review_challenge);
     }
 
     @Override
-    public SwipeAdapter.ViewHolder onBindViewholder(Integer object) {
-        return null;
+    public ReviewViewHolder<T> onBindViewholder(Integer object) {
+        mTextView.setText(object.toString());
+        return this;
     }
+
+
 }
