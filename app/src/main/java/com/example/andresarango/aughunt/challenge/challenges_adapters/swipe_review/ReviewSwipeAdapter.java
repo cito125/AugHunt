@@ -46,8 +46,10 @@ public class ReviewSwipeAdapter extends BaseAdapter {
         }
         ImageView imageView = (ImageView) view.findViewById(R.id.offer_image);
         Glide.with(view.getContext()).load(R.drawable.cat2).centerCrop().into(imageView);
+
         TextView textView = (TextView) view.findViewById(R.id.sample_text);
-        String item = (String)getItem(position);
+        String item = mDataList.get(position);
+
         textView.setText(item);
         return view;
     }
