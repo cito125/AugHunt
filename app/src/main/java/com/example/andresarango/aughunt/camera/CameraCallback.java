@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.google.android.cameraview.CameraView;
@@ -19,14 +19,14 @@ public class CameraCallback extends CameraView.Callback {
     private final Context mContext;
     private Handler mBackgroundHandler;
     private FrameLayout mPhoto;
-    private Button mTakePicture;
+    private FloatingActionButton mTakePicture;
 
     private final String TAG = "ActivityPicture";
     private Bitmap mBitmap;
     private byte[] picData;
 
 
-    public CameraCallback(Context context, FrameLayout photo, Button takepicture) {
+    public CameraCallback(Context context, FrameLayout photo, FloatingActionButton takepicture) {
         mContext = context;
         this.mPhoto = photo;
         this.mTakePicture = takepicture;

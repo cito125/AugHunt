@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.andresarango.aughunt.HomeScreenActivity;
 import com.example.andresarango.aughunt.R;
+import com.example.andresarango.aughunt.SearchChallengeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment{
                     Toast.makeText(rootView.getContext(), "Sign in success!", Toast.LENGTH_SHORT).show();
 
                     // Go to home screen activity
-                    Intent intent = new Intent(getActivity(), HomeScreenActivity.class);
+                    Intent intent = new Intent(getActivity(), SearchChallengeActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(rootView.getContext(), "Sign in failed.", Toast.LENGTH_SHORT).show();

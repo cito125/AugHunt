@@ -18,9 +18,9 @@ import java.util.List;
 public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChallengeViewHolder> {
 
     private List<ChallengePhoto> mChallengeList = new ArrayList<>();
-    private ChallengeViewholderListener mListener;
+    private CreatedChallengeListener mListener;
 
-    public CreatedChallengesAdapter(ChallengeViewholderListener listener) {
+    public CreatedChallengesAdapter(CreatedChallengeListener listener) {
         this.mListener = listener;
     }
 
@@ -38,7 +38,7 @@ public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChalle
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onChallengeClicked(mChallengeList.get(viewHolderPosition));
+                mListener.onCreatedChallengeClicked(mChallengeList.get(viewHolderPosition));
             }
         });
     }

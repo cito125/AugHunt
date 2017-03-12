@@ -5,18 +5,18 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeViewholderListener;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CompareChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CreatedChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.ReviewChallengesFragment;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
 
 import butterknife.ButterKnife;
 
 
 public class CreateChallengeActivity extends AppCompatActivity implements
-        ChallengeViewholderListener,
-        CompletedChallengeViewholderListener {
+        CreatedChallengeListener,
+        CompletedChallengeListener {
 
     private CreatedChallengesFragment mCreatedChallengesFragment;
     private ReviewChallengesFragment mReviewChallengesFragment;
@@ -38,7 +38,7 @@ public class CreateChallengeActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onChallengeClicked(ChallengePhoto challenge) {
+    public void onCreatedChallengeClicked(ChallengePhoto challenge) {
         mSelectedChallenge = challenge;
         startReviewChallengeFragment(challenge);
     }

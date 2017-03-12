@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.andresarango.aughunt.CreateChallengeActivity;
+import com.example.andresarango.aughunt.ProfileActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
@@ -57,7 +57,7 @@ public class CompareChallengesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 removeCompletedChallengeFromFirebase();
-                ((CreateChallengeActivity) getActivity()).popFragmentFromBackStack();
+                ((ProfileActivity) getActivity()).popFragmentFromBackStack();
             }
         });
 
@@ -65,7 +65,7 @@ public class CompareChallengesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 removeCompletedChallengeFromFirebase();
-                ((CreateChallengeActivity) getActivity()).popFragmentFromBackStack();
+                ((ProfileActivity) getActivity()).popFragmentFromBackStack();
             }
         });
     }

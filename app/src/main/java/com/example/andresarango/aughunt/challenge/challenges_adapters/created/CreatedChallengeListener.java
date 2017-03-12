@@ -6,6 +6,7 @@ import com.example.andresarango.aughunt.challenge.ChallengePhoto;
  * Created by Millochka on 3/6/17.
  */
 
-public interface ChallengeViewholderListener {
-    void onChallengeClicked(ChallengePhoto challenge);
+public interface CreatedChallengeListener {
+    void onCreatedChallengeClicked(ChallengePhoto challenge);
 }
+

@@ -1,5 +1,6 @@
 package com.example.andresarango.aughunt.challenge.challenges_adapters.created;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,11 +20,11 @@ import butterknife.ButterKnife;
 class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.iv_created_challenge_image) ImageView mChallengeImageIv;
-    @BindView(R.id.tv_created_challenge_id) TextView mChallengeIdTv;
-    @BindView(R.id.tv_created_challenge_owner_id) TextView mOwnerIdTv;
     @BindView(R.id.tv_created_challenge_hint) TextView mHintTv;
-    @BindView(R.id.tv_created_challenge_pursuing) TextView mPursuingTv;
-    @BindView(R.id.tv_created_challenge_completed) TextView mCompletedTv;
+    @BindView(R.id.tv_created_challenge_players) TextView mPursuingTv;
+    @BindView(R.id.tv_created_challenge_submissions) TextView mSubmission;
+    @BindView(R.id.tv_pending_review) TextView mPendingReviewTv;
+    @BindView(R.id.tv_hint) TextView mHint;
 
     public CreatedChallengeViewHolder(View itemView) {
         super(itemView);
@@ -32,11 +33,12 @@ class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(ChallengePhoto challenge) {
         Glide.with(itemView.getContext()).load(challenge.getPhotoUrl()).into(mChallengeImageIv);
-        mChallengeIdTv.setText("Challenge ID: " + challenge.getChallengeId());
-        mOwnerIdTv.setText("Owner ID: " + challenge.getOwnerId());
-        mHintTv.setText("Hint: " + challenge.getHint());
-        mPursuingTv.setText("Pursuing: " + challenge.getPursuing());
-        mCompletedTv.setText("Completed: " + challenge.getCompleted());
+        mHint.setTypeface(mHint.getTypeface(), Typeface.BOLD);
+        mHint.setText("Hint: ");
+        mHintTv.setText( challenge.getHint());
+        mPursuingTv.setText("Players: " + challenge.getPursuing());
+        mSubmission.setText("Submissions: " + challenge.getCompleted());
+        mPendingReviewTv.setText("Pending Review: ");
     }
 
 }

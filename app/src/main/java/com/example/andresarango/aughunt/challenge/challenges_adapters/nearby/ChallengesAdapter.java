@@ -7,16 +7,16 @@ import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.created.ChallengeViewholderListener;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChallengesAdapter extends RecyclerView.Adapter<ChallengeViewholder> {
     List<ChallengePhoto> mChallengeList = new ArrayList<>();
-    private final ChallengeViewholderListener mChallengeViewholderListener;
+    private final CreatedChallengeListener mChallengeViewholderListener;
 
-    public ChallengesAdapter(ChallengeViewholderListener challengeViewholderListener) {
+    public ChallengesAdapter(CreatedChallengeListener challengeViewholderListener) {
         mChallengeViewholderListener = challengeViewholderListener;
     }
 
@@ -36,7 +36,7 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengeViewholder>
 
     @Override
     public void onBindViewHolder(ChallengeViewholder holder, int position) {
-        holder.bind(mChallengeList.get(position));
+        holder.getUserName(mChallengeList.get(position));
     }
 
     @Override

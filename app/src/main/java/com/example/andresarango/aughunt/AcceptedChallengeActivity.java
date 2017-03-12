@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -55,7 +56,8 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
     private static final int LOCATION_PERMISSION = 1245;
 
     @BindView(R.id.cam_accepted_challenge) CameraView mCameraView;
-    @BindView(R.id.btn_accepted_take_photo) Button mTakePhotoBtn;
+    @BindView(R.id.btn_accepted_take_photo)
+    FloatingActionButton mTakePhotoBtn;
     @BindView(R.id.accepted_photo) FrameLayout mPhoto;
     @BindView(R.id.btn_accepted_submit_challenge) Button submitChallengeBtn;
 
