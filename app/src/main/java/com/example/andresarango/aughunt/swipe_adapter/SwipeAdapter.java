@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public abstract class SwipeAdapter<VH extends SwipeAdapter.ViewHolder>
-        extends BaseAdapter{
+public abstract class SwipeAdapter<T, VH extends SwipeAdapter.ViewHolder<T>>
+        extends BaseAdapter {
 
     @Override
     public Integer getItem(int position) {
@@ -18,13 +18,13 @@ public abstract class SwipeAdapter<VH extends SwipeAdapter.ViewHolder>
         return 0;
     }
 
-    public  abstract VH onCreateViewholder(int position, ViewHolder viewHolder, ViewGroup viewGroup);
+    public abstract VH onCreateViewholder(int position, ViewHolder viewHolder, ViewGroup viewGroup);
 
-    public abstract class ViewHolder extends View{
+    public static abstract class ViewHolder<T> extends View {
         public ViewHolder(Context context) {
             super(context);
         }
 
-        public abstract ViewHolder onBindViewholder(int position);
+        public abstract ViewHolder onBindViewholder(T object);
     }
 }
