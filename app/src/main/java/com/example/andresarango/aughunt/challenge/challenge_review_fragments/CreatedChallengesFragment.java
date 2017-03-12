@@ -1,9 +1,7 @@
 package com.example.andresarango.aughunt.challenge.challenge_review_fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.andresarango.aughunt.ChallengeTemplateActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
@@ -37,10 +34,8 @@ import butterknife.ButterKnife;
  */
 
 public class CreatedChallengesFragment extends Fragment {
-    @BindView(R.id.created_challenges)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.fab_create_challenge)
-    FloatingActionButton mFloatingActionButton;
+    @BindView(R.id.created_challenges) RecyclerView mRecyclerView;
+//    @BindView(R.id.fab_create_challenge) FloatingActionButton mFloatingActionButton;
 
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -51,7 +46,6 @@ public class CreatedChallengesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_created_challenges, container, false);
-
     }
 
     @Override
@@ -63,12 +57,12 @@ public class CreatedChallengesFragment extends Fragment {
         mRecyclerView.setAdapter(new CreatedChallengesAdapter(mListener));
         callFirebase();
 
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), ChallengeTemplateActivity.class));
-            }
-        });
+//        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(view.getContext(), ChallengeTemplateActivity.class));
+//            }
+//        });
     }
 
     private void callFirebase() {

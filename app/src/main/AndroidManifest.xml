@@ -20,22 +20,22 @@
         android:theme="@style/AppTheme">
         <activity android:name=".login.SplashScreen">
 
-
         </activity>
 
-        <activity android:name=".login.StartActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".login.StartActivity">
+        </activity>
 
-            <category android:name="android.intent.category.LAUNCHER" />
+        <activity android:name=".ProfileActivity">
 
-        </intent-filter>
-    </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+        </activity>
 
         <activity android:name=".SearchChallengeActivity" />
-
-
         <activity android:name=".ChallengeTemplateActivity" />
         <activity android:name=".AcceptedChallengeActivity" />
 
