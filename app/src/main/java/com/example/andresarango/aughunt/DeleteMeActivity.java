@@ -16,15 +16,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeAdapter;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteMeActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
     private SwipeDeck cardStack;
-    private Context context = this;
     private ReviewSwipeAdapter adapter;
     private ArrayList<String> testData;
 
@@ -44,48 +43,26 @@ public class DeleteMeActivity extends AppCompatActivity {
         if(cardStack != null){
             cardStack.setAdapter(adapter);
         }
-        cardStack.setCallback(new SwipeDeck.SwipeDeckCallback() {
-            @Override
-            public void cardSwipedLeft(long stableId) {
-                Log.i("MainActivity", "card was swiped left, position in adapter: " + stableId);
-            }
-
-            @Override
-            public void cardSwipedRight(long stableId) {
-                Log.i("MainActivity", "card was swiped right, position in adapter: " + stableId);
-
-            }
-
-        });
-
+        cardStack.setCallback(new ReviewSwipeCallback());
         cardStack.setLeftImage(R.id.left_image);
         cardStack.setRightImage(R.id.right_image);
 
-        Button btn = (Button) findViewById(R.id.button_left);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button leftButton = (Button) findViewById(R.id.button_left);
+        leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cardStack.swipeTopCardLeft(500);
 
             }
         });
-        Button btn2 = (Button) findViewById(R.id.button_right);
-        btn2.setOnClickListener(new View.OnClickListener() {
+        Button rightButton = (Button) findViewById(R.id.button_right);
+        rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cardStack.swipeTopCardRight(180);
             }
         });
 
-        Button btn3 = (Button) findViewById(R.id.button_center);
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                testData.add("a sample string.");
-//                adapter.notifyDataSetChanged();
-                cardStack.unSwipeCard();
-            }
-        });
 
     }
 
