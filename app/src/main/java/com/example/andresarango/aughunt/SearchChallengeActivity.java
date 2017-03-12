@@ -92,21 +92,17 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
                    case R.id.create_challenge:
                        Intent createChallenge=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
                        startActivity(createChallenge);
-                       mBottomNav.setItemTextColor(ColorStateList.valueOf(Color.parseColor("#D81B60")));
-                       mBottomNav.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#D81B60")));
+
 
                        break;
                    case R.id.homepage:
                        Intent homePage=new Intent(getApplicationContext(), SearchChallengeActivity.class);
                        startActivity(homePage);
-                       mBottomNav.setItemTextColor(ColorStateList.valueOf(Color.parseColor("#D81B60")));
-                       mBottomNav.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#D81B60")));
+
                        break;
                    case R.id.user_profile:
                        Intent userProfile=new Intent(getApplicationContext(),ProfileActivity.class);
                        startActivity(userProfile);
-                       mBottomNav.setItemTextColor(ColorStateList.valueOf(Color.parseColor("#D81B60")));
-                       mBottomNav.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#D81B60")));
                        break;
                 }
                 return true;

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -19,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
@@ -51,7 +51,8 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     private static final int LOCATION_PERMISSION = 1245;
 
     @BindView(R.id.cam_create_challenge) CameraView mCameraView;
-    @BindView(R.id.btn_take_photo) Button mTakePhotoButton;
+    @BindView(R.id.btn_take_photo)
+    FloatingActionButton mTakePhotoButton;
     @BindView(R.id.btn_leave_hint) Button mHint;
     @BindView(R.id.btn_submit_challenge) Button mSubmit;
     @BindView(R.id.photo) FrameLayout mPhoto;
@@ -243,6 +244,8 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
                 progressDialog.dismiss();
                 finish();
             }
+
+
         });
     }
 

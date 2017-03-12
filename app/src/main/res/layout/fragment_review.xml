@@ -5,13 +5,35 @@
     android:background="@android:color/white"
     android:orientation="vertical"
     >
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/top_menu"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:background="#5d91b6"
-        />
+        android:background="#5d91b6">
+        <TextView
+            android:id="@+id/tv_user_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="#5d91b6"/>
+        <TextView
+            android:id="@+id/review_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="#5d91b6"/>
+        <TextView
+            android:id="@+id/pending_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/review_number"
+            android:layout_marginTop="5dp"
+            android:background="#5d91b6"/>
+
+    </RelativeLayout>
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

@@ -1,6 +1,8 @@
 package com.example.andresarango.aughunt.challenge.challenge_review_fragments;
 
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,11 +20,14 @@ import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.ReviewChallengeAdapter;
+import com.example.andresarango.aughunt.user.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +36,7 @@ import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Millochka on 3/6/17.
@@ -42,6 +48,10 @@ public class ReviewChallengesFragment extends Fragment {
 
     private ChallengePhoto mChallengeToReview;
     private CompletedChallengeListener mListener;
+    @BindView(R.id.tv_user_points) TextView mUserPointsTv;
+    @BindView(R.id.review_number) TextView mPendingReview;
+    @BindView(R.id.pending_review) TextView mPending;
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -56,8 +66,11 @@ public class ReviewChallengesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this,view);
         initializeViews();
         initializeRecyclerView();
+
+        retrieveUserFromFirebaseAndSetProfile();
 
     }
 
@@ -110,6 +123,29 @@ public class ReviewChallengesFragment extends Fragment {
 
         mRecyclerView.setAdapter(reviewChallengesAdapter);
 
+    }
+
+    private void retrieveUserFromFirebaseAndSetProfile() {
+        rootRef.child("users").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                System.out.println("USER: " + user.getProfileName());
+                mUserPointsTv.setText(user.getUserPoints() + " PTS");
+                mUserPointsTv.setTextColor(Color.parseColor("#D81B60"));
+                mPendingReview.setTypeface(mPendingReview.getTypeface(), Typeface.BOLD);
+                mPendingReview.setText("2");
+                mPendingReview.setTextColor(Color.parseColor("#D81B60"));
+                mPending.setTextColor(Color.parseColor("#D81B60"));
+                mPending.setTypeface(mPending.getTypeface(), Typeface.BOLD);
+                mPending.setText("Pending review: ");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
