@@ -121,5 +121,8 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                 .addToBackStack(null)
                 .commit();
     }
+    public void popFragmentFromBackStack() {
+        getSupportFragmentManager().popBackStack();
+    }
 }
 

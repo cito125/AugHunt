@@ -198,9 +198,9 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     }
 
     private void initializeViews() {
-        mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
-        mHint = (TextView) findViewById(R.id.challenge_hint);
-        mLocation = (TextView) findViewById(R.id.challenge_location);
+//        mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
+//        mHint = (TextView) findViewById(R.id.challenge_hint);
+//        mLocation = (TextView) findViewById(R.id.challenge_location);
         mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
     }
 
