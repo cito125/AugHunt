@@ -17,6 +17,7 @@ public class ChallengePhoto implements Serializable {
     private int pursuing;
     private int completed;
     private long timestamp;
+    private int pendingReviews;
 
     public ChallengePhoto() {
 
@@ -31,6 +32,7 @@ public class ChallengePhoto implements Serializable {
         this.timestamp = timestamp;
         this.pursuing = 0;
         this.completed = 0;
+        this.pendingReviews=0;
     }
 
     public String getChallengeId() {
@@ -71,5 +73,13 @@ public class ChallengePhoto implements Serializable {
 
     public void setCompleted(int completed) {
         this.completed = completed;
+    }
+
+    public void setPendingReviews(int pendingReviews) {
+        this.pendingReviews = pendingReviews;
+    }
+
+    public int getPendingReviews() {
+        return pendingReviews;
     }
 }

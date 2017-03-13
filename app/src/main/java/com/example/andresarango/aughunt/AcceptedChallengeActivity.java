@@ -147,6 +147,7 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
             public Transaction.Result doTransaction(MutableData mutableData) {
                 ChallengePhoto challenge = mutableData.getValue(ChallengePhoto.class);
                 challenge.setCompleted(challenge.getCompleted() + 1);
+                challenge.setPendingReviews(challenge.getPendingReviews()+1);
                 mutableData.setValue(challenge);
                 return Transaction.success(mutableData);
             }

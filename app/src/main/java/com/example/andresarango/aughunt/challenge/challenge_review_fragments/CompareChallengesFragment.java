@@ -14,8 +14,12 @@ import com.example.andresarango.aughunt.ProfileActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -57,6 +61,7 @@ public class CompareChallengesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 removeCompletedChallengeFromFirebase();
+                decrementPendingReviewCounter();
                 ((ProfileActivity) getActivity()).popFragmentFromBackStack();
             }
         });
@@ -65,7 +70,9 @@ public class CompareChallengesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 removeCompletedChallengeFromFirebase();
+                decrementPendingReviewCounter();
                 ((ProfileActivity) getActivity()).popFragmentFromBackStack();
+
             }
         });
     }
@@ -92,4 +99,22 @@ public class CompareChallengesFragment extends Fragment {
     public void setCompletedChallenge(ChallengePhotoCompleted mCompletedChallenge) {
         this.mCompletedChallenge = mCompletedChallenge;
     }
+
+    private void decrementPendingReviewCounter() {
+        rootRef.child("challenges").child(mCurrentChallenge.getChallengeId()).runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                ChallengePhoto challenge = mutableData.getValue(ChallengePhoto.class);
+                challenge.setPendingReviews(challenge.getPendingReviews()-1);
+                mutableData.setValue(challenge);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+
+            }
+        });
+    }
+
 }
