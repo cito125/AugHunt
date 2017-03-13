@@ -188,7 +188,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     public void cardSwipedLeft(long stableId) {
         removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
         if(mCompletedChallengeDeck.isEmpty()){
-            mListener.popFragment();
+            mListener.popFragment(this);
         }
     }
 
@@ -196,7 +196,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     public void cardSwipedRight(long stableId) {
         removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
         if(mCompletedChallengeDeck.isEmpty()){
-            mListener.popFragment();
+            mListener.popFragment(this);
         }
     }
 
