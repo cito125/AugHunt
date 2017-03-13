@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
-import com.daprlabs.aaron.swipedeck.Utility.SwipeCallback;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeAdapter;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class DeleteMeActivity extends AppCompatActivity
         }
 
         adapter = new ReviewSwipeAdapter();
-        adapter.setData(testData);
+        adapter.setCompletedChallengeList(testData);
         if(cardStack != null){
             cardStack.setAdapter(adapter);
         }
