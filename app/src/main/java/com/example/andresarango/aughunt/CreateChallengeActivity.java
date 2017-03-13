@@ -1,6 +1,8 @@
 package com.example.andresarango.aughunt;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
@@ -53,14 +55,17 @@ public class CreateChallengeActivity extends AppCompatActivity implements
 
 
 
-    public void popFragmentFromBackStack() {
-        getSupportFragmentManager().popBackStack();
+    public void popFragmentFromBackStack(Fragment fragment) {
+        getSupportFragmentManager()
+        .beginTransaction()
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        .remove(fragment);
     }
+
+
 
     @Override
-    public void popFragment() {
-        popFragmentFromBackStack();
+    public void popFragment(Fragment fragment) {
+        popFragmentFromBackStack(fragment);
     }
-
-
 }
