@@ -1,9 +1,7 @@
 package com.example.andresarango.aughunt;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,6 +25,7 @@ import com.example.andresarango.aughunt.challenge.challenge_review_fragments.Rev
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
 import com.example.andresarango.aughunt.profile.ViewPagerAdapter;
+import com.example.andresarango.aughunt.profile.viewpager.SubmittedChallengeFragment;
 import com.example.andresarango.aughunt.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     @BindView(R.id.tab_layout) TabLayout tablayout; // Import design in build.gradle
     @BindView(R.id.viewpager) ViewPager pager;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
+    @BindView(R.id.tv_main_profile_name) TextView profileNameTv;
     @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
     @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
     @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
@@ -53,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
 
     private CreatedChallengesFragment mCreatedChallengesFragment;
+    private SubmittedChallengeFragment mSubmittedChallengesFragment;
     private ReviewChallengesFragment mReviewChallengesFragment;
     private CompareChallengesFragment mCompareChallengesFragment;
     private ChallengePhoto mSelectedChallenge;
@@ -119,8 +120,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
-
-
+                profileNameTv.setText(currentUser.getProfileName());
                 userPointsTv.setText(String.valueOf(currentUser.getUserPoints()));
                 totalCreatedChallengesTv.setText(String.valueOf(currentUser.getNumberOfCreatedChallenges()));
                 totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
@@ -141,8 +141,10 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         mCreatedChallengesFragment = new CreatedChallengesFragment();
         mCreatedChallengesFragment.setListener(this);
 
+        mSubmittedChallengesFragment = new SubmittedChallengeFragment();
+
         adapter.addFragment(mCreatedChallengesFragment, "Created");
-        adapter.addFragment(new ChallengeHistoryFragment(), "Submitted");
+        adapter.addFragment(mSubmittedChallengesFragment, "Submitted");
         pager.setAdapter(adapter);
     }
 
