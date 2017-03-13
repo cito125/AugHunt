@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,17 +27,16 @@
         </activity>
 
         <activity android:name=".ProfileActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
         <activity android:name=".SearchChallengeActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-
-        </intent-filter>
     </activity>
         <activity android:name=".ChallengeTemplateActivity" />
         <activity android:name=".AcceptedChallengeActivity" />
@@ -46,11 +44,13 @@
         <meta-data
             android:name="com.google.android.awareness.API_KEY"
             android:value="AIzaSyBeF2aZF_8M99U4ryAymUg3fPcAm-hww9A" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBeF2aZF_8M99U4ryAymUg3fPcAm-hww9A" />
 
+        <activity android:name=".DeleteMeActivity">
+
+        </activity>
     </application>
 
 </manifest>
