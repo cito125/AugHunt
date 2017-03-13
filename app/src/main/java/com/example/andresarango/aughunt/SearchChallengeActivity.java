@@ -62,7 +62,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     private TextView mLocation;
     private RecyclerView mRecyclerView;
     private ChallengesAdapter mNearbyChallengesAdapter;
-    private Boolean mHasBeenInflated=false;
+    private Boolean mHasBeenInflated = false;
 
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -70,13 +70,17 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     private Double radius = 100.0;
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
     private List<ChallengePhoto> challengeList = new ArrayList<>();
-    @BindView(R.id.tv_user_points) TextView mUserPointsTv;
-    @BindView(R.id.review_number) TextView mPendingReview;
-    @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
-    @BindView(R.id.pending_review) TextView mPending;
+    @BindView(R.id.tv_user_points)
+    TextView mUserPointsTv;
+    @BindView(R.id.review_number)
+    TextView mPendingReview;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView mBottomNav;
+    @BindView(R.id.pending_review)
+    TextView mPending;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-    private int mPendingReviewIndicator=0;
+    private int mPendingReviewIndicator = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,29 +99,27 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-               switch (item.getItemId()){
+                switch (item.getItemId()) {
 
-                   case R.id.create_challenge:
+                    case R.id.create_challenge:
 
-                       Intent createChallenge=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
-                       startActivity(createChallenge);
+                        Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                        startActivity(createChallenge);
 
+                        break;
+                    case R.id.homepage:
+                        Intent homePage = new Intent(getApplicationContext(), SearchChallengeActivity.class);
+                        startActivity(homePage);
 
-                       break;
-                   case R.id.homepage:
-                       Intent homePage=new Intent(getApplicationContext(), SearchChallengeActivity.class);
-                       startActivity(homePage);
-
-                       break;
-                   case R.id.user_profile:
-                       Intent userProfile=new Intent(getApplicationContext(),ProfileActivity.class);
-                       startActivity(userProfile);
-                       break;
+                        break;
+                    case R.id.user_profile:
+                        Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
+                        startActivity(userProfile);
+                        break;
                 }
                 return true;
             }
         });
-
 
 
     }
@@ -158,8 +160,9 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                if(!hasBeenInflated) {
-                updateRecyclerView(dataSnapshot);}
+                if (!hasBeenInflated) {
+                    updateRecyclerView(dataSnapshot);
+                }
             }
 
             @Override
@@ -187,11 +190,11 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
 
 
         if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-            mPendingReviewIndicator+=challenge.getPendingReviews();
+            mPendingReviewIndicator += challenge.getPendingReviews();
             mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
         }
         // Check location
-        if(!hasBeenInflated) {
+        if (!hasBeenInflated) {
             if (challenge.getLocation().isWithinRadius(userLocation, radius)) {
                 // Put in challenge map
                 challengeMap.put(challengeKey, challenge);
@@ -210,7 +213,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         Set<String> challengeKeys = challengeMap.keySet();
         if (challengeKeys.contains(challengeKey)) {
             challengeMap.put(challengeKey, dataSnapshot.getValue(ChallengePhoto.class));
-
 
 
         }
@@ -238,7 +240,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     public void onCreatedChallengeClicked(ChallengePhoto challenge) {
         DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
         dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
-        mHasBeenInflated=true;
+        mHasBeenInflated = true;
     }
 
     private void requestPermission() {
@@ -288,12 +290,13 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         System.out.println(userLocation.getLat() + " " + userLocation.getLng() + " <--- USER LOCATION");
         initialize(mHasBeenInflated);
     }
-public void openPendingReview(View view){
-    getSupportFragmentManager().beginTransaction()
-            .replace(R.id.search_challenge, new PendingReviewFragment())
-            .commit();
 
-}
+    public void openPendingReview(View view) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.search_challenge, new PendingReviewFragment())
+                .commit();
+
+    }
 
     @Override
     protected void onStart() {
@@ -305,11 +308,11 @@ public void openPendingReview(View view){
     @Override
     protected void onResume() {
         super.onResume();
-if(mHasBeenInflated){
-    mPendingReviewIndicator=0;
-    initialize(mHasBeenInflated);
-    mHasBeenInflated=false;
-}
+        if (mHasBeenInflated) {
+            mPendingReviewIndicator = 0;
+            initialize(mHasBeenInflated);
+            mHasBeenInflated = false;
+        }
 
 
     }

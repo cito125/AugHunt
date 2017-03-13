@@ -268,7 +268,8 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
-                currentUser.setNumberOfCreatedChallenges(currentUser.getNumberOfSubmittedChallenges() + 1);
+                currentUser.setNumberOfCreatedChallenges(currentUser.getNumberOfCreatedChallenges() + 1);
+                System.out.println("CURRENT CHALLENGE NUMBER: " + currentUser.getNumberOfCreatedChallenges());
                 rootRef.child("users").child(auth.getCurrentUser().getUid()).setValue(currentUser);
             }
 
