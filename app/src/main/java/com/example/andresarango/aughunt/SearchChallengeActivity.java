@@ -85,6 +85,8 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         ButterKnife.bind(this);
         SnapshotHelper snapshotHelper = new SnapshotHelper(this);
         snapshotHelper.runSnapshot(getApplicationContext());
+        initializeViews();
+        setUpRecyclerView();
 
         retrieveUserFromFirebaseAndSetProfile();
         requestPermission();
@@ -145,19 +147,19 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         });
     }
 
-    private void initialize() {
+    private void initialize(final Boolean hasBeenInflated) {
 
-        initializeViews();
-        setUpRecyclerView();
+
         rootRef.child("challenges").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                addChallengeToRecyclerView(dataSnapshot);
+                addChallengeToRecyclerView(dataSnapshot, hasBeenInflated);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                updateRecyclerView(dataSnapshot);
+                if(!hasBeenInflated) {
+                updateRecyclerView(dataSnapshot);}
             }
 
             @Override
@@ -177,7 +179,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         });
     }
 
-    private void addChallengeToRecyclerView(DataSnapshot dataSnapshot) {
+    private void addChallengeToRecyclerView(DataSnapshot dataSnapshot, final Boolean hasBeenInflated) {
         // Key - value
         String challengeKey = dataSnapshot.getKey();
         ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
@@ -189,41 +191,17 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
             mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
         }
         // Check location
-        if (challenge.getLocation().isWithinRadius(userLocation, radius)) {
-            // Put in challenge map
-            challengeMap.put(challengeKey, challenge);
-            challengeList.add(challengeMap.get(challengeKey));
+        if(!hasBeenInflated) {
+            if (challenge.getLocation().isWithinRadius(userLocation, radius)) {
+                // Put in challenge map
+                challengeMap.put(challengeKey, challenge);
+                challengeList.add(challengeMap.get(challengeKey));
 
-            mNearbyChallengesAdapter.setChallengeList(challengeList);
-        } else {
-            System.out.println("NOT WITHIN RADIUS");
+                mNearbyChallengesAdapter.setChallengeList(challengeList);
+            } else {
+                System.out.println("NOT WITHIN RADIUS");
+            }
         }
-    }
-    private void retrievePendingReview() {
-        rootRef.child("challenges").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
-                mPendingReviewIndicator =0;
-
-
-                if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                    mPendingReviewIndicator+=challenge.getPendingReviews();
-                    mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
-                }
-                mPendingReview.setTypeface(mPendingReview.getTypeface(), Typeface.BOLD);
-                mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
-                mPendingReview.setTextColor(Color.parseColor("#D81B60"));
-
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
@@ -308,7 +286,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     public void run(LocationResult locationResult) {
         userLocation = new DAMLocation(locationResult.getLocation().getLatitude(), locationResult.getLocation().getLongitude());
         System.out.println(userLocation.getLat() + " " + userLocation.getLng() + " <--- USER LOCATION");
-        initialize();
+        initialize(mHasBeenInflated);
     }
 public void openPendingReview(View view){
     getSupportFragmentManager().beginTransaction()
@@ -320,20 +298,18 @@ public void openPendingReview(View view){
     @Override
     protected void onStart() {
         super.onStart();
-//        if(mHasBeenInflated){
-//            retrievePendingReview();
-//            mHasBeenInflated=false;
-//        }
+
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//if(mHasBeenInflated){
-//    retrievePendingReview();
-//    mHasBeenInflated=false;
-//}
+if(mHasBeenInflated){
+    mPendingReviewIndicator=0;
+    initialize(mHasBeenInflated);
+    mHasBeenInflated=false;
+}
 
 
     }
