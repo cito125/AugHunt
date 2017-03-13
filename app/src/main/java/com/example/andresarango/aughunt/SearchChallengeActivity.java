@@ -181,7 +181,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         // Key - value
         String challengeKey = dataSnapshot.getKey();
         ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
-        mPendingReviewIndicator =0;
+        //mPendingReviewIndicator =0;
 
 
         if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
