@@ -25,6 +25,7 @@ import com.example.andresarango.aughunt.challenge.challenge_review_fragments.Rev
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
 import com.example.andresarango.aughunt.profile.ViewPagerAdapter;
+import com.example.andresarango.aughunt.profile.viewpager.SubmittedChallengeFragment;
 import com.example.andresarango.aughunt.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -52,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
 
     private CreatedChallengesFragment mCreatedChallengesFragment;
+    private SubmittedChallengeFragment mSubmittedChallengesFragment;
     private ReviewChallengesFragment mReviewChallengesFragment;
     private CompareChallengesFragment mCompareChallengesFragment;
     private ChallengePhoto mSelectedChallenge;
@@ -139,8 +141,10 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         mCreatedChallengesFragment = new CreatedChallengesFragment();
         mCreatedChallengesFragment.setListener(this);
 
+        mSubmittedChallengesFragment = new SubmittedChallengeFragment();
+
         adapter.addFragment(mCreatedChallengesFragment, "Created");
-        adapter.addFragment(new ChallengeHistoryFragment(), "Submitted");
+        adapter.addFragment(mSubmittedChallengesFragment, "Submitted");
         pager.setAdapter(adapter);
     }
 
