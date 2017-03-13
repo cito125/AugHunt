@@ -5,7 +5,6 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -20,12 +19,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
+import com.example.andresarango.aughunt.challenge.challenge_review_fragments.PendingReviewFragment;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengesAdapter;
 import com.example.andresarango.aughunt.location.DAMLocation;
@@ -51,6 +52,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 public class SearchChallengeActivity extends AppCompatActivity implements CreatedChallengeListener, SnapshotHelper.SnapshotListener {
     private static final int LOCATION_PERMISSION = 1245;
 
@@ -60,6 +62,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     private TextView mLocation;
     private RecyclerView mRecyclerView;
     private ChallengesAdapter mNearbyChallengesAdapter;
+    private Boolean mHasBeenInflated=false;
 
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -73,6 +76,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     @BindView(R.id.pending_review) TextView mPending;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+    private int mPendingReviewIndicator=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +85,10 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         ButterKnife.bind(this);
         SnapshotHelper snapshotHelper = new SnapshotHelper(this);
         snapshotHelper.runSnapshot(getApplicationContext());
+
         retrieveUserFromFirebaseAndSetProfile();
         requestPermission();
+
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -90,6 +96,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
                switch (item.getItemId()){
 
                    case R.id.create_challenge:
+
                        Intent createChallenge=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
                        startActivity(createChallenge);
 
@@ -122,11 +129,13 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
                 mUserPointsTv.setText(user.getUserPoints() + " PTS");
                 mUserPointsTv.setTextColor(Color.parseColor("#D81B60"));
                 mPendingReview.setTypeface(mPendingReview.getTypeface(), Typeface.BOLD);
-                mPendingReview.setText("2");
+                mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
                 mPendingReview.setTextColor(Color.parseColor("#D81B60"));
                 mPending.setTextColor(Color.parseColor("#D81B60"));
                 mPending.setTypeface(mPending.getTypeface(), Typeface.BOLD);
                 mPending.setText("Pending review: ");
+
+
             }
 
             @Override
@@ -137,9 +146,9 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     }
 
     private void initialize() {
+
         initializeViews();
         setUpRecyclerView();
-
         rootRef.child("challenges").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -172,7 +181,13 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         // Key - value
         String challengeKey = dataSnapshot.getKey();
         ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
+        mPendingReviewIndicator =0;
 
+
+        if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            mPendingReviewIndicator+=challenge.getPendingReviews();
+            mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
+        }
         // Check location
         if (challenge.getLocation().isWithinRadius(userLocation, radius)) {
             // Put in challenge map
@@ -184,7 +199,32 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
             System.out.println("NOT WITHIN RADIUS");
         }
     }
+    private void retrievePendingReview() {
+        rootRef.child("challenges").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
+                mPendingReviewIndicator =0;
 
+
+                if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                    mPendingReviewIndicator+=challenge.getPendingReviews();
+                    mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
+                }
+                mPendingReview.setTypeface(mPendingReview.getTypeface(), Typeface.BOLD);
+                mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
+                mPendingReview.setTextColor(Color.parseColor("#D81B60"));
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
         String challengeKey = dataSnapshot.getKey();
@@ -192,6 +232,9 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         Set<String> challengeKeys = challengeMap.keySet();
         if (challengeKeys.contains(challengeKey)) {
             challengeMap.put(challengeKey, dataSnapshot.getValue(ChallengePhoto.class));
+
+
+
         }
 
         challengeList.clear();
@@ -210,9 +253,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     }
 
     private void initializeViews() {
-//        mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
-//        mHint = (TextView) findViewById(R.id.challenge_hint);
-//        mLocation = (TextView) findViewById(R.id.challenge_location);
         mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
     }
 
@@ -220,6 +260,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     public void onCreatedChallengeClicked(ChallengePhoto challenge) {
         DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
         dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
+        mHasBeenInflated=true;
     }
 
     private void requestPermission() {
@@ -269,6 +310,32 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         System.out.println(userLocation.getLat() + " " + userLocation.getLng() + " <--- USER LOCATION");
         initialize();
     }
+public void openPendingReview(View view){
+    getSupportFragmentManager().beginTransaction()
+            .replace(R.id.search_challenge, new PendingReviewFragment())
+            .commit();
 
+}
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        if(mHasBeenInflated){
+//            retrievePendingReview();
+//            mHasBeenInflated=false;
+//        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//if(mHasBeenInflated){
+//    retrievePendingReview();
+//    mHasBeenInflated=false;
+//}
+
+
+    }
 
 }
