@@ -23,6 +23,7 @@ import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt.challenge.ChallengePhotoSubmitted;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
 import com.example.andresarango.aughunt.user.User;
@@ -138,12 +139,18 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
                 final ChallengePhotoCompleted completedChallenge = new ChallengePhotoCompleted(pushId, auth.getCurrentUser().getUid(), url);
                 rootRef.child("completed-challenges").child(mChallengePhoto.getChallengeId()).child(pushId).setValue(completedChallenge);
                 incrementCompletedCounter();
-                inrementSubmittedCounter();
+                incrementSubmittedCounter();
             }
         });
+
+
+        // Create submitted challenge object and push to firebase
+        ChallengePhotoSubmitted submittedChallenge = new ChallengePhotoSubmitted(pushId, mChallengePhoto.getOwnerId(), mChallengePhoto.getPhotoUrl());
+        rootRef.child("submitted-challenges").child(auth.getCurrentUser().getUid()).child(pushId).setValue(submittedChallenge);
+
     }
 
-    private void inrementSubmittedCounter() {
+    private void incrementSubmittedCounter() {
         rootRef.child("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -172,6 +179,7 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
                 decrementPursuingCounter(); // Chaining these methods to finish properly
+
             }
         });
     }
