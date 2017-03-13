@@ -29,7 +29,7 @@ public class DeleteMeActivity extends AppCompatActivity
         }
 
         adapter = new ReviewSwipeAdapter();
-        adapter.setCompletedChallengeList(testData);
+//        adapter.setCompletedChallengeList(testData);
         if(cardStack != null){
             cardStack.setAdapter(adapter);
         }

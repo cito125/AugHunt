@@ -24,6 +24,7 @@ import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CompareChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CreatedChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.ReviewChallengesFragment;
+import com.example.andresarango.aughunt.challenge.challenge_review_fragments.ReviewChallengesFragmentAndres;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
 import com.example.andresarango.aughunt.profile.ViewPagerAdapter;
@@ -53,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
 
     private CreatedChallengesFragment mCreatedChallengesFragment;
-    private ReviewChallengesFragment mReviewChallengesFragment;
+    private ReviewChallengesFragmentAndres mReviewChallengesFragment;
     private CompareChallengesFragment mCompareChallengesFragment;
     private ChallengePhoto mSelectedChallenge;
 
@@ -159,9 +160,8 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     }
 
     private void startReviewChallengeFragment(ChallengePhoto challenge) {
-        mReviewChallengesFragment = new ReviewChallengesFragment();
+        mReviewChallengesFragment = new ReviewChallengesFragmentAndres();
         mReviewChallengesFragment.setChallengeToReview(challenge);
-        mReviewChallengesFragment.setmListener(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
