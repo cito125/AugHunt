@@ -68,6 +68,7 @@ public class ReviewChallengesFragmentAndres extends Fragment implements SwipeDec
 
 
     private Map<String, ChallengePhotoCompleted> challengeMap = new HashMap<>();
+    private PopFragmentListener mListener;
 
     @Nullable
     @Override
@@ -92,6 +93,8 @@ public class ReviewChallengesFragmentAndres extends Fragment implements SwipeDec
     public void initializeSwiperView() {
 
         mSwipeDeck.setCallback(this);
+        mSwipeDeck.setLeftImage(R.id.left_image);
+        mSwipeDeck.setRightImage(R.id.right_image);
 
         rootRef.child("completed-challenges").child(mChallengeToReview.getChallengeId()).addChildEventListener(new ChildEventListener() {
             @Override
@@ -184,12 +187,22 @@ public class ReviewChallengesFragmentAndres extends Fragment implements SwipeDec
     @Override
     public void cardSwipedLeft(long stableId) {
         removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
+        if(mCompletedChallengeDeck.isEmpty()){
+            mListener.popFragment();
+        }
     }
 
     @Override
     public void cardSwipedRight(long stableId) {
         removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
+        if(mCompletedChallengeDeck.isEmpty()){
+            mListener.popFragment();
+        }
     }
+
+
+
+
 
     private void removeCompletedChallengeFromFirebase(ChallengePhotoCompleted completedChallenge) {
         // Delete database value
@@ -204,4 +217,9 @@ public class ReviewChallengesFragmentAndres extends Fragment implements SwipeDec
                 .child(completedChallenge.getCompletedChallengeId())
                 .delete();
     }
+
+    public void setPopFragmentListener(PopFragmentListener listener) {
+        mListener = listener;
+    }
+
 }

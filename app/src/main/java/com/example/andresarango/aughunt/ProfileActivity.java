@@ -1,9 +1,7 @@
 package com.example.andresarango.aughunt;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +21,7 @@ import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CompareChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CreatedChallengesFragment;
-import com.example.andresarango.aughunt.challenge.challenge_review_fragments.ReviewChallengesFragment;
+import com.example.andresarango.aughunt.challenge.challenge_review_fragments.PopFragmentListener;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.ReviewChallengesFragmentAndres;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
@@ -43,7 +41,7 @@ import butterknife.ButterKnife;
  * Created by dannylui on 3/11/17.
  */
 
-public class ProfileActivity extends AppCompatActivity implements CreatedChallengeListener, CompletedChallengeListener {
+public class ProfileActivity extends AppCompatActivity implements CreatedChallengeListener, CompletedChallengeListener,PopFragmentListener {
     @BindView(R.id.tab_layout) TabLayout tablayout; // Import design in build.gradle
     @BindView(R.id.viewpager) ViewPager pager;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
@@ -162,6 +160,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     private void startReviewChallengeFragment(ChallengePhoto challenge) {
         mReviewChallengesFragment = new ReviewChallengesFragmentAndres();
         mReviewChallengesFragment.setChallengeToReview(challenge);
+        mReviewChallengesFragment.setPopFragmentListener(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -188,6 +187,11 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
     public void popFragmentFromBackStack() {
         getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void popFragment() {
+        popFragmentFromBackStack();
     }
 }
 
