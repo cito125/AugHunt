@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.daprlabs.aaron.swipedeck.SwipeDeck;
 import com.example.andresarango.aughunt.R;
 
 import java.util.ArrayList;
@@ -59,4 +60,5 @@ public class ReviewSwipeAdapter extends BaseAdapter {
         mDataList.addAll(data);
         notifyDataSetChanged();
     }
+
 }

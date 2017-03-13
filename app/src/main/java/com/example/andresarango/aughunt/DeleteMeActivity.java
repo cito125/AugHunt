@@ -1,27 +1,18 @@
 package com.example.andresarango.aughunt;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
+import com.daprlabs.aaron.swipedeck.Utility.SwipeCallback;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeAdapter;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeCallback;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class DeleteMeActivity extends AppCompatActivity {
+public class DeleteMeActivity extends AppCompatActivity
+        implements SwipeDeck.SwipeDeckCallback{
 
     private SwipeDeck cardStack;
     private ReviewSwipeAdapter adapter;
@@ -43,7 +34,7 @@ public class DeleteMeActivity extends AppCompatActivity {
         if(cardStack != null){
             cardStack.setAdapter(adapter);
         }
-        cardStack.setCallback(new ReviewSwipeCallback());
+        cardStack.setCallback(this);
         cardStack.setLeftImage(R.id.left_image);
         cardStack.setRightImage(R.id.right_image);
 
@@ -66,4 +57,13 @@ public class DeleteMeActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void cardSwipedLeft(long stableId) {
+
+    }
+
+    @Override
+    public void cardSwipedRight(long stableId) {
+
+    }
 }
