@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
@@ -161,8 +162,8 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     }
 
     private void setupTabLayout(TabLayout tablayout) {
-        tablayout.setTabTextColors(0xFFFFFFFF, 0xFFFFFFFF);
-        tablayout.setSelectedTabIndicatorColor(0xFFFFFFFF);
+        tablayout.setTabTextColors(ContextCompat.getColor(this, R.color.lightGrey), ContextCompat.getColor(this, R.color.lightGrey));
+        tablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.lightGrey));
     }
 
 

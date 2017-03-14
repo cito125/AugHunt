@@ -16,6 +16,7 @@ import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeAdapter;
 import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.models.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt.models.ChallengePhotoSubmitted;
 import com.example.andresarango.aughunt.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -218,8 +219,10 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
 
     @Override
     public void cardSwipedLeft(long stableId) {
-        removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
+        ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
+        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
+        updateUsersSubmittedChallenge(completed, false);
         if(mCompletedChallengeDeck.isEmpty()){
             mListener.popFragment(this);
         }
@@ -227,11 +230,36 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
 
     @Override
     public void cardSwipedRight(long stableId) {
-        removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
+        ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
+        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
+        updateUsersSubmittedChallenge(completed, true);
         if(mCompletedChallengeDeck.isEmpty()){
             mListener.popFragment(this);
         }
+    }
+
+    private void updateUsersSubmittedChallenge(final ChallengePhotoCompleted completed, final boolean isAccepted) {
+        rootRef.child("submitted-challenges").child(completed.getPlayerId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.getKey().equals(completed.getOriginalChallengeId())) {
+                        if (isAccepted) {
+                            ChallengePhotoSubmitted submittedChallenge = snapshot.getValue(ChallengePhotoSubmitted.class);
+                            submittedChallenge.setAccepted(isAccepted);
+                            submittedChallenge.setReviewed(true);
+                            rootRef.child("submitted-challenges").child(completed.getPlayerId()).child(snapshot.getKey()).setValue(submittedChallenge);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void removeCompletedChallengeFromFirebase(ChallengePhotoCompleted completedChallenge) {
