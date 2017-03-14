@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 
 import java.util.ArrayList;

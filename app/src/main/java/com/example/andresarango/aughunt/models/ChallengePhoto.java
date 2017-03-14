@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge;
+package com.example.andresarango.aughunt.models;
 
 import com.example.andresarango.aughunt.location.DAMLocation;
 

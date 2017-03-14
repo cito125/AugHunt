@@ -13,11 +13,10 @@ import android.widget.TextView;
 
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
+import com.example.andresarango.aughunt.models.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeAdapter;
-import com.example.andresarango.aughunt.user.User;
+import com.example.andresarango.aughunt.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;

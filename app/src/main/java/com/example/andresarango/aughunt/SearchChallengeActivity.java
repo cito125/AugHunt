@@ -5,7 +5,6 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -23,14 +22,13 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.andresarango.aughunt.challenge.Challenge;
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengesAdapter;
 import com.example.andresarango.aughunt.location.DAMLocation;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
+import com.example.andresarango.aughunt.models.User;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
-import com.example.andresarango.aughunt.user.User;
 import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -56,7 +54,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
 
     private ImageView mChallengeImage;
     private TextView mHint;
-    private List<Challenge<String>> mChallengeList;
     private TextView mLocation;
     private RecyclerView mRecyclerView;
     private ChallengesAdapter mNearbyChallengesAdapter;

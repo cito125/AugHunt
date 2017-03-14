@@ -1,6 +1,7 @@
 package com.example.andresarango.aughunt.challenge;
 
 import com.example.andresarango.aughunt.location.DAMLocation;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
 
 import java.util.ArrayList;
 import java.util.List;

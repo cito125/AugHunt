@@ -24,10 +24,10 @@ import android.widget.Toast;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
-import com.example.andresarango.aughunt.user.User;
+import com.example.andresarango.aughunt.models.User;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.snapshot.LocationResult;
