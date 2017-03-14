@@ -54,10 +54,14 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
 
     Deque<ChallengePhotoCompleted> mCompletedChallengeDeck = new LinkedList<>();
 
-    @BindView(R.id.swipe_deck) SwipeDeck mSwipeDeck;
-    @BindView(R.id.tv_user_points) TextView mUserPointsTv;
-    @BindView(R.id.review_number) TextView mPendingReview;
-    @BindView(R.id.pending_review) TextView mPending;
+    @BindView(R.id.swipe_deck)
+    SwipeDeck mSwipeDeck;
+    @BindView(R.id.tv_user_points)
+    TextView mUserPointsTv;
+    @BindView(R.id.review_number)
+    TextView mPendingReview;
+    @BindView(R.id.pending_review)
+    TextView mPending;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -223,7 +227,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
         updateUsersSubmittedChallenge(completed, false);
-        if(mCompletedChallengeDeck.isEmpty()){
+        if (mCompletedChallengeDeck.isEmpty()) {
             mListener.popFragment(this);
         }
     }
@@ -234,7 +238,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
         updateUsersSubmittedChallenge(completed, true);
-        if(mCompletedChallengeDeck.isEmpty()){
+        if (mCompletedChallengeDeck.isEmpty()) {
             mListener.popFragment(this);
         }
     }
@@ -245,12 +249,11 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.getKey().equals(completed.getOriginalChallengeId())) {
-                        if (isAccepted) {
-                            ChallengePhotoSubmitted submittedChallenge = snapshot.getValue(ChallengePhotoSubmitted.class);
-                            submittedChallenge.setAccepted(isAccepted);
-                            submittedChallenge.setReviewed(true);
-                            rootRef.child("submitted-challenges").child(completed.getPlayerId()).child(snapshot.getKey()).setValue(submittedChallenge);
-                        }
+                        ChallengePhotoSubmitted submittedChallenge = snapshot.getValue(ChallengePhotoSubmitted.class);
+                        submittedChallenge.setAccepted(isAccepted);
+                        submittedChallenge.setReviewed(true);
+                        rootRef.child("submitted-challenges").child(completed.getPlayerId()).child(snapshot.getKey()).setValue(submittedChallenge);
+                        
                     }
                 }
             }
@@ -281,7 +284,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
                 ChallengePhoto challenge = mutableData.getValue(ChallengePhoto.class);
-                challenge.setPendingReviews(challenge.getPendingReviews()-1);
+                challenge.setPendingReviews(challenge.getPendingReviews() - 1);
                 mutableData.setValue(challenge);
                 return Transaction.success(mutableData);
             }
