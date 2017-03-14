@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/search_challenge"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/top_menu"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#5d91b6">
-    <TextView
-        android:id="@+id/tv_user_points"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:background="#5d91b6"/>
+
+        <TextView
+            android:id="@+id/tv_user_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="#5d91b6" />
+
         <TextView
             android:id="@+id/review_number"
             android:layout_width="wrap_content"
@@ -23,31 +27,34 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:background="#5d91b6"/>
+            android:background="#5d91b6"
+            android:onClick="openPendingReview" />
+
         <TextView
             android:id="@+id/pending_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/review_number"
             android:layout_marginTop="5dp"
-            android:background="#5d91b6"/>
+            android:layout_toLeftOf="@id/review_number"
+            android:background="#5d91b6"
+            android:onClick="openPendingReview" />
 
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_challenge_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top_menu"
-        android:background="#6e5d91b6"
-        >
-    </android.support.v7.widget.RecyclerView>
+        android:background="#6e5d91b6"></android.support.v7.widget.RecyclerView>
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="#5d91b6"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        android:layout_alignParentBottom="true"
         app:menu="@menu/menu_bottom_navigation" />
 </RelativeLayout>

@@ -1,6 +1,5 @@
 package com.example.andresarango.aughunt.challenge.challenges_adapters.nearby;
 
-
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,8 +8,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.andresarango.aughunt.R;
+import com.example.andresarango.aughunt.SearchChallengeHelper;
 import com.example.andresarango.aughunt.models.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,20 +20,25 @@ import com.google.firebase.database.ValueEventListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-class ChallengeViewholder<T> extends RecyclerView.ViewHolder {
-    @BindView(R.id.iv_search_challenge_picture) ImageView mChallengePictureIv;
+class ChallengeViewholder extends RecyclerView.ViewHolder {
+    @BindView(R.id.iv_search_challenge_picture)
+    ImageView mChallengePictureIv;
     //@BindView(R.id.tv_search_challenge_id) TextView mChallengeIdTv;
-    @BindView(R.id.tv_search_challenge_owner_id) TextView mChallengeOwnerIdTv;
-    @BindView(R.id.tv_search_challenge_hint) TextView mHintTextView;
-    @BindView(R.id.tv_search_challenge_pursuing) TextView mPursuingTv;
-    @BindView(R.id.tv_hint) TextView mHint;
+    @BindView(R.id.tv_search_challenge_owner_id)
+    TextView mChallengeOwnerIdTv;
+    @BindView(R.id.tv_search_challenge_hint)
+    TextView mHintTextView;
+    @BindView(R.id.tv_search_challenge_pursuing)
+    TextView mPursuingTv;
+    @BindView(R.id.tv_hint)
+    TextView mHint;
 
     private DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
 
-    private final CreatedChallengeListener mListener;
-    private String mProfileName="";
+    private final SearchChallengeHelper mListener;
+    private String mProfileName = "";
 
-    public ChallengeViewholder(View itemView, CreatedChallengeListener listener) {
+    public ChallengeViewholder(View itemView, SearchChallengeHelper listener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         mListener = listener;
@@ -43,8 +47,6 @@ class ChallengeViewholder<T> extends RecyclerView.ViewHolder {
     }
 
     public void bind(ChallengePhoto challenge, String profileName) {
-
-
         Glide.with(itemView.getContext()).load(challenge.getPhotoUrl()).into(mChallengePictureIv);
         mChallengeOwnerIdTv.setTypeface(mChallengeOwnerIdTv.getTypeface(), Typeface.BOLD);
         mChallengeOwnerIdTv.setText("Created by  " + profileName);
@@ -59,29 +61,29 @@ class ChallengeViewholder<T> extends RecyclerView.ViewHolder {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onCreatedChallengeClicked(challenge);
+                mListener.onSearchChallengeClicked(challenge);
             }
         };
     }
 
-public void getUserName(final ChallengePhoto challenge){
+    public void getUserName(final ChallengePhoto challenge) {
 
 
-    mDataBase.child("users").child(challenge.getOwnerId()).addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
+        mDataBase.child("users").child(challenge.getOwnerId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-            User user = dataSnapshot.getValue(User.class);
+                User user = dataSnapshot.getValue(User.class);
 
-            bind(challenge, user.getProfileName());
-        }
+                bind(challenge, user.getProfileName());
+            }
 
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        }
-    });
+            }
+        });
 
 
-}
+    }
 }

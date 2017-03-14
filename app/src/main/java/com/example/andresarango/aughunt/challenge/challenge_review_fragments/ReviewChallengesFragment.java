@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
 import com.example.andresarango.aughunt.R;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeAdapter;
 import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.models.ChallengePhotoCompleted;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeAdapter;
 import com.example.andresarango.aughunt.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -23,6 +23,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -51,17 +53,12 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
 
     Deque<ChallengePhotoCompleted> mCompletedChallengeDeck = new LinkedList<>();
 
-    @BindView(R.id.swipe_deck)
-    SwipeDeck mSwipeDeck;
+    @BindView(R.id.swipe_deck) SwipeDeck mSwipeDeck;
+    @BindView(R.id.tv_user_points) TextView mUserPointsTv;
+    @BindView(R.id.review_number) TextView mPendingReview;
+    @BindView(R.id.pending_review) TextView mPending;
 
-    @BindView(R.id.tv_user_points)
-    TextView mUserPointsTv;
-    @BindView(R.id.review_number)
-    TextView mPendingReview;
-    @BindView(R.id.pending_review)
-    TextView mPending;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
-
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -186,6 +183,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @Override
     public void cardSwipedLeft(long stableId) {
         removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
+        decrementPendingReviewCounter();
         if(mCompletedChallengeDeck.isEmpty()){
             mListener.popFragment(this);
         }
@@ -194,14 +192,11 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @Override
     public void cardSwipedRight(long stableId) {
         removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
+        decrementPendingReviewCounter();
         if(mCompletedChallengeDeck.isEmpty()){
             mListener.popFragment(this);
         }
     }
-
-
-
-
 
     private void removeCompletedChallengeFromFirebase(ChallengePhotoCompleted completedChallenge) {
         // Delete database value
@@ -215,6 +210,23 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
                 .child(mChallengeToReview.getChallengeId())
                 .child(completedChallenge.getCompletedChallengeId())
                 .delete();
+    }
+
+    private void decrementPendingReviewCounter() {
+        rootRef.child("challenges").child(mChallengeToReview.getChallengeId()).runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                ChallengePhoto challenge = mutableData.getValue(ChallengePhoto.class);
+                challenge.setPendingReviews(challenge.getPendingReviews()-1);
+                mutableData.setValue(challenge);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+
+            }
+        });
     }
 
     public void setPopFragmentListener(PopFragmentListener listener) {

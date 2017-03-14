@@ -19,11 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengesAdapter;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.models.ChallengePhoto;
@@ -37,11 +35,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -49,65 +46,73 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchChallengeActivity extends AppCompatActivity implements CreatedChallengeListener, SnapshotHelper.SnapshotListener {
+public class SearchChallengeActivity extends AppCompatActivity implements SnapshotHelper.SnapshotListener, SearchChallengeHelper {
     private static final int LOCATION_PERMISSION = 1245;
 
-    private ImageView mChallengeImage;
-    private TextView mHint;
-    private TextView mLocation;
-    private RecyclerView mRecyclerView;
     private ChallengesAdapter mNearbyChallengesAdapter;
-
-    private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
     private DAMLocation userLocation;
     private Double radius = 100.0;
+
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
     private List<ChallengePhoto> challengeList = new ArrayList<>();
+    private Set<String> submittedChallengeSet = new HashSet<>();
+
+    @BindView(R.id.search_challenge_recyclerview) RecyclerView mRecyclerView;
     @BindView(R.id.tv_user_points) TextView mUserPointsTv;
     @BindView(R.id.review_number) TextView mPendingReview;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
     @BindView(R.id.pending_review) TextView mPending;
+
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+
+    private int mPendingReviewIndicator = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_challenge);
         ButterKnife.bind(this);
-        SnapshotHelper snapshotHelper = new SnapshotHelper(this);
-        snapshotHelper.runSnapshot(getApplicationContext());
-        retrieveUserFromFirebaseAndSetProfile();
+
         requestPermission();
+        retrieveUserFromFirebaseAndSetProfile();
+
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-               switch (item.getItemId()){
-
-                   case R.id.create_challenge:
-                       Intent createChallenge=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
-                       startActivity(createChallenge);
-
-
-                       break;
-                   case R.id.homepage:
-                       Intent homePage=new Intent(getApplicationContext(), SearchChallengeActivity.class);
-                       startActivity(homePage);
-
-                       break;
-                   case R.id.user_profile:
-                       Intent userProfile=new Intent(getApplicationContext(),ProfileActivity.class);
-                       startActivity(userProfile);
-                       break;
+                switch (item.getItemId()) {
+                    case R.id.create_challenge:
+                        Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                        startActivity(createChallenge);
+                        break;
+                    case R.id.user_profile:
+                        Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
+                        startActivity(userProfile);
+                        break;
                 }
                 return true;
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println("CALLED ON START");
+        mPendingReviewIndicator = 0;
+        challengeList.clear();
+        challengeMap.clear();
+        submittedChallengeSet.clear();
+        SnapshotHelper snapshotHelper = new SnapshotHelper(this);
+        snapshotHelper.runSnapshot(getApplicationContext());
+        setUpRecyclerView();
+    }
 
-
+    private void setUpRecyclerView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mNearbyChallengesAdapter = new ChallengesAdapter(this);
+        mRecyclerView.setAdapter(mNearbyChallengesAdapter);
     }
 
     private void retrieveUserFromFirebaseAndSetProfile() {
@@ -119,11 +124,12 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
                 mUserPointsTv.setText(user.getUserPoints() + " PTS");
                 mUserPointsTv.setTextColor(Color.parseColor("#D81B60"));
                 mPendingReview.setTypeface(mPendingReview.getTypeface(), Typeface.BOLD);
-                mPendingReview.setText("2");
+                mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
                 mPendingReview.setTextColor(Color.parseColor("#D81B60"));
                 mPending.setTextColor(Color.parseColor("#D81B60"));
                 mPending.setTypeface(mPending.getTypeface(), Typeface.BOLD);
                 mPending.setText("Pending review: ");
+
             }
 
             @Override
@@ -134,9 +140,6 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     }
 
     private void initialize() {
-        initializeViews();
-        setUpRecyclerView();
-
         rootRef.child("challenges").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -146,6 +149,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 updateRecyclerView(dataSnapshot);
+
             }
 
             @Override
@@ -166,22 +170,47 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     }
 
     private void addChallengeToRecyclerView(DataSnapshot dataSnapshot) {
-        // Key - value
-        String challengeKey = dataSnapshot.getKey();
         ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
 
-        // Check location
-        if (challenge.getLocation().isWithinRadius(userLocation, radius)) {
-            // Put in challenge map
-            challengeMap.put(challengeKey, challenge);
-            challengeList.add(challengeMap.get(challengeKey));
-
-            mNearbyChallengesAdapter.setChallengeList(challengeList);
-        } else {
-            System.out.println("NOT WITHIN RADIUS");
+        if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            mPendingReviewIndicator += challenge.getPendingReviews();
+            mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
         }
+
+        System.out.println("CALLED GETTING LIST OF SUBMITTED CHALLENGES");
+        getListOfSubmittedChallenges(dataSnapshot);
     }
 
+    private void getListOfSubmittedChallenges(final DataSnapshot dataSnapshot) {
+        final String challengeKey = dataSnapshot.getKey();
+        final ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
+
+        rootRef.child("submitted-challenges").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    submittedChallengeSet.add(snapshot.getKey());
+                    System.out.println(snapshot.getKey());
+                }
+
+                if (challenge.getLocation().isWithinRadius(userLocation, radius) &&
+                        !submittedChallengeSet.contains(challengeKey)) {
+                    System.out.println("ADDING ONE TO RV");
+                    challengeMap.put(challengeKey, challenge);
+                    challengeList.add(challengeMap.get(challengeKey));
+
+                    mNearbyChallengesAdapter.setChallengeList(challengeList);
+                } else {
+                    System.out.println("NOT WITHIN RADIUS / HAS SUBMITTED");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
         String challengeKey = dataSnapshot.getKey();
@@ -196,29 +225,23 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
             challengeList.add(challengeMap.get(key));
         }
 
-        // update recycler view
         mNearbyChallengesAdapter.setChallengeList(challengeList);
     }
 
-    private void setUpRecyclerView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mNearbyChallengesAdapter = new ChallengesAdapter(this);
-        mRecyclerView.setAdapter(mNearbyChallengesAdapter);
-    }
-
-    private void initializeViews() {
-//        mChallengeImage = (ImageView) findViewById(R.id.existing_challenge);
-//        mHint = (TextView) findViewById(R.id.challenge_hint);
-//        mLocation = (TextView) findViewById(R.id.challenge_location);
-        mRecyclerView = (RecyclerView) findViewById(R.id.search_challenge_recyclerview);
-    }
-
     @Override
-    public void onCreatedChallengeClicked(ChallengePhoto challenge) {
+    public void onSearchChallengeClicked(ChallengePhoto challenge) {
         DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
         dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
     }
 
+    @Override
+    public void run(LocationResult locationResult) {
+        userLocation = new DAMLocation(locationResult.getLocation().getLatitude(), locationResult.getLocation().getLongitude());
+        System.out.println(userLocation.getLat() + " " + userLocation.getLng() + " <--- USER LOCATION");
+        initialize();
+    }
+
+    //    PERMISSION STUFF
     private void requestPermission() {
         int locationPermission = ContextCompat.checkSelfPermission(SearchChallengeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
         boolean locationPermissionIsNotGranted = locationPermission != PackageManager.PERMISSION_GRANTED;
@@ -259,13 +282,4 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
                 .create()
                 .show();
     }
-
-    @Override
-    public void run(LocationResult locationResult) {
-        userLocation = new DAMLocation(locationResult.getLocation().getLatitude(), locationResult.getLocation().getLongitude());
-        System.out.println(userLocation.getLat() + " " + userLocation.getLng() + " <--- USER LOCATION");
-        initialize();
-    }
-
-
 }
