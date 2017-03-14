@@ -2,12 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/homepage"
+        android:id="@+id/search_challenge"
         android:enabled="true"
         android:icon="@drawable/ic_search_black_48dp"
         android:title="@string/text_search_challenges"
         app:showAsAction="ifRoom" />
-
+    <item
+        android:id="@+id/leaderboard"
+        android:enabled="true"
+        android:icon="@drawable/leaderboard"
+        android:title="@string/leader_board"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/create_challenge"
         android:enabled="true"

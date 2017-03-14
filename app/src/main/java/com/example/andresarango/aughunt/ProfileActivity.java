@@ -69,30 +69,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         setupViewPager(pager);
         tablayout.setupWithViewPager(pager);
 
-        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-                    case R.id.create_challenge:
-                        Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
-                        startActivity(createChallenge);
-
-                        break;
-                    case R.id.homepage:
-                        Intent homePage = new Intent(getApplicationContext(), SearchChallengeActivity.class);
-                        startActivity(homePage);
-
-                        break;
-                    case R.id.user_profile:
-                        Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
-                        startActivity(userProfile);
-                        break;
-                }
-                return true;
-            }
-        });
+        setupProfileStatusBar();
 
         Glide.with(getApplicationContext())
                 .load("http://clipart-library.com/images/rcLojMEni.jpg")
@@ -108,8 +85,47 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                     }
                 });
 
-        setupProfileStatusBar();
+        setupBottomNavigation();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mBottomNav.getMenu().getItem(0).setChecked(true);
+        mBottomNav.getMenu().getItem(1).setChecked(false);
+        mBottomNav.getMenu().getItem(2).setChecked(false);
+        mBottomNav.getMenu().getItem(3).setChecked(false);
+    }
+
+    private void setupBottomNavigation() {
+        mBottomNav.getMenu().getItem(3).setChecked(false);// Search item
+        mBottomNav.getMenu().getItem(2).setChecked(false);// Leaderboard
+        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
+        mBottomNav.getMenu().getItem(0).setChecked(true); // Profile item
+        BottomNavigationViewHelper.disableShiftMode(mBottomNav);
+
+
+        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.create_challenge:
+                        Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                        startActivity(createChallenge);
+                        break;
+                    case R.id.search_challenge:
+                        Intent searchChallenge = new Intent(getApplicationContext(), SearchChallengeActivity.class);
+                        startActivity(searchChallenge);
+                        break;
+                    case R.id.leaderboard:
+                        Intent leadeBoard = new Intent(getApplicationContext(), LeaderBoardActivity.class);
+                        startActivity(leadeBoard);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     private void setupProfileStatusBar() {

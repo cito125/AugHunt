@@ -77,6 +77,17 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
 
         requestPermission();
         retrieveUserFromFirebaseAndSetProfile();
+        setupBottomNavigation();
+    }
+
+    private void setupBottomNavigation() {
+
+        mBottomNav.getMenu().getItem(3).setChecked(true);// Search item
+        mBottomNav.getMenu().getItem(2).setChecked(false);// Leaderboard
+        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
+        mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
+        BottomNavigationViewHelper.disableShiftMode(mBottomNav);
+
 
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -90,6 +101,10 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
                         Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
                         startActivity(userProfile);
                         break;
+                    case R.id.leaderboard:
+                        Intent leadeBoard = new Intent(getApplicationContext(), LeaderBoardActivity.class);
+                        startActivity(leadeBoard);
+                        break;
                 }
                 return true;
             }
@@ -100,6 +115,11 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     protected void onResume() {
         super.onResume();
         System.out.println("CALLED ON START");
+        mBottomNav.getMenu().getItem(3).setChecked(true);
+        mBottomNav.getMenu().getItem(2).setChecked(false);  // Search item
+        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
+        mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
+
         mPendingReviewIndicator = 0;
         challengeList.clear();
         challengeMap.clear();
