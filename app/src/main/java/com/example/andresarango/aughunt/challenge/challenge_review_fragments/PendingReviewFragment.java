@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.PendingReviewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -41,7 +41,7 @@ public class PendingReviewFragment extends Fragment {
     @BindView(R.id.pending_review_challenges) RecyclerView mRecyclerView;
     PendingReviewAdapter mPendingReviewAdapter;
     private AppCompatActivity mAppCompatActivity;
-    private  ChallengeReviewCreated  mChallengeReviewCreated;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,8 +52,7 @@ public class PendingReviewFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
-        mChallengeReviewCreated = new ChallengeReviewCreated(mAppCompatActivity);
-         mPendingReviewAdapter = new PendingReviewAdapter(mChallengeReviewCreated);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mPendingReviewAdapter);
         callFirebase();
@@ -98,8 +97,8 @@ public class PendingReviewFragment extends Fragment {
         // Check location
         if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())&& challenge.getPendingReviews()>0) {
             challengeMap.put(challengeKey, challenge);
-            PendingReviewAdapter adapter = (PendingReviewAdapter) mRecyclerView.getAdapter();
-            adapter.addChallengeToList(challenge);
+//            PendingReviewAdapter adapter = (PendingReviewAdapter) mRecyclerView.getAdapter();
+//            adapter.addChallengeToList(challenge);
 
         } else {
             System.out.println("NOT THE RIGHT USER");
@@ -120,8 +119,8 @@ public class PendingReviewFragment extends Fragment {
         }
 
         // update recycler view
-        PendingReviewAdapter adapter = (PendingReviewAdapter) mRecyclerView.getAdapter();
-        adapter.setChallengeList(challengeList);
+//        PendingReviewAdapter adapter = (PendingReviewAdapter) mRecyclerView.getAdapter();
+//        adapter.setChallengeList(challengeList);
     }
 
     public void setmAppCompatActivity(AppCompatActivity mAppCompatActivity) {
