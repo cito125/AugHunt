@@ -145,8 +145,8 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
 
 
         // Create submitted challenge object and push to firebase
-        ChallengePhotoSubmitted submittedChallenge = new ChallengePhotoSubmitted(pushId, mChallengePhoto.getOwnerId(), mChallengePhoto.getHint(), mChallengePhoto.getPhotoUrl());
-        rootRef.child("submitted-challenges").child(auth.getCurrentUser().getUid()).child(pushId).setValue(submittedChallenge);
+        ChallengePhotoSubmitted submittedChallenge = new ChallengePhotoSubmitted(mChallengePhoto.getChallengeId(), mChallengePhoto.getOwnerId(), mChallengePhoto.getHint(), mChallengePhoto.getPhotoUrl());
+        rootRef.child("submitted-challenges").child(auth.getCurrentUser().getUid()).child(mChallengePhoto.getChallengeId()).setValue(submittedChallenge);
 
     }
 

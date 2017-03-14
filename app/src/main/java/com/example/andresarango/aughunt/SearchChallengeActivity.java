@@ -25,10 +25,14 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.challenge.Challenge;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
+import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CompareChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.PendingReviewFragment;
+import com.example.andresarango.aughunt.challenge.challenge_review_fragments.ReviewChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.nearby.ChallengesAdapter;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
 import com.example.andresarango.aughunt.user.User;
@@ -45,6 +49,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -53,7 +58,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SearchChallengeActivity extends AppCompatActivity implements CreatedChallengeListener, SnapshotHelper.SnapshotListener {
+public class SearchChallengeActivity extends AppCompatActivity implements SearchChallengeHelper,CreatedChallengeListener, SnapshotHelper.SnapshotListener , CompletedChallengeListener {
     private static final int LOCATION_PERMISSION = 1245;
 
     private ImageView mChallengeImage;
@@ -62,7 +67,10 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     private TextView mLocation;
     private RecyclerView mRecyclerView;
     private ChallengesAdapter mNearbyChallengesAdapter;
-    private Boolean mHasBeenInflated = false;
+    private Boolean mHasBeenInflated=false;
+    private ChallengePhoto mSelectedChallenge;
+    private ReviewChallengesFragment mReviewChallengesFragment;
+    private CompareChallengesFragment mCompareChallengesFragment;
 
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -70,6 +78,8 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     private Double radius = 100.0;
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
     private List<ChallengePhoto> challengeList = new ArrayList<>();
+    private Set<String> submittedChallengeSet = new HashSet<>();
+
     @BindView(R.id.tv_user_points)
     TextView mUserPointsTv;
     @BindView(R.id.review_number)
@@ -195,16 +205,48 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         }
         // Check location
         if (!hasBeenInflated) {
-            if (challenge.getLocation().isWithinRadius(userLocation, radius)) {
-                // Put in challenge map
-                challengeMap.put(challengeKey, challenge);
-                challengeList.add(challengeMap.get(challengeKey));
+            System.out.println("CALLED GETTING LIST OF SUBMITTED CHALLENGES");
+            getListOfSubmittedChallenges(dataSnapshot);
 
-                mNearbyChallengesAdapter.setChallengeList(challengeList);
-            } else {
-                System.out.println("NOT WITHIN RADIUS");
-            }
+//            if (challenge.getLocation().isWithinRadius(userLocation, radius)) {
+//                // Put in challenge map
+//                challengeMap.put(challengeKey, challenge);
+//                challengeList.add(challengeMap.get(challengeKey));
+//
+//                mNearbyChallengesAdapter.setChallengeList(challengeList);
+//            } else {
+//                System.out.println("NOT WITHIN RADIUS");
+//            }
         }
+    }
+
+    private void getListOfSubmittedChallenges(final DataSnapshot dataSnapshot) {
+        final String challengeKey = dataSnapshot.getKey();
+        final ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
+
+        rootRef.child("submitted-challenges").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    submittedChallengeSet.add(snapshot.getKey());
+                }
+
+                if (challenge.getLocation().isWithinRadius(userLocation, radius) &&
+                        !submittedChallengeSet.contains(challengeKey)) {
+                    challengeMap.put(challengeKey, challenge);
+                    challengeList.add(challengeMap.get(challengeKey));
+
+                    mNearbyChallengesAdapter.setChallengeList(challengeList);
+                } else {
+                    System.out.println("NOT WITHIN RADIUS / HAS SUBMITTED");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
@@ -237,7 +279,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
     }
 
     @Override
-    public void onCreatedChallengeClicked(ChallengePhoto challenge) {
+    public void onSearchChallengeClicked(ChallengePhoto challenge) {
         DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
         dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
         mHasBeenInflated = true;
@@ -290,11 +332,13 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
         System.out.println(userLocation.getLat() + " " + userLocation.getLng() + " <--- USER LOCATION");
         initialize(mHasBeenInflated);
     }
+public void openPendingReview(View view){
 
-    public void openPendingReview(View view) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.search_challenge, new PendingReviewFragment())
-                .commit();
+    PendingReviewFragment pendingReviewFragment = new PendingReviewFragment();
+    pendingReviewFragment.setmAppCompatActivity(this);
+    getSupportFragmentManager().beginTransaction()
+            .replace(R.id.search_challenge, pendingReviewFragment)
+            .commit();
 
     }
 
@@ -314,7 +358,58 @@ public class SearchChallengeActivity extends AppCompatActivity implements Create
             mHasBeenInflated = false;
         }
 
+        System.out.println("CALLED ON RESUME");
+
+
 
     }
 
+    @Override
+    public void onCompletedChallengeClicked(ChallengePhotoCompleted completedChallenge) {
+        startCompareChallengeFragment(completedChallenge, mSelectedChallenge);
+
+    }
+
+    @Override
+    public void onCreatedChallengeClicked(ChallengePhoto challenge) {
+        mSelectedChallenge = challenge;
+        startReviewChallengeFragment(challenge);
+
+    }
+
+    private void startReviewChallengeFragment(ChallengePhoto challenge) {
+        mReviewChallengesFragment = new ReviewChallengesFragment();
+        mReviewChallengesFragment.setChallengeToReview(challenge);
+        mReviewChallengesFragment.setmListener(this);
+
+       getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.search_challenge, mReviewChallengesFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void startCompareChallengeFragment(ChallengePhotoCompleted completedChallenge, ChallengePhoto challenge) {
+        mCompareChallengesFragment = new CompareChallengesFragment();
+        mCompareChallengesFragment.setCompletedChallenge(completedChallenge);
+        mCompareChallengesFragment.setCurrentChallenge(challenge);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.search_challenge, mCompareChallengesFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

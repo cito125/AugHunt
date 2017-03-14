@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  * Created by Millochka on 3/5/17.
  */
 
-class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
+public class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.iv_created_challenge_image) ImageView mChallengeImageIv;
     @BindView(R.id.tv_created_challenge_hint) TextView mHintTv;
