@@ -88,10 +88,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                         startActivity(homePage);
 
                         break;
-                    case R.id.user_profile:
-                        Intent userProfile=new Intent(getApplicationContext(),ProfileActivity.class);
-                        startActivity(userProfile);
-                        break;
+
                 }
                 return true;
             }
