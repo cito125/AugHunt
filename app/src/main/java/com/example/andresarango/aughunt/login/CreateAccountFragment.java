@@ -88,4 +88,6 @@ public class CreateAccountFragment extends Fragment {
         String userId = auth.getCurrentUser().getUid();
         rootRef.child("users").child(userId).setValue(new User(userId, name));
     }
+
+
 }

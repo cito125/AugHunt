@@ -16,4 +16,12 @@ public class StartActivity extends AppCompatActivity {
                 .replace(R.id.activity_start, new LoginFragment())
                 .commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.activity_start, new LoginFragment())
+                .commit();
+    }
+
 }
