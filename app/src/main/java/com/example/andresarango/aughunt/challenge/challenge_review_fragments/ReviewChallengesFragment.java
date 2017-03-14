@@ -233,4 +233,9 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         mListener = listener;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mListener.setTabLayoutVisibile();
+    }
 }

@@ -167,7 +167,9 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
     @Override
     public void onCreatedChallengeClicked(ChallengePhoto challenge) {
-        startReviewChallengeFragment(challenge);
+        if (challenge.getPendingReviews() > 0) {
+            startReviewChallengeFragment(challenge);
+        }
     }
 
     private void startReviewChallengeFragment(ChallengePhoto challenge) {
@@ -190,11 +192,17 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                 .remove(fragment)
                 .commit();
         tablayout.setVisibility(View.VISIBLE);
+
     }
 
     @Override
     public void popFragment(Fragment fragment) {
         popFragmentFromBackStack(fragment);
+    }
+
+    @Override
+    public void setTabLayoutVisibile() {
+        tablayout.setVisibility(View.VISIBLE);
     }
 }
 
