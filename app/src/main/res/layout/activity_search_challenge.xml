@@ -4,13 +4,14 @@
     android:id="@+id/search_challenge"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#e7edee">
 
     <RelativeLayout
         android:id="@+id/top_menu"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#5d91b6">
+        android:background="@color/colorPrimaryDark">
 
         <TextView
             android:id="@+id/tv_user_points"
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:background="#5d91b6" />
+            android:background="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/review_number"
@@ -27,8 +28,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:background="#5d91b6"
-            android:onClick="openPendingReview" />
+            android:background="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/pending_review"
@@ -36,8 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_toLeftOf="@id/review_number"
-            android:background="#5d91b6"
-            android:onClick="openPendingReview" />
+            android:background="@color/colorPrimaryDark" />
 
     </RelativeLayout>
 
@@ -46,14 +45,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top_menu"
-        android:background="#6e5d91b6"></android.support.v7.widget.RecyclerView>
+        android:layout_above="@id/bottom_navigation">
+    </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#5d91b6"
+        android:background="@color/colorPrimaryDark"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/menu_bottom_navigation" />

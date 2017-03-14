@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AugHunt</string>
-    <string name="text_search_challenges">Search Challenges</string>
-    <string name="text_create_challenges">My Challenges</string>
+    <string name="text_search_challenges">Search</string>
+    <string name="text_create_challenges">Create</string>
     <string name="text_profile">Profile</string>
 
 <!-- TODO: Remove or change this placeholder text -->
