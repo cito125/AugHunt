@@ -116,16 +116,11 @@ public class SearchChallengeActivity extends AppCompatActivity implements Search
                         Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
                         startActivity(createChallenge);
 
-                        break;
-                    case R.id.homepage:
-                        Intent homePage = new Intent(getApplicationContext(), SearchChallengeActivity.class);
-                        startActivity(homePage);
-
-                        break;
-                    case R.id.user_profile:
-                        Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
-                        startActivity(userProfile);
-                        break;
+                       break;
+                   case R.id.user_profile:
+                       Intent userProfile=new Intent(getApplicationContext(),ProfileActivity.class);
+                       startActivity(userProfile);
+                       break;
                 }
                 return true;
             }
