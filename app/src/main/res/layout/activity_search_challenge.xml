@@ -17,26 +17,27 @@
             android:id="@+id/tv_user_points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/colorPrimaryDark" />
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:textColor="#FFEB3B" />
 
         <TextView
             android:id="@+id/review_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/colorPrimaryDark" />
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/lightGrey" />
 
         <TextView
             android:id="@+id/pending_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_toLeftOf="@id/review_number"
-            android:background="@color/colorPrimaryDark" />
+            android:textColor="@color/lightGrey"
+            android:layout_centerVertical="true"
+            android:text="Pending review: "/>
 
     </RelativeLayout>
 
