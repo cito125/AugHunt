@@ -43,19 +43,19 @@ import butterknife.ButterKnife;
  */
 
 public class ReviewChallengesFragment extends Fragment {
-    @BindView(R.id.challanges_for_review)
-    RecyclerView mRecyclerView;
-
-    private ChallengePhoto mChallengeToReview;
-    private CompletedChallengeListener mListener;
+    @BindView(R.id.challanges_for_review) RecyclerView mRecyclerView;
     @BindView(R.id.tv_user_points) TextView mUserPointsTv;
     @BindView(R.id.review_number) TextView mPendingReview;
     @BindView(R.id.pending_review) TextView mPending;
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
+    private ChallengePhoto mChallengeToReview;
+    private CompletedChallengeListener mListener;
+
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     private Map<String, ChallengePhotoCompleted> challengeMap = new HashMap<>();
+    private int mPendingReviewIndicator = 0;
 
     @Nullable
     @Override
@@ -67,9 +67,9 @@ public class ReviewChallengesFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
+
         initializeViews();
         initializeRecyclerView();
-
         retrieveUserFromFirebaseAndSetProfile();
 
     }
