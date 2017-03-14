@@ -47,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     @BindView(R.id.viewpager) ViewPager pager;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
     @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
+    @BindView(R.id.tv_main_profile_name) TextView profileNameTv;
     @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
     @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
     @BindView(R.id.tv_main_profile_total_submitted) TextView totalSubmittedChallengesTv;
@@ -130,8 +131,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
-
-
+                profileNameTv.setText(currentUser.getProfileName());
                 userPointsTv.setText(String.valueOf(currentUser.getUserPoints()));
                 totalCreatedChallengesTv.setText(String.valueOf(currentUser.getNumberOfCreatedChallenges()));
                 totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
@@ -142,6 +142,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
             }
         });
+
 
 
     }
