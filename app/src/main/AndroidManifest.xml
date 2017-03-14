@@ -48,9 +48,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBeF2aZF_8M99U4ryAymUg3fPcAm-hww9A" />
 
-        <activity android:name=".DeleteMeActivity">
-
-        </activity>
     </application>
 
 </manifest>
