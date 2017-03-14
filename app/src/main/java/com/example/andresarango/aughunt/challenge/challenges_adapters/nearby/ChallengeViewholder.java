@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.andresarango.aughunt.R;
+import com.example.andresarango.aughunt.SearchChallengeHelper;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.user.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,10 +31,10 @@ class ChallengeViewholder<T> extends RecyclerView.ViewHolder {
 
     private DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
 
-    private final CreatedChallengeListener mListener;
+    private final  SearchChallengeHelper mListener;
     private String mProfileName="";
 
-    public ChallengeViewholder(View itemView, CreatedChallengeListener listener) {
+    public ChallengeViewholder(View itemView,  SearchChallengeHelper listener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         mListener = listener;
@@ -59,7 +59,7 @@ class ChallengeViewholder<T> extends RecyclerView.ViewHolder {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onCreatedChallengeClicked(challenge);
+                mListener.onSearchChallengeClicked(challenge);
             }
         };
     }

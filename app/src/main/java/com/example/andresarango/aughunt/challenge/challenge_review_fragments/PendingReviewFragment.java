@@ -3,16 +3,15 @@ package com.example.andresarango.aughunt.challenge.challenge_review_fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.andresarango.aughunt.CreateChallengeActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengesAdapter;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.review.PendingReviewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -41,7 +40,8 @@ public class PendingReviewFragment extends Fragment {
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
     @BindView(R.id.pending_review_challenges) RecyclerView mRecyclerView;
     PendingReviewAdapter mPendingReviewAdapter;
-    CreateChallengeActivity mCreateChallengeActivity ;
+    private AppCompatActivity mAppCompatActivity;
+    private  ChallengeReviewCreated  mChallengeReviewCreated;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,8 +52,8 @@ public class PendingReviewFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
-        mCreateChallengeActivity = new CreateChallengeActivity();
-         mPendingReviewAdapter = new PendingReviewAdapter(mCreateChallengeActivity);
+        mChallengeReviewCreated = new ChallengeReviewCreated(mAppCompatActivity);
+         mPendingReviewAdapter = new PendingReviewAdapter(mChallengeReviewCreated);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mPendingReviewAdapter);
         callFirebase();
@@ -120,9 +120,11 @@ public class PendingReviewFragment extends Fragment {
         }
 
         // update recycler view
-        CreatedChallengesAdapter adapter = (CreatedChallengesAdapter) mRecyclerView.getAdapter();
+        PendingReviewAdapter adapter = (PendingReviewAdapter) mRecyclerView.getAdapter();
         adapter.setChallengeList(challengeList);
     }
 
-
+    public void setmAppCompatActivity(AppCompatActivity mAppCompatActivity) {
+        this.mAppCompatActivity = mAppCompatActivity;
+    }
 }
