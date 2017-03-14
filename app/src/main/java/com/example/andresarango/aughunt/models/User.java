@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.user;
+package com.example.andresarango.aughunt.models;
 
 /**
  * Created by Millochka on 3/6/17.

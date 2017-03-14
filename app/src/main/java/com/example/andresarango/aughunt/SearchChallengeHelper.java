@@ -1,12 +1,11 @@
 package com.example.andresarango.aughunt;
 
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
 
 /**
- * Created by Millochka on 3/13/17.
+ * Created by Danny on 3/14/2017.
  */
 
 public interface SearchChallengeHelper {
-
     void onSearchChallengeClicked(ChallengePhoto challenge);
 }

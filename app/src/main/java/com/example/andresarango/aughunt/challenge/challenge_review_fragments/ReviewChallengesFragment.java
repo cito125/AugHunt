@@ -6,31 +6,33 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.daprlabs.aaron.swipedeck.SwipeDeck;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.review.ReviewChallengeAdapter;
-import com.example.andresarango.aughunt.user.User;
+import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeAdapter;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
+import com.example.andresarango.aughunt.models.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,34 +44,39 @@ import butterknife.ButterKnife;
  * Created by Millochka on 3/6/17.
  */
 
-public class ReviewChallengesFragment extends Fragment {
-    @BindView(R.id.challanges_for_review)
-    RecyclerView mRecyclerView;
+public class ReviewChallengesFragment extends Fragment implements SwipeDeck.SwipeDeckCallback {
+
 
     private ChallengePhoto mChallengeToReview;
-    private CompletedChallengeListener mListener;
+
+    private ReviewSwipeAdapter mSwipeAdapter = new ReviewSwipeAdapter();
+
+    Deque<ChallengePhotoCompleted> mCompletedChallengeDeck = new LinkedList<>();
+
+    @BindView(R.id.swipe_deck) SwipeDeck mSwipeDeck;
     @BindView(R.id.tv_user_points) TextView mUserPointsTv;
     @BindView(R.id.review_number) TextView mPendingReview;
     @BindView(R.id.pending_review) TextView mPending;
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+    private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
 
     private Map<String, ChallengePhotoCompleted> challengeMap = new HashMap<>();
+    private PopFragmentListener mListener;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_review, container, false);
+        return inflater.inflate(R.layout.activity_delete_me, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this,view);
-        initializeViews();
-        initializeRecyclerView();
-
+        ButterKnife.bind(this, view);
+        initializeSwiperView();
         retrieveUserFromFirebaseAndSetProfile();
 
     }
@@ -78,31 +85,22 @@ public class ReviewChallengesFragment extends Fragment {
         mChallengeToReview = challengeToReview;
     }
 
-    public void initializeViews() {
-        ImageView challengePhoto = (ImageView) getView().findViewById(R.id.review_challenge_picture);
-        TextView hint = (TextView) getView().findViewById(R.id.review_challenge_hit);
-        TextView usersAccepted = (TextView) getView().findViewById(R.id.usersaccepted);
 
-        Glide.with(getContext()).load(mChallengeToReview.getPhotoUrl()).into(challengePhoto);
-        hint.setText("Challenge Hint: " + mChallengeToReview.getHint());
-        usersAccepted.setText("Users Accepted: " + String.valueOf(mChallengeToReview.getPursuing()));
+    public void initializeSwiperView() {
 
-    }
-
-    public void initializeRecyclerView() {
-        mRecyclerView = (RecyclerView) getView().findViewById(R.id.challanges_for_review);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ReviewChallengeAdapter reviewChallengesAdapter = new ReviewChallengeAdapter(mListener);
+        mSwipeDeck.setCallback(this);
+        mSwipeDeck.setLeftImage(R.id.left_image);
+        mSwipeDeck.setRightImage(R.id.right_image);
 
         rootRef.child("completed-challenges").child(mChallengeToReview.getChallengeId()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                addChallengeToRecyclerView(dataSnapshot);
+                addChallengeToSwiperView(dataSnapshot);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                updateRecyclerView(dataSnapshot);
+                updateSwiperView(dataSnapshot);
             }
 
             @Override
@@ -121,8 +119,7 @@ public class ReviewChallengesFragment extends Fragment {
             }
         });
 
-        mRecyclerView.setAdapter(reviewChallengesAdapter);
-
+        mSwipeDeck.setAdapter(mSwipeAdapter);
     }
 
     private void retrieveUserFromFirebaseAndSetProfile() {
@@ -148,7 +145,7 @@ public class ReviewChallengesFragment extends Fragment {
         });
     }
 
-    private void updateRecyclerView(DataSnapshot dataSnapshot) {
+    private void updateSwiperView(DataSnapshot dataSnapshot) {
         String challengeKey = dataSnapshot.getKey();
         List<ChallengePhotoCompleted> challengeList = new ArrayList<>();
 
@@ -162,12 +159,13 @@ public class ReviewChallengesFragment extends Fragment {
             challengeList.add(challengeMap.get(key));
         }
 
-        // update recycler view
-        ReviewChallengeAdapter adapter = (ReviewChallengeAdapter) mRecyclerView.getAdapter();
-        adapter.setCompletedChallangesList(challengeList);
+        mCompletedChallengeDeck.clear();
+        mCompletedChallengeDeck.addAll(challengeList);
+
+        mSwipeAdapter.setCompletedChallengeList(challengeList);
     }
 
-    private void addChallengeToRecyclerView(DataSnapshot dataSnapshot) {
+    private void addChallengeToSwiperView(DataSnapshot dataSnapshot) {
         // Key - value
         String challengeKey = dataSnapshot.getKey();
         ChallengePhotoCompleted challenge = dataSnapshot.getValue(ChallengePhotoCompleted.class);
@@ -176,13 +174,63 @@ public class ReviewChallengesFragment extends Fragment {
         System.out.println("BOOM BOOM");
         // Put in challenge map
         challengeMap.put(challengeKey, challenge);
-        ReviewChallengeAdapter adapter = (ReviewChallengeAdapter) mRecyclerView.getAdapter();
-        adapter.addChallengeToList(challenge);
+        mCompletedChallengeDeck.addFirst(challenge);
+        mSwipeAdapter.addChallenge(challenge);
 
 
     }
 
-    public void setmListener(CompletedChallengeListener mListener) {
-        this.mListener = mListener;
+    @Override
+    public void cardSwipedLeft(long stableId) {
+        removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
+        decrementPendingReviewCounter();
+        if(mCompletedChallengeDeck.isEmpty()){
+            mListener.popFragment(this);
+        }
     }
+
+    @Override
+    public void cardSwipedRight(long stableId) {
+        removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
+        decrementPendingReviewCounter();
+        if(mCompletedChallengeDeck.isEmpty()){
+            mListener.popFragment(this);
+        }
+    }
+
+    private void removeCompletedChallengeFromFirebase(ChallengePhotoCompleted completedChallenge) {
+        // Delete database value
+        rootRef.child("completed-challenges")
+                .child(mChallengeToReview.getChallengeId())
+                .child(completedChallenge.getCompletedChallengeId())
+                .removeValue();
+
+        // Delete storage image
+        storageRef.child("challenges")
+                .child(mChallengeToReview.getChallengeId())
+                .child(completedChallenge.getCompletedChallengeId())
+                .delete();
+    }
+
+    private void decrementPendingReviewCounter() {
+        rootRef.child("challenges").child(mChallengeToReview.getChallengeId()).runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                ChallengePhoto challenge = mutableData.getValue(ChallengePhoto.class);
+                challenge.setPendingReviews(challenge.getPendingReviews()-1);
+                mutableData.setValue(challenge);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+
+            }
+        });
+    }
+
+    public void setPopFragmentListener(PopFragmentListener listener) {
+        mListener = listener;
+    }
+
 }

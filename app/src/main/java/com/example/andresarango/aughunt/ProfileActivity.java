@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
@@ -17,16 +19,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
-import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CompareChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CreatedChallengesFragment;
+import com.example.andresarango.aughunt.challenge.challenge_review_fragments.PopFragmentListener;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.ReviewChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
-import com.example.andresarango.aughunt.challenge.challenges_adapters.review.CompletedChallengeListener;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
+import com.example.andresarango.aughunt.models.User;
+import com.example.andresarango.aughunt.profile.SubmittedChallengeFragment;
 import com.example.andresarango.aughunt.profile.ViewPagerAdapter;
-import com.example.andresarango.aughunt.profile.viewpager.SubmittedChallengeFragment;
-import com.example.andresarango.aughunt.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,22 +41,19 @@ import butterknife.ButterKnife;
  * Created by dannylui on 3/11/17.
  */
 
-public class ProfileActivity extends AppCompatActivity implements CreatedChallengeListener, CompletedChallengeListener {
-    @BindView(R.id.tab_layout) TabLayout tablayout; // Import design in build.gradle
+public class ProfileActivity extends AppCompatActivity implements CreatedChallengeListener, PopFragmentListener {
+    @BindView(R.id.tab_layout) TabLayout tablayout;
     @BindView(R.id.viewpager) ViewPager pager;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
-    @BindView(R.id.tv_main_profile_name) TextView profileNameTv;
     @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
     @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
     @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
     @BindView(R.id.tv_main_profile_total_submitted) TextView totalSubmittedChallengesTv;
 
 
-    private CreatedChallengesFragment mCreatedChallengesFragment;
     private SubmittedChallengeFragment mSubmittedChallengesFragment;
+    private CreatedChallengesFragment mCreatedChallengesFragment;
     private ReviewChallengesFragment mReviewChallengesFragment;
-    private CompareChallengesFragment mCompareChallengesFragment;
-    private ChallengePhoto mSelectedChallenge;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -76,19 +73,22 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
 
                     case R.id.create_challenge:
-                        Intent createChallenge=new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                        Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
                         startActivity(createChallenge);
 
                         break;
                     case R.id.homepage:
-                        Intent homePage=new Intent(getApplicationContext(), SearchChallengeActivity.class);
+                        Intent homePage = new Intent(getApplicationContext(), SearchChallengeActivity.class);
                         startActivity(homePage);
 
                         break;
-
+                    case R.id.user_profile:
+                        Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
+                        startActivity(userProfile);
+                        break;
                 }
                 return true;
             }
@@ -117,7 +117,8 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
-                profileNameTv.setText(currentUser.getProfileName());
+
+
                 userPointsTv.setText(String.valueOf(currentUser.getUserPoints()));
                 totalCreatedChallengesTv.setText(String.valueOf(currentUser.getNumberOfCreatedChallenges()));
                 totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
@@ -153,14 +154,13 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
     @Override
     public void onCreatedChallengeClicked(ChallengePhoto challenge) {
-        mSelectedChallenge = challenge;
         startReviewChallengeFragment(challenge);
     }
 
     private void startReviewChallengeFragment(ChallengePhoto challenge) {
         mReviewChallengesFragment = new ReviewChallengesFragment();
         mReviewChallengesFragment.setChallengeToReview(challenge);
-        mReviewChallengesFragment.setmListener(this);
+        mReviewChallengesFragment.setPopFragmentListener(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -169,24 +169,17 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                 .commit();
     }
 
-    @Override
-    public void onCompletedChallengeClicked(ChallengePhotoCompleted completedChallenge) {
-        startCompareChallengeFragment(completedChallenge, mSelectedChallenge);
-    }
-
-    private void startCompareChallengeFragment(ChallengePhotoCompleted completedChallenge, ChallengePhoto challenge) {
-        mCompareChallengesFragment = new CompareChallengesFragment();
-        mCompareChallengesFragment.setCompletedChallenge(completedChallenge);
-        mCompareChallengesFragment.setCurrentChallenge(challenge);
+    public void popFragmentFromBackStack(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.profile_activity, mCompareChallengesFragment)
-                .addToBackStack(null)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .remove(fragment)
                 .commit();
     }
 
-    public void popFragmentFromBackStack() {
-        getSupportFragmentManager().popBackStack();
+    @Override
+    public void popFragment(Fragment fragment) {
+        popFragmentFromBackStack(fragment);
     }
 }
 

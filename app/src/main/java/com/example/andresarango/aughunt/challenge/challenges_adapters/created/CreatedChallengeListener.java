@@ -1,6 +1,6 @@
 package com.example.andresarango.aughunt.challenge.challenges_adapters.created;
 
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
 
 /**
  * Created by Millochka on 3/6/17.

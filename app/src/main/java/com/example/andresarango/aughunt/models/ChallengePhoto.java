@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.challenge;
+package com.example.andresarango.aughunt.models;
 
 import com.example.andresarango.aughunt.location.DAMLocation;
 
@@ -32,7 +32,8 @@ public class ChallengePhoto implements Serializable {
         this.timestamp = timestamp;
         this.pursuing = 0;
         this.completed = 0;
-        this.pendingReviews=0;
+        this.pendingReviews = 0;
+
     }
 
     public String getChallengeId() {
@@ -67,6 +68,10 @@ public class ChallengePhoto implements Serializable {
         return completed;
     }
 
+    public int getPendingReviews() {
+        return pendingReviews;
+    }
+
     public void setPursuing(int pursuing) {
         this.pursuing = pursuing;
     }
@@ -77,9 +82,5 @@ public class ChallengePhoto implements Serializable {
 
     public void setPendingReviews(int pendingReviews) {
         this.pendingReviews = pendingReviews;
-    }
-
-    public int getPendingReviews() {
-        return pendingReviews;
     }
 }
