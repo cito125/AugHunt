@@ -19,13 +19,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.CreatedChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.PopFragmentListener;
 import com.example.andresarango.aughunt.challenge.challenge_review_fragments.ReviewChallengesFragment;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
-import com.example.andresarango.aughunt.profile.ViewPagerAdapter;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.models.User;
+import com.example.andresarango.aughunt.profile.SubmittedChallengeFragment;
+import com.example.andresarango.aughunt.profile.ViewPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,22 +42,16 @@ import butterknife.ButterKnife;
  */
 
 public class ProfileActivity extends AppCompatActivity implements CreatedChallengeListener, PopFragmentListener {
-    @BindView(R.id.tab_layout)
-    TabLayout tablayout; // Import design in build.gradle
-    @BindView(R.id.viewpager)
-    ViewPager pager;
-    @BindView(R.id.bottom_navigation)
-    BottomNavigationView mBottomNav;
-    @BindView(R.id.iv_main_profile_pic)
-    ImageView profilePicIv;
-    @BindView(R.id.tv_main_profile_points)
-    TextView userPointsTv;
-    @BindView(R.id.tv_main_profile_total_created)
-    TextView totalCreatedChallengesTv;
-    @BindView(R.id.tv_main_profile_total_submitted)
-    TextView totalSubmittedChallengesTv;
+    @BindView(R.id.tab_layout) TabLayout tablayout;
+    @BindView(R.id.viewpager) ViewPager pager;
+    @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
+    @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
+    @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
+    @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
+    @BindView(R.id.tv_main_profile_total_submitted) TextView totalSubmittedChallengesTv;
 
 
+    private SubmittedChallengeFragment mSubmittedChallengesFragment;
     private CreatedChallengesFragment mCreatedChallengesFragment;
     private ReviewChallengesFragment mReviewChallengesFragment;
 
@@ -144,8 +139,10 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         mCreatedChallengesFragment = new CreatedChallengesFragment();
         mCreatedChallengesFragment.setListener(this);
 
+        mSubmittedChallengesFragment = new SubmittedChallengeFragment();
+
         adapter.addFragment(mCreatedChallengesFragment, "Created");
-        adapter.addFragment(new ChallengeHistoryFragment(), "Submitted");
+        adapter.addFragment(mSubmittedChallengesFragment, "Submitted");
         pager.setAdapter(adapter);
     }
 

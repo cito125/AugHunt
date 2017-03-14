@@ -10,7 +10,11 @@ public class ChallengePhotoSubmitted {
     private String hint;
     private String photoUrl;
     private boolean isAccepted;
-    private boolean isReview;
+    private boolean isReviewed;
+
+    public ChallengePhotoSubmitted() {
+
+    }
 
     public ChallengePhotoSubmitted(String challengeId, String ownerId, String hint, String photoUrl) {
         this.challengeId = challengeId;
@@ -18,7 +22,7 @@ public class ChallengePhotoSubmitted {
         this.hint = hint;
         this.photoUrl = photoUrl;
         this.isAccepted = false;
-        this.isReview = false;
+        this.isReviewed = false;
     }
 
     public String getChallengeId() {
@@ -41,15 +45,15 @@ public class ChallengePhotoSubmitted {
         return isAccepted;
     }
 
-    public boolean isReview() {
-        return isReview;
+    public boolean isReviewed() {
+        return isReviewed;
     }
 
     public void setAccepted(boolean accepted) {
         isAccepted = accepted;
     }
 
-    public void setReview(boolean review) {
-        isReview = review;
+    public void setReviewed(boolean reviewed) {
+        isReviewed = reviewed;
     }
 }
