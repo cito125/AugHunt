@@ -19,12 +19,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".login.SplashScreen">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
 
         <activity android:name=".login.StartActivity">
@@ -37,7 +31,13 @@
 
         <activity android:name=".SearchChallengeActivity" >
 
-    </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".ChallengeTemplateActivity" />
         <activity android:name=".AcceptedChallengeActivity" />
 
