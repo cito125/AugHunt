@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeViewHolder;
 import com.example.andresarango.aughunt.models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,16 +16,18 @@ import java.util.List;
 
 class LeaderBoardAdapter extends RecyclerView.Adapter {
 
-    private List<User> mUserList;
+    private List<User> mUserList= new ArrayList<>();
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_points, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vh_user_points, parent, false);
         return new LeaderBoardViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        LeaderBoardViewHolder leaderBoardViewHolder=(LeaderBoardViewHolder) holder;
+        leaderBoardViewHolder.bind(mUserList.get(position));
 
     }
 

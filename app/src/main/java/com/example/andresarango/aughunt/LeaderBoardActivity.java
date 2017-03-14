@@ -32,9 +32,8 @@ import butterknife.ButterKnife;
 
 public class LeaderBoardActivity extends AppCompatActivity{
 
-    @BindView(R.id.bottom_navigation)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.list_of_users) BottomNavigationView mBottomNav;
+    @BindView(R.id.list_of_users) RecyclerView mRecyclerView;
+    @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private Map<String, User> mUserMap = new HashMap<>();
@@ -47,6 +46,7 @@ public class LeaderBoardActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
         ButterKnife.bind(this);
+        setUpRecyclerView();
         setupBottomNavigation();
         initialize();
 
@@ -54,12 +54,17 @@ public class LeaderBoardActivity extends AppCompatActivity{
 
     private void setupBottomNavigation() {
 
-        mBottomNav.getMenu().getItem(3).setChecked(false);// Search item
-        mBottomNav.getMenu().getItem(2).setChecked(true);// Leaderboard
-        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
-        mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
+
 
         BottomNavigationViewHelper.disableShiftMode(mBottomNav);
+        mBottomNav.getMenu().getItem(0).setChecked(false);
+        mBottomNav.getMenu().getItem(3).setChecked(false);
+        mBottomNav.getMenu().getItem(2).setChecked(true);// Profile item
+        mBottomNav.getMenu().getItem(1).setChecked(false);// Create item
+        // Leaderboard
+        // Search item
+
+
 
 
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -97,7 +102,7 @@ public class LeaderBoardActivity extends AppCompatActivity{
         rootRef.child("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                addChallengeToRecyclerView(dataSnapshot);
+                addUserToRecyclerView(dataSnapshot);
             }
 
             @Override
@@ -139,7 +144,7 @@ public class LeaderBoardActivity extends AppCompatActivity{
         mLeaderBoardAdapter.setUserList(mUserList);
     }
 
-    private void addChallengeToRecyclerView(DataSnapshot dataSnapshot) {
+    private void addUserToRecyclerView(DataSnapshot dataSnapshot) {
         // Key - value
         String userKey = dataSnapshot.getKey();
         User user = dataSnapshot.getValue(User.class);

@@ -98,6 +98,9 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         mBottomNav.getMenu().getItem(1).setChecked(false);
         mBottomNav.getMenu().getItem(2).setChecked(false);
         mBottomNav.getMenu().getItem(3).setChecked(false);
+
+
+
     }
 
     private void setupBottomNavigation() {
