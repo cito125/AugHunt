@@ -3,6 +3,7 @@ package com.example.andresarango.aughunt.challenge.challenges_adapters.nearby;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,9 @@ class ChallengeViewholder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_hint)
     TextView mHint;
 
+    @BindView(R.id.btn_search_challenge_find)
+    Button findChallengeBtn;
+
     private DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
 
     private final SearchChallengeHelper mListener;
@@ -49,12 +53,13 @@ class ChallengeViewholder extends RecyclerView.ViewHolder {
     public void bind(ChallengePhoto challenge, String profileName) {
         Glide.with(itemView.getContext()).load(challenge.getPhotoUrl()).into(mChallengePictureIv);
         mChallengeOwnerIdTv.setTypeface(mChallengeOwnerIdTv.getTypeface(), Typeface.BOLD);
-        mChallengeOwnerIdTv.setText("Created by  " + profileName);
+        mChallengeOwnerIdTv.setText("Created by " + profileName);
         mHint.setTypeface(mHint.getTypeface(), Typeface.BOLD);
-        mHint.setText("Hint: ");
+//        mHint.setText("Hint: ");
         mHintTextView.setText(challenge.getHint());
-        mPursuingTv.setText("# Pursuing: " + challenge.getPursuing());
-        itemView.setOnClickListener(onClick(challenge));
+        mPursuingTv.setText("People pursuing: " + challenge.getPursuing());
+
+        findChallengeBtn.setOnClickListener(onClick(challenge));
     }
 
     private View.OnClickListener onClick(final ChallengePhoto challenge) {

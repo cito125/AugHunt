@@ -4,7 +4,13 @@
     android:id="@+id/activity_splash_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_bg"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.example.andresarango.aughunt.login.SplashScreen">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="50dp"
+        android:src="@drawable/search_logo"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>
