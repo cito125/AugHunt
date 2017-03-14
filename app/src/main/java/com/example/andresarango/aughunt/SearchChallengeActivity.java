@@ -81,8 +81,8 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     }
 
     private void setupBottomNavigation() {
+
         mBottomNav.getMenu().getItem(2).setChecked(true);  // Search item
-        mBottomNav.getMenu().getItem(2).setEnabled(true);  // Search item
         mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
         mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
 
@@ -108,6 +108,11 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     protected void onResume() {
         super.onResume();
         System.out.println("CALLED ON START");
+
+        mBottomNav.getMenu().getItem(2).setChecked(true);  // Search item
+        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
+        mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
+
         mPendingReviewIndicator = 0;
         challengeList.clear();
         challengeMap.clear();
