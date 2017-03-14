@@ -80,12 +80,13 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                         startActivity(createChallenge);
 
                         break;
-                    case R.id.homepage:
+                    case R.id.search_challenge:
                         Intent homePage = new Intent(getApplicationContext(), SearchChallengeActivity.class);
                         startActivity(homePage);
 
                         break;
                     case R.id.user_profile:
+                        item.setEnabled(true);
                         Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
                         startActivity(userProfile);
                         break;

@@ -77,6 +77,14 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
 
         requestPermission();
         retrieveUserFromFirebaseAndSetProfile();
+        setupBottomNavigation();
+    }
+
+    private void setupBottomNavigation() {
+        mBottomNav.getMenu().getItem(2).setChecked(true);  // Search item
+        mBottomNav.getMenu().getItem(2).setEnabled(true);  // Search item
+        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
+        mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
 
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
