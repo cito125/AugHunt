@@ -1,8 +1,11 @@
 package com.example.andresarango.aughunt;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeViewHolder;
 import com.example.andresarango.aughunt.models.User;
 
 import java.util.List;
@@ -17,7 +20,8 @@ class LeaderBoardAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_points, parent, false);
+        return new LeaderBoardViewHolder(itemView);
     }
 
     @Override
