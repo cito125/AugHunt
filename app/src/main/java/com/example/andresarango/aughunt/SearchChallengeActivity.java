@@ -110,7 +110,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     }
 
     private void setUpRecyclerView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         mNearbyChallengesAdapter = new ChallengesAdapter(this);
         mRecyclerView.setAdapter(mNearbyChallengesAdapter);
     }
