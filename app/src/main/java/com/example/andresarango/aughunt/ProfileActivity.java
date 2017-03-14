@@ -14,6 +14,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -100,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     private void setupBottomNavigation() {
         mBottomNav.getMenu().getItem(0).setChecked(true);
         mBottomNav.getMenu().getItem(1).setChecked(false);
-        mBottomNav.getMenu().getItem(2).setChecked(false);  
+        mBottomNav.getMenu().getItem(2).setChecked(false);
 
 
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -170,6 +171,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     }
 
     private void startReviewChallengeFragment(ChallengePhoto challenge) {
+        tablayout.setVisibility(View.INVISIBLE);
         mReviewChallengesFragment = new ReviewChallengesFragment();
         mReviewChallengesFragment.setChallengeToReview(challenge);
         mReviewChallengesFragment.setPopFragmentListener(this);
@@ -187,6 +189,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .remove(fragment)
                 .commit();
+        tablayout.setVisibility(View.VISIBLE);
     }
 
     @Override

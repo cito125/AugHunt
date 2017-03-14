@@ -3,16 +3,16 @@ package com.example.andresarango.aughunt.challenge.challenge_review_fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengesAdapter;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -53,7 +53,8 @@ public class CreatedChallengesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view.getRootView());
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.setAdapter(new CreatedChallengesAdapter(mListener));
         callFirebase();
 
