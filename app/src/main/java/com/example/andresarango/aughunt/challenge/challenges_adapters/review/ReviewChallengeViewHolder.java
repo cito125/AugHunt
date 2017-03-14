@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt.models.ChallengePhotoCompleted;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -21,9 +21,11 @@ import android.widget.Toast;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
-import com.example.andresarango.aughunt.challenge.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt.challenge.challenge_dialog_fragment.ChallengeDialogFragment;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
+import com.example.andresarango.aughunt.models.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt.models.ChallengePhotoSubmitted;
+import com.example.andresarango.aughunt.models.User;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
@@ -36,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -136,6 +139,28 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
                 final ChallengePhotoCompleted completedChallenge = new ChallengePhotoCompleted(pushId, auth.getCurrentUser().getUid(), url);
                 rootRef.child("completed-challenges").child(mChallengePhoto.getChallengeId()).child(pushId).setValue(completedChallenge);
                 incrementCompletedCounter();
+                incrementSubmittedCounter();
+            }
+        });
+
+
+        // Create submitted challenge object and push to firebase
+        ChallengePhotoSubmitted submittedChallenge = new ChallengePhotoSubmitted(mChallengePhoto.getChallengeId(), mChallengePhoto.getOwnerId(), mChallengePhoto.getHint(), mChallengePhoto.getPhotoUrl());
+        rootRef.child("submitted-challenges").child(auth.getCurrentUser().getUid()).child(mChallengePhoto.getChallengeId()).setValue(submittedChallenge);
+
+    }
+
+    private void incrementSubmittedCounter() {
+        rootRef.child("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+                currentUser.setNumberOfSubmittedChallenges(currentUser.getNumberOfSubmittedChallenges() + 1);
+                rootRef.child("users").child(auth.getCurrentUser().getUid()).setValue(currentUser);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -147,6 +172,7 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
             public Transaction.Result doTransaction(MutableData mutableData) {
                 ChallengePhoto challenge = mutableData.getValue(ChallengePhoto.class);
                 challenge.setCompleted(challenge.getCompleted() + 1);
+                challenge.setPendingReviews(challenge.getPendingReviews()+1);
                 mutableData.setValue(challenge);
                 return Transaction.success(mutableData);
             }
@@ -154,6 +180,7 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
                 decrementPursuingCounter(); // Chaining these methods to finish properly
+
             }
         });
     }

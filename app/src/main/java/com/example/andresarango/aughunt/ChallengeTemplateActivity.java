@@ -24,10 +24,10 @@ import android.widget.Toast;
 
 import com.example.andresarango.aughunt.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.camera.CameraCallback;
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.location.DAMLocation;
 import com.example.andresarango.aughunt.snapshot_callback.SnapshotHelper;
-import com.example.andresarango.aughunt.user.User;
+import com.example.andresarango.aughunt.models.User;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.snapshot.LocationResult;
@@ -46,7 +46,6 @@ import com.google.firebase.storage.UploadTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 public class ChallengeTemplateActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener, ViewGroup.OnClickListener,
@@ -56,8 +55,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     private static final int LOCATION_PERMISSION = 1245;
 
     @BindView(R.id.cam_create_challenge) CameraView mCameraView;
-    @BindView(R.id.btn_take_photo)
-    FloatingActionButton mTakePhotoButton;
+    @BindView(R.id.btn_take_photo) FloatingActionButton mTakePhotoButton;
     @BindView(R.id.btn_leave_hint) Button mHint;
     @BindView(R.id.btn_submit_challenge) Button mSubmit;
     @BindView(R.id.photo) FrameLayout mPhoto;
@@ -125,7 +123,111 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
         }
     }
 
+    private void submitChallenge() {
+        SnapshotHelper snapshotHelper = new SnapshotHelper(this);
+        snapshotHelper.runSnapshot(getApplicationContext());
+    }
 
+    @Override
+    public void run(LocationResult locationResult) {
+        double latitude = locationResult.getLocation().getLatitude();
+        double longitude = locationResult.getLocation().getLongitude();
+        final DAMLocation damLocation = new DAMLocation(latitude, longitude);
+
+        final String pushId = rootRef.child("challenges").push().getKey(); // Get a unique id for the challenge
+        UploadTask uploadTask = storageRef.child("challenges").child(pushId).putBytes(mCameraCallback.getPicData()); // Upload photo taken to firebase storage
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                String url = taskSnapshot.getDownloadUrl().toString();
+                ChallengePhoto challenge = new ChallengePhoto(pushId, auth.getCurrentUser().getUid(), damLocation, url, mHintText, System.currentTimeMillis()/1000);
+                rootRef.child("challenges").child(pushId).setValue(challenge); // Upload challenge object to firebase database
+
+                incrementCreatedChallengeCounter();
+
+                Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
+                        .show();
+                progressDialog.dismiss();
+                finish();
+            }
+
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+                progressDialog.dismiss();
+                Toast.makeText(ChallengeTemplateActivity.this, "Failed to save image.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void incrementCreatedChallengeCounter() {
+        rootRef.child("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+                currentUser.setNumberOfCreatedChallenges(currentUser.getNumberOfCreatedChallenges() + 1);
+                rootRef.child("users").child(auth.getCurrentUser().getUid()).setValue(currentUser);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void createDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.AboutDialog);
+
+        final EditText edittext = new EditText(getApplicationContext());
+        alert.setView(edittext);
+
+        alert.setMessage("Enter Your Hint");
+
+        alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                mHintText = edittext.getText().toString().trim();
+            }
+        });
+
+        alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.cancel();
+            }
+        });
+
+        alert.show();
+
+    }
+
+    @Override
+    public void onAspectRatioSelected(@NonNull AspectRatio ratio) {
+        if (mCameraView != null) {
+            mCameraView.setAspectRatio(ratio);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkCameraPermission();
+    }
+
+    @Override
+    protected void onPause() {
+        mCameraView.stop();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCameraCallback.destroyHandler();
+    }
+
+    // ==================== PERMISSIONS ====================
     private void checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -151,7 +253,6 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION);
         }
-
     }
 
 
@@ -181,10 +282,8 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
                 .show();
     }
 
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CAMERA_PERMISSION:
                 if (permissions.length != 1 || grantResults.length != 1) {
@@ -195,112 +294,5 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
                 }
                 break;
         }
-    }
-
-
-    private void submitChallenge() {
-        SnapshotHelper snapshotHelper = new SnapshotHelper(this);
-        snapshotHelper.runSnapshot(getApplicationContext());
-    }
-
-    public void createDialog() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.AboutDialog);
-
-        final EditText edittext = new EditText(getApplicationContext());
-        alert.setView(edittext);
-
-        alert.setMessage("Enter Your Hint");
-
-
-        alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                mHintText = edittext.getText().toString().trim();
-            }
-        });
-
-        alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dialog.cancel();
-            }
-        });
-
-        alert.show();
-
-    }
-
-    @Override
-    public void run(LocationResult locationResult) {
-        double latitude = locationResult.getLocation().getLatitude();
-        double longitude = locationResult.getLocation().getLongitude();
-        final DAMLocation damLocation = new DAMLocation(latitude, longitude);
-
-        final String pushId = rootRef.child("challenges").push().getKey(); // Get a unique id for the challenge
-        UploadTask uploadTask = storageRef.child("challenges").child(pushId).putBytes(mCameraCallback.getPicData()); // Upload photo taken to firebase storage
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                String url = taskSnapshot.getDownloadUrl().toString();
-                ChallengePhoto challenge = new ChallengePhoto(pushId, auth.getCurrentUser().getUid(), damLocation, url, mHintText, System.currentTimeMillis()/1000);
-                rootRef.child("challenges").child(pushId).setValue(challenge); // Upload challenge object to firebase database
-
-                updateNumberOfCompletedChallenges();
-
-                Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
-                        .show();
-                progressDialog.dismiss();
-                finish();
-            }
-
-
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-
-                progressDialog.dismiss();
-                Toast.makeText(ChallengeTemplateActivity.this, "Failed to save image.", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void updateNumberOfCompletedChallenges() {
-        rootRef.child("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User currentUser = dataSnapshot.getValue(User.class);
-                currentUser.setNumberOfCreatedChallenges(currentUser.getNumberOfSubmittedChallenges() + 1);
-                rootRef.child("users").child(auth.getCurrentUser().getUid()).setValue(currentUser);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    @Override
-    public void onAspectRatioSelected(@NonNull AspectRatio ratio) {
-        if (mCameraView != null) {
-            mCameraView.setAspectRatio(ratio);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkCameraPermission();
-    }
-
-    @Override
-    protected void onPause() {
-        mCameraView.stop();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mCameraCallback.destroyHandler();
     }
 }

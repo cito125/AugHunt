@@ -6,7 +6,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.challenge.ChallengePhoto;
+import com.example.andresarango.aughunt.SearchChallengeHelper;
+import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.created.CreatedChallengeListener;
 
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ import java.util.List;
 
 public class ChallengesAdapter extends RecyclerView.Adapter<ChallengeViewholder> {
     List<ChallengePhoto> mChallengeList = new ArrayList<>();
-    private final CreatedChallengeListener mChallengeViewholderListener;
+    private final SearchChallengeHelper mChallengeViewholderListener;
 
-    public ChallengesAdapter(CreatedChallengeListener challengeViewholderListener) {
+    public ChallengesAdapter(SearchChallengeHelper challengeViewholderListener) {
         mChallengeViewholderListener = challengeViewholderListener;
     }
 
