@@ -12,13 +12,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
 import com.example.andresarango.aughunt._models.User;
+import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
 import com.example.andresarango.aughunt.profile.ProfileActivity;
 import com.example.andresarango.aughunt.search.SearchChallengeActivity;
+import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -69,17 +69,19 @@ public class LeaderBoardActivity extends AppCompatActivity{
 
     private void setupBottomNavigation() {
 
-
-
-        BottomNavigationViewHelper.disableShiftMode(mBottomNav);
+        mBottomNav.getMenu().getItem(1).setChecked(false);
         mBottomNav.getMenu().getItem(0).setChecked(false);
         mBottomNav.getMenu().getItem(3).setChecked(false);
-        mBottomNav.getMenu().getItem(2).setChecked(true);// Profile item
-        mBottomNav.getMenu().getItem(1).setChecked(false);// Create item
+        mBottomNav.getMenu().getItem(2).setChecked(true);
+
+
+
+        // Profile item
+        // Create item
         // Leaderboard
         // Search item
 
-
+        BottomNavigationViewHelper.disableShiftMode(mBottomNav);
 
 
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -107,10 +109,15 @@ public class LeaderBoardActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        mBottomNav.getMenu().getItem(3).setChecked(false);// Search item
-        mBottomNav.getMenu().getItem(2).setChecked(true);// Leaderboard
-        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
-        mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
+        mBottomNav.getMenu().getItem(0).setChecked(false);
+        mBottomNav.getMenu().getItem(3).setChecked(false);
+        mBottomNav.getMenu().getItem(2).setChecked(true);
+        mBottomNav.getMenu().getItem(1).setChecked(false);
+
+        // Search item
+       // Leaderboard
+         // Create item
+         // Profile item
         mPendingReviewIndicator = 0;
     }
 

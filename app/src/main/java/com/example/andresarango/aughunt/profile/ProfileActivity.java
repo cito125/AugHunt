@@ -99,6 +99,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     protected void onResume() {
         super.onResume();
 
+
         mBottomNav.getMenu().getItem(0).setChecked(true);
         mBottomNav.getMenu().getItem(1).setChecked(false);
         mBottomNav.getMenu().getItem(2).setChecked(false);
@@ -106,13 +107,20 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
 
 
+
+
     }
 
     private void setupBottomNavigation() {
-        mBottomNav.getMenu().getItem(3).setChecked(false);// Search item
+
+
+
+
+        mBottomNav.getMenu().getItem(3).setChecked(false);
         mBottomNav.getMenu().getItem(2).setChecked(false);// Leaderboard
-        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
-        mBottomNav.getMenu().getItem(0).setChecked(true); // Profile item
+        mBottomNav.getMenu().getItem(1).setChecked(false);
+        mBottomNav.getMenu().getItem(0).setChecked(true);// Create item
+        // Profile item
         BottomNavigationViewHelper.disableShiftMode(mBottomNav);
 
 
