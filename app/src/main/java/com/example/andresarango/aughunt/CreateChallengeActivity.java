@@ -66,4 +66,9 @@ public class CreateChallengeActivity extends AppCompatActivity implements
     public void popFragment(Fragment fragment) {
         popFragmentFromBackStack(fragment);
     }
+
+    @Override
+    public void setTabLayoutVisibile() {
+
+    }
 }

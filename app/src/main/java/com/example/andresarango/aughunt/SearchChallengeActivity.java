@@ -5,7 +5,6 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,11 +57,16 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     private List<ChallengePhoto> challengeList = new ArrayList<>();
     private Set<String> submittedChallengeSet = new HashSet<>();
 
-    @BindView(R.id.search_challenge_recyclerview) RecyclerView mRecyclerView;
-    @BindView(R.id.tv_user_points) TextView mUserPointsTv;
-    @BindView(R.id.review_number) TextView mPendingReview;
-    @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
-    @BindView(R.id.pending_review) TextView mPending;
+    @BindView(R.id.search_challenge_recyclerview)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.tv_user_points)
+    TextView mUserPointsTv;
+    @BindView(R.id.review_number)
+    TextView mPendingReview;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView mBottomNav;
+    @BindView(R.id.pending_review)
+    TextView mPending;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -77,6 +81,17 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
 
         requestPermission();
         retrieveUserFromFirebaseAndSetProfile();
+        setupBottomNavigation();
+    }
+
+    private void setupBottomNavigation() {
+
+        mBottomNav.getMenu().getItem(3).setChecked(true);// Search item
+        mBottomNav.getMenu().getItem(2).setChecked(false);// Leaderboard
+        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
+        mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
+        BottomNavigationViewHelper.disableShiftMode(mBottomNav);
+
 
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -90,6 +105,10 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
                         Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
                         startActivity(userProfile);
                         break;
+                    case R.id.leaderboard:
+                        Intent leadeBoard = new Intent(getApplicationContext(), LeaderBoardActivity.class);
+                        startActivity(leadeBoard);
+                        break;
                 }
                 return true;
             }
@@ -100,6 +119,11 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     protected void onResume() {
         super.onResume();
         System.out.println("CALLED ON START");
+        mBottomNav.getMenu().getItem(3).setChecked(true);
+        mBottomNav.getMenu().getItem(2).setChecked(false);  // Search item
+        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
+        mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
+
         mPendingReviewIndicator = 0;
         challengeList.clear();
         challengeMap.clear();
@@ -122,14 +146,9 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
                 User user = dataSnapshot.getValue(User.class);
                 System.out.println("USER: " + user.getProfileName());
                 mUserPointsTv.setText(user.getUserPoints() + " PTS");
-                mUserPointsTv.setTextColor(Color.parseColor("#D81B60"));
                 mPendingReview.setTypeface(mPendingReview.getTypeface(), Typeface.BOLD);
                 mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
-                mPendingReview.setTextColor(Color.parseColor("#D81B60"));
-                mPending.setTextColor(Color.parseColor("#D81B60"));
                 mPending.setTypeface(mPending.getTypeface(), Typeface.BOLD);
-                mPending.setText("Pending review: ");
-
             }
 
             @Override
@@ -175,6 +194,13 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
         if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             mPendingReviewIndicator += challenge.getPendingReviews();
             mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
+            if (mPendingReviewIndicator > 0) {
+                mPendingReview.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+                mPending.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+            } else {
+                mPendingReview.setTextColor(ContextCompat.getColor(this, R.color.lightGrey));
+                mPending.setTextColor(ContextCompat.getColor(this, R.color.lightGrey));
+            }
         }
 
         System.out.println("CALLED GETTING LIST OF SUBMITTED CHALLENGES");

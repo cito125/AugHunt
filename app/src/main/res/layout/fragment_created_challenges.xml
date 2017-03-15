@@ -13,9 +13,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/created_challenges"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#6e5d91b6">
-
+            android:layout_height="match_parent">
         </android.support.v7.widget.RecyclerView>
 
     </FrameLayout>

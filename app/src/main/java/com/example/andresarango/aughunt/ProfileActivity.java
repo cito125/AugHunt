@@ -9,11 +9,13 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     @BindView(R.id.viewpager) ViewPager pager;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
     @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
+    @BindView(R.id.tv_main_profile_name) TextView profileNameTv;
     @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
     @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
     @BindView(R.id.tv_main_profile_total_submitted) TextView totalSubmittedChallengesTv;
@@ -69,30 +72,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         setupViewPager(pager);
         tablayout.setupWithViewPager(pager);
 
-        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-                    case R.id.create_challenge:
-                        Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
-                        startActivity(createChallenge);
-
-                        break;
-                    case R.id.homepage:
-                        Intent homePage = new Intent(getApplicationContext(), SearchChallengeActivity.class);
-                        startActivity(homePage);
-
-                        break;
-                    case R.id.user_profile:
-                        Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
-                        startActivity(userProfile);
-                        break;
-                }
-                return true;
-            }
-        });
+        setupProfileStatusBar();
 
         Glide.with(getApplicationContext())
                 .load("http://clipart-library.com/images/rcLojMEni.jpg")
@@ -108,8 +88,53 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                     }
                 });
 
-        setupProfileStatusBar();
+        setupBottomNavigation();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mBottomNav.getMenu().getItem(0).setChecked(true);
+        mBottomNav.getMenu().getItem(1).setChecked(false);
+        mBottomNav.getMenu().getItem(2).setChecked(false);
+        mBottomNav.getMenu().getItem(3).setChecked(false);
+
+
+
+    }
+
+    private void setupBottomNavigation() {
+        mBottomNav.getMenu().getItem(3).setChecked(false);// Search item
+        mBottomNav.getMenu().getItem(2).setChecked(false);// Leaderboard
+        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
+        mBottomNav.getMenu().getItem(0).setChecked(true); // Profile item
+        BottomNavigationViewHelper.disableShiftMode(mBottomNav);
+
+
+        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+
+                    case R.id.create_challenge:
+                        Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                        startActivity(createChallenge);
+
+                        break;
+                    case R.id.search_challenge:
+                        Intent searchChallenge = new Intent(getApplicationContext(), SearchChallengeActivity.class);
+                        startActivity(searchChallenge);
+                        break;
+                    case R.id.leaderboard:
+                        Intent leadeBoard = new Intent(getApplicationContext(), LeaderBoardActivity.class);
+                        startActivity(leadeBoard);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     private void setupProfileStatusBar() {
@@ -117,8 +142,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
-
-
+                profileNameTv.setText(currentUser.getProfileName());
                 userPointsTv.setText(String.valueOf(currentUser.getUserPoints()));
                 totalCreatedChallengesTv.setText(String.valueOf(currentUser.getNumberOfCreatedChallenges()));
                 totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
@@ -129,6 +153,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
             }
         });
+
 
 
     }
@@ -147,17 +172,20 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     }
 
     private void setupTabLayout(TabLayout tablayout) {
-        tablayout.setTabTextColors(0xFFFFFFFF, 0xFFFFFFFF);
-        tablayout.setSelectedTabIndicatorColor(0xFFFFFFFF);
+        tablayout.setTabTextColors(ContextCompat.getColor(this, R.color.lightGrey), ContextCompat.getColor(this, R.color.lightGrey));
+        tablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.lightGrey));
     }
 
 
     @Override
     public void onCreatedChallengeClicked(ChallengePhoto challenge) {
-        startReviewChallengeFragment(challenge);
+        if (challenge.getPendingReviews() > 0) {
+            startReviewChallengeFragment(challenge);
+        }
     }
 
     private void startReviewChallengeFragment(ChallengePhoto challenge) {
+        tablayout.setVisibility(View.INVISIBLE);
         mReviewChallengesFragment = new ReviewChallengesFragment();
         mReviewChallengesFragment.setChallengeToReview(challenge);
         mReviewChallengesFragment.setPopFragmentListener(this);
@@ -175,11 +203,18 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .remove(fragment)
                 .commit();
+        tablayout.setVisibility(View.VISIBLE);
+
     }
 
     @Override
     public void popFragment(Fragment fragment) {
         popFragmentFromBackStack(fragment);
+    }
+
+    @Override
+    public void setTabLayoutVisibile() {
+        tablayout.setVisibility(View.VISIBLE);
     }
 }
 

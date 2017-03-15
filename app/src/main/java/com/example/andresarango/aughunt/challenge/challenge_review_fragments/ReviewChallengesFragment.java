@@ -1,11 +1,11 @@
 package com.example.andresarango.aughunt.challenge.challenge_review_fragments;
 
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.challenge.challenges_adapters.swipe_review.ReviewSwipeAdapter;
 import com.example.andresarango.aughunt.models.ChallengePhoto;
 import com.example.andresarango.aughunt.models.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt.models.ChallengePhotoSubmitted;
 import com.example.andresarango.aughunt.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -53,10 +54,14 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
 
     Deque<ChallengePhotoCompleted> mCompletedChallengeDeck = new LinkedList<>();
 
-    @BindView(R.id.swipe_deck) SwipeDeck mSwipeDeck;
-    @BindView(R.id.tv_user_points) TextView mUserPointsTv;
-    @BindView(R.id.review_number) TextView mPendingReview;
-    @BindView(R.id.pending_review) TextView mPending;
+    @BindView(R.id.swipe_deck)
+    SwipeDeck mSwipeDeck;
+    @BindView(R.id.tv_user_points)
+    TextView mUserPointsTv;
+    @BindView(R.id.review_number)
+    TextView mPendingReview;
+    @BindView(R.id.pending_review)
+    TextView mPending;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -65,11 +70,12 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
 
     private Map<String, ChallengePhotoCompleted> challengeMap = new HashMap<>();
     private PopFragmentListener mListener;
+    private int mPendingReviewIndicator = 0;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_delete_me, container, false);
+        return inflater.inflate(R.layout.fragment_review_challenges, container, false);
     }
 
     @Override
@@ -129,13 +135,48 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
                 User user = dataSnapshot.getValue(User.class);
                 System.out.println("USER: " + user.getProfileName());
                 mUserPointsTv.setText(user.getUserPoints() + " PTS");
-                mUserPointsTv.setTextColor(Color.parseColor("#D81B60"));
                 mPendingReview.setTypeface(mPendingReview.getTypeface(), Typeface.BOLD);
                 mPendingReview.setText("2");
-                mPendingReview.setTextColor(Color.parseColor("#D81B60"));
-                mPending.setTextColor(Color.parseColor("#D81B60"));
                 mPending.setTypeface(mPending.getTypeface(), Typeface.BOLD);
-                mPending.setText("Pending review: ");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        rootRef.child("challenges").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
+                if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                    mPendingReviewIndicator += challenge.getPendingReviews();
+                    mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
+                    if (mPendingReviewIndicator > 0) {
+                        mPendingReview.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+                        mPending.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+                    } else {
+                        mPendingReview.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
+                        mPending.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
+                    }
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override
@@ -182,20 +223,46 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
 
     @Override
     public void cardSwipedLeft(long stableId) {
-        removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
+        ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
+        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
-        if(mCompletedChallengeDeck.isEmpty()){
+        updateUsersSubmittedChallenge(completed, false);
+        if (mCompletedChallengeDeck.isEmpty()) {
             mListener.popFragment(this);
         }
     }
 
     @Override
     public void cardSwipedRight(long stableId) {
-        removeCompletedChallengeFromFirebase(mCompletedChallengeDeck.removeLast());
+        ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
+        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
-        if(mCompletedChallengeDeck.isEmpty()){
+        updateUsersSubmittedChallenge(completed, true);
+        if (mCompletedChallengeDeck.isEmpty()) {
             mListener.popFragment(this);
         }
+    }
+
+    private void updateUsersSubmittedChallenge(final ChallengePhotoCompleted completed, final boolean isAccepted) {
+        rootRef.child("submitted-challenges").child(completed.getPlayerId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.getKey().equals(completed.getOriginalChallengeId())) {
+                        ChallengePhotoSubmitted submittedChallenge = snapshot.getValue(ChallengePhotoSubmitted.class);
+                        submittedChallenge.setAccepted(isAccepted);
+                        submittedChallenge.setReviewed(true);
+                        rootRef.child("submitted-challenges").child(completed.getPlayerId()).child(snapshot.getKey()).setValue(submittedChallenge);
+                        
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void removeCompletedChallengeFromFirebase(ChallengePhotoCompleted completedChallenge) {
@@ -217,7 +284,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
                 ChallengePhoto challenge = mutableData.getValue(ChallengePhoto.class);
-                challenge.setPendingReviews(challenge.getPendingReviews()-1);
+                challenge.setPendingReviews(challenge.getPendingReviews() - 1);
                 mutableData.setValue(challenge);
                 return Transaction.success(mutableData);
             }
@@ -233,4 +300,9 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         mListener = listener;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mListener.setTabLayoutVisibile();
+    }
 }

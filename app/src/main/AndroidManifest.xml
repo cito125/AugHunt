@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".login.SplashScreen">
+
             
         </activity>
 
@@ -36,10 +37,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <activity android:name=".ChallengeTemplateActivity" />
         <activity android:name=".AcceptedChallengeActivity" />
+        <activity android:name=".LeaderBoardActivity" />
 
         <meta-data
             android:name="com.google.android.awareness.API_KEY"
@@ -48,9 +51,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBeF2aZF_8M99U4ryAymUg3fPcAm-hww9A" />
 
-        <activity android:name=".DeleteMeActivity">
-
-        </activity>
     </application>
 
 </manifest>

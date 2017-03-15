@@ -12,29 +12,32 @@
         android:id="@+id/top_menu"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#5d91b6">
+        android:background="@color/colorPrimaryDark">
         <TextView
             android:id="@+id/tv_user_points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:background="#5d91b6"/>
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:textColor="#FFEB3B" />
+
         <TextView
             android:id="@+id/review_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:background="#5d91b6"/>
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/lightGrey" />
+
         <TextView
             android:id="@+id/pending_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/review_number"
-            android:layout_marginTop="5dp"
-            android:background="#5d91b6"/>
+            android:textColor="@color/lightGrey"
+            android:layout_centerVertical="true"
+            android:text="Pending review: "/>
 
     </RelativeLayout>
 
@@ -49,19 +52,5 @@
         swipedeck:max_visible="3"
         swipedeck:render_above="false"
         swipedeck:card_spacing="15dp"/>
-
-    <Button
-        android:id="@+id/button_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="swipe left" />
-    <Button
-        android:id="@+id/button_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:text="swipe right" />
-
 
 </com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>
