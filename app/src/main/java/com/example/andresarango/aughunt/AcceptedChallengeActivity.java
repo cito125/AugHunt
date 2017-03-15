@@ -136,7 +136,7 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 String url = taskSnapshot.getDownloadUrl().toString();
-                final ChallengePhotoCompleted completedChallenge = new ChallengePhotoCompleted(pushId, auth.getCurrentUser().getUid(), url);
+                final ChallengePhotoCompleted completedChallenge = new ChallengePhotoCompleted(pushId, mChallengePhoto.getChallengeId(), auth.getCurrentUser().getUid(), url);
                 rootRef.child("completed-challenges").child(mChallengePhoto.getChallengeId()).child(pushId).setValue(completedChallenge);
                 incrementCompletedCounter();
                 incrementSubmittedCounter();
