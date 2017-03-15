@@ -302,4 +302,6 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
         super.onDestroy();
         mCameraCallback.destroyHandler();
     }
+
+
 }
