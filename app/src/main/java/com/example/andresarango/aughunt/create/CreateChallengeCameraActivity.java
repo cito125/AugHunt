@@ -25,10 +25,10 @@ import android.widget.Toast;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.util.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.util.camera.CameraCallback;
-import com.example.andresarango.aughunt.models.ChallengePhoto;
-import com.example.andresarango.aughunt.models.DAMLocation;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.DAMLocation;
 import com.example.andresarango.aughunt.util.snapshot_callback.SnapshotHelper;
-import com.example.andresarango.aughunt.models.User;
+import com.example.andresarango.aughunt._models.User;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.snapshot.LocationResult;
@@ -47,7 +47,7 @@ import com.google.firebase.storage.UploadTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChallengeTemplateActivity extends AppCompatActivity implements
+public class CreateChallengeCameraActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener, ViewGroup.OnClickListener,
         SnapshotHelper.SnapshotListener {
@@ -75,7 +75,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_challenge_template);
+        setContentView(R.layout.activity_camera_create);
         ButterKnife.bind(this);
         progressDialog = new ProgressDialog(this);
 
@@ -158,7 +158,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
             public void onFailure(@NonNull Exception e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
-                Toast.makeText(ChallengeTemplateActivity.this, "Failed to save image.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateChallengeCameraActivity.this, "Failed to save image.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -180,7 +180,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     }
 
     public void createDialog() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.AboutDialog);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.HintDialog);
 
         final EditText edittext = new EditText(getApplicationContext());
         alert.setView(edittext);
@@ -228,7 +228,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
         mCameraCallback.destroyHandler();
     }
 
-    // ==================== PERMISSIONS ====================
+    // ==================== PERMISSIONS STUFF BELOW ====================
     private void checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -243,14 +243,14 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     }
 
     private void requestPermission() {
-        int locationPermission = ContextCompat.checkSelfPermission(ChallengeTemplateActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int locationPermission = ContextCompat.checkSelfPermission(CreateChallengeCameraActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
         boolean locationPermissionIsNotGranted = locationPermission != PackageManager.PERMISSION_GRANTED;
         boolean APILevelIsTwentyThreeOrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
         if (locationPermissionIsNotGranted && APILevelIsTwentyThreeOrHigher) {
             marshamallowRequestPermission();
         }
         if (locationPermissionIsNotGranted) {
-            ActivityCompat.requestPermissions(ChallengeTemplateActivity.this,
+            ActivityCompat.requestPermissions(CreateChallengeCameraActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION);
         }
@@ -265,7 +265,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(ChallengeTemplateActivity.this,
+                            ActivityCompat.requestPermissions(CreateChallengeCameraActivity.this,
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     LOCATION_PERMISSION);
                         }
@@ -275,7 +275,7 @@ public class ChallengeTemplateActivity extends AppCompatActivity implements
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
-        new AlertDialog.Builder(ChallengeTemplateActivity.this)
+        new AlertDialog.Builder(CreateChallengeCameraActivity.this)
                 .setMessage(message)
                 .setPositiveButton("NO", onClickListener)
                 .setNegativeButton("YES", null)

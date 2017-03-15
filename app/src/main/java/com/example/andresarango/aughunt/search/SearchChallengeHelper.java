@@ -1,6 +1,6 @@
 package com.example.andresarango.aughunt.search;
 
-import com.example.andresarango.aughunt.models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
 
 /**
  * Created by Danny on 3/14/2017.

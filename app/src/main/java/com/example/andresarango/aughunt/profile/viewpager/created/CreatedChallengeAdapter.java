@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +15,18 @@ import java.util.List;
  * Created by Millochka on 3/5/17.
  */
 
-public class CreatedChallengesAdapter extends RecyclerView.Adapter<CreatedChallengeViewHolder> {
+public class CreatedChallengeAdapter extends RecyclerView.Adapter<CreatedChallengeViewHolder> {
 
     private List<ChallengePhoto> mChallengeList = new ArrayList<>();
     private CreatedChallengeListener mListener;
 
-    public CreatedChallengesAdapter(CreatedChallengeListener listener) {
+    public CreatedChallengeAdapter(CreatedChallengeListener listener) {
         this.mListener = listener;
     }
 
     @Override
     public CreatedChallengeViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vh_created_challenge, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vh_challenge_created, parent, false);
         return new CreatedChallengeViewHolder(itemView);
     }
 

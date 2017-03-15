@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
  * Created by dannylui on 3/10/17.
  */
 
-public class CreatedChallengesFragment extends Fragment {
+public class CreatedChallengeFragment extends Fragment {
     @BindView(R.id.created_challenges) RecyclerView mRecyclerView;
 //    @BindView(R.id.fab_create_challenge) FloatingActionButton mFloatingActionButton;
 
@@ -43,7 +43,7 @@ public class CreatedChallengesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_created_challenges, container, false);
+        return inflater.inflate(R.layout.fragment_challenges_created, container, false);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CreatedChallengesFragment extends Fragment {
 
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        mRecyclerView.setAdapter(new CreatedChallengesAdapter(mListener));
+        mRecyclerView.setAdapter(new CreatedChallengeAdapter(mListener));
         callFirebase();
 
     }
@@ -96,7 +96,7 @@ public class CreatedChallengesFragment extends Fragment {
         if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             challengeMap.put(challengeKey, challenge);
 
-            CreatedChallengesAdapter adapter = (CreatedChallengesAdapter) mRecyclerView.getAdapter();
+            CreatedChallengeAdapter adapter = (CreatedChallengeAdapter) mRecyclerView.getAdapter();
             adapter.addChallengeToList(challenge);
 
         } else {
@@ -118,7 +118,7 @@ public class CreatedChallengesFragment extends Fragment {
         }
 
         // update recycler view
-        CreatedChallengesAdapter adapter = (CreatedChallengesAdapter) mRecyclerView.getAdapter();
+        CreatedChallengeAdapter adapter = (CreatedChallengeAdapter) mRecyclerView.getAdapter();
         adapter.setChallengeList(challengeList);
     }
 

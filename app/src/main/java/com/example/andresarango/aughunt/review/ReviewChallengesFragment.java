@@ -13,10 +13,10 @@ import android.widget.TextView;
 
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.models.ChallengePhoto;
-import com.example.andresarango.aughunt.models.ChallengePhotoCompleted;
-import com.example.andresarango.aughunt.models.ChallengePhotoSubmitted;
-import com.example.andresarango.aughunt.models.User;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt._models.ChallengePhotoSubmitted;
+import com.example.andresarango.aughunt._models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -74,7 +74,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_review_challenges, container, false);
+        return inflater.inflate(R.layout.fragment_challenges_review, container, false);
     }
 
     @Override

@@ -23,10 +23,10 @@ import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.util.camera.AspectRatioFragment;
 import com.example.andresarango.aughunt.util.camera.CameraCallback;
 import com.example.andresarango.aughunt.util.challenge_dialog_fragment.ChallengeDialogFragment;
-import com.example.andresarango.aughunt.models.ChallengePhoto;
-import com.example.andresarango.aughunt.models.ChallengePhotoCompleted;
-import com.example.andresarango.aughunt.models.ChallengePhotoSubmitted;
-import com.example.andresarango.aughunt.models.User;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt._models.ChallengePhotoSubmitted;
+import com.example.andresarango.aughunt._models.User;
 import com.example.andresarango.aughunt.util.snapshot_callback.SnapshotHelper;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
@@ -51,7 +51,7 @@ import butterknife.ButterKnife;
  * Created by dannylui on 3/9/17.
  */
 
-public class AcceptedChallengeActivity extends AppCompatActivity implements
+public class AcceptChallengeCameraActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         AspectRatioFragment.Listener, ViewGroup.OnClickListener,
         SnapshotHelper.SnapshotListener {
@@ -78,7 +78,7 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_challenge_accepted);
+        setContentView(R.layout.activity_camera_search);
         ButterKnife.bind(this);
 
         progressDialog = new ProgressDialog(this);
@@ -207,14 +207,14 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
     }
 
     private void requestPermission() {
-        int locationPermission = ContextCompat.checkSelfPermission(AcceptedChallengeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int locationPermission = ContextCompat.checkSelfPermission(AcceptChallengeCameraActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
         boolean locationPermissionIsNotGranted = locationPermission != PackageManager.PERMISSION_GRANTED;
         boolean APILevelIsTwentyThreeOrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
         if (locationPermissionIsNotGranted && APILevelIsTwentyThreeOrHigher) {
             marshamallowRequestPermission();
         }
         if (locationPermissionIsNotGranted) {
-            ActivityCompat.requestPermissions(AcceptedChallengeActivity.this,
+            ActivityCompat.requestPermissions(AcceptChallengeCameraActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION);
         }
@@ -241,7 +241,7 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(AcceptedChallengeActivity.this,
+                            ActivityCompat.requestPermissions(AcceptChallengeCameraActivity.this,
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     LOCATION_PERMISSION);
                         }
@@ -251,7 +251,7 @@ public class AcceptedChallengeActivity extends AppCompatActivity implements
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
-        new AlertDialog.Builder(AcceptedChallengeActivity.this)
+        new AlertDialog.Builder(AcceptChallengeCameraActivity.this)
                 .setMessage(message)
                 .setPositiveButton("NO", onClickListener)
                 .setNegativeButton("YES", null)

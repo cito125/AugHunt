@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.models.User;
+import com.example.andresarango.aughunt._models.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

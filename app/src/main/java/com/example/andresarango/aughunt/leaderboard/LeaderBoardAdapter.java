@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.models.User;
+import com.example.andresarango.aughunt._models.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +23,7 @@ class LeaderBoardAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vh_user_points, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vh_leaderboard_userpoints, parent, false);
         return new LeaderBoardViewHolder(itemView);
     }
 

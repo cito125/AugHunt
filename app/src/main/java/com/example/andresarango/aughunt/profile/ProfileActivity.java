@@ -21,17 +21,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
+import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeFragment;
 import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
-import com.example.andresarango.aughunt.create.ChallengeTemplateActivity;
 import com.example.andresarango.aughunt.leaderboard.LeaderBoardActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.search.SearchChallengeActivity;
-import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengesFragment;
 import com.example.andresarango.aughunt.review.PopFragmentListener;
 import com.example.andresarango.aughunt.review.ReviewChallengesFragment;
 import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeListener;
-import com.example.andresarango.aughunt.models.ChallengePhoto;
-import com.example.andresarango.aughunt.models.User;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.User;
 import com.example.andresarango.aughunt.profile.viewpager.submitted.SubmittedChallengeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -59,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
 
     private SubmittedChallengeFragment mSubmittedChallengesFragment;
-    private CreatedChallengesFragment mCreatedChallengesFragment;
+    private CreatedChallengeFragment mCreatedChallengeFragment;
     private ReviewChallengesFragment mReviewChallengesFragment;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -123,7 +123,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
                 switch (item.getItemId()) {
 
                     case R.id.create_challenge:
-                        Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                        Intent createChallenge = new Intent(getApplicationContext(), CreateChallengeCameraActivity.class);
                         startActivity(createChallenge);
 
                         break;
@@ -165,12 +165,12 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     private void setupViewPager(ViewPager pager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        mCreatedChallengesFragment = new CreatedChallengesFragment();
-        mCreatedChallengesFragment.setListener(this);
+        mCreatedChallengeFragment = new CreatedChallengeFragment();
+        mCreatedChallengeFragment.setListener(this);
 
         mSubmittedChallengesFragment = new SubmittedChallengeFragment();
 
-        adapter.addFragment(mCreatedChallengesFragment, "Created");
+        adapter.addFragment(mCreatedChallengeFragment, "Created");
         adapter.addFragment(mSubmittedChallengesFragment, "Submitted");
         pager.setAdapter(adapter);
     }

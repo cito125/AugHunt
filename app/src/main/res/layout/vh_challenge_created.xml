@@ -27,15 +27,15 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/iv_created_challenge_completed_star"
+                android:id="@+id/iv_created_challenge_completed_check"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_star_black_48dp"
+                android:src="@drawable/ic_check_black_48dp"
                 android:layout_centerVertical="true"/>
 
             <TextView
                 android:id="@+id/tv_created_challenge_submissions"
-                android:layout_toRightOf="@id/iv_created_challenge_completed_star"
+                android:layout_toRightOf="@id/iv_created_challenge_completed_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -44,17 +44,17 @@
                 android:text="0"/>
 
             <ImageView
-                android:id="@+id/iv_created_challenge_pursuing_eye"
+                android:id="@+id/iv_created_challenge_pursuing_person"
                 android:layout_toRightOf="@id/tv_created_challenge_submissions"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/ic_remove_red_eye_black_48dp"/>
+                android:src="@drawable/ic_person_black_48dp"/>
 
             <TextView
                 android:id="@+id/tv_created_challenge_players"
-                android:layout_toRightOf="@id/iv_created_challenge_pursuing_eye"
+                android:layout_toRightOf="@id/iv_created_challenge_pursuing_person"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
@@ -67,7 +67,7 @@
                 android:id="@+id/iv_created_challenge_pending_pen"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_edit_black_48dp"
+                android:src="@drawable/ic_rate_review_black_48dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@id/tv_created_challenge_players"/>
@@ -78,7 +78,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-
                 android:textSize="15sp"
                 android:text="0"/>
 

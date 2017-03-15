@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.models.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt._models.ChallengePhotoCompleted;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class ReviewSwipeAdapter extends BaseAdapter {
         if (view == null) {
             view = LayoutInflater
                     .from(parent.getContext())
-                    .inflate(R.layout.vh_review_challenge_swipe, parent, false);
+                    .inflate(R.layout.vh_challenge_review_swipe, parent, false);
         }
         ImageView imageView = (ImageView) view.findViewById(R.id.offer_image);
         Glide.with(view.getContext()).load(completedChallenge.getPhotoUrl()).fitCenter().into(imageView);

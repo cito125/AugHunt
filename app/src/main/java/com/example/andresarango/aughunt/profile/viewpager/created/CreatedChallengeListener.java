@@ -1,6 +1,6 @@
 package com.example.andresarango.aughunt.profile.viewpager.created;
 
-import com.example.andresarango.aughunt.models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
 
 /**
  * Created by Millochka on 3/6/17.

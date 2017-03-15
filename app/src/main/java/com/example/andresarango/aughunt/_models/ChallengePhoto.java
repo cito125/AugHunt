@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.models;
+package com.example.andresarango.aughunt._models;
 
 import java.io.Serializable;
 

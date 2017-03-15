@@ -41,14 +41,6 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/search_challenge_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/top_menu"
-        android:layout_above="@id/bottom_navigation">
-    </android.support.v7.widget.RecyclerView>
-
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -58,4 +50,13 @@
         app:itemIconTint="@drawable/bottom_navigation_selector"
         app:itemTextColor="@drawable/bottom_navigation_selector"
         app:menu="@menu/menu_bottom_navigation" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_challenge_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_menu"
+        android:layout_above="@id/bottom_navigation">
+    </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>

@@ -3,7 +3,7 @@ package com.example.andresarango.aughunt.profile.viewpager.submitted;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.example.andresarango.aughunt.models.ChallengePhotoSubmitted;
+import com.example.andresarango.aughunt._models.ChallengePhotoSubmitted;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.create.ChallengeTemplateActivity;
-import com.example.andresarango.aughunt.models.ChallengePhoto;
-import com.example.andresarango.aughunt.models.User;
+import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.User;
 import com.example.andresarango.aughunt.profile.ProfileActivity;
 import com.example.andresarango.aughunt.search.SearchChallengeActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -87,7 +87,7 @@ public class LeaderBoardActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.create_challenge:
-                        Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                        Intent createChallenge = new Intent(getApplicationContext(), CreateChallengeCameraActivity.class);
                         startActivity(createChallenge);
                         break;
                     case R.id.user_profile:

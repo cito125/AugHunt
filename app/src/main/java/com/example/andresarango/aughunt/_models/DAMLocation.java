@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.models;
+package com.example.andresarango.aughunt._models;
 
 import java.io.Serializable;
 
@@ -7,9 +7,9 @@ import java.io.Serializable;
  */
 
 public class DAMLocation implements Serializable {
-    private Double mLat;
-    private Double mLng;
-    private Double mElevation;
+    private Double lat;
+    private Double lng;
+    private Double elevation;
 
     public DAMLocation() {
 
@@ -21,33 +21,33 @@ public class DAMLocation implements Serializable {
     }
 
     public DAMLocation(Double lat, Double lng, Double elevation) {
-        this.mLat = lat;
-        this.mLng = lng;
-        this.mElevation = elevation;
+        this.lat = lat;
+        this.lng = lng;
+        this.elevation = elevation;
     }
 
     public Double getLat() {
-        return mLat;
+        return lat;
     }
 
     public void setLat(Double lat) {
-        this.mLat = lat;
+        this.lat = lat;
     }
 
     public Double getLng() {
-        return mLng;
+        return lng;
     }
 
     public void setLng(Double lng) {
-        this.mLng = lng;
+        this.lng = lng;
     }
 
     public Double getElevation() {
-        return mElevation;
+        return elevation;
     }
 
     public void setElevation(Double elevation) {
-        this.mElevation = elevation;
+        this.elevation = elevation;
     }
 
 

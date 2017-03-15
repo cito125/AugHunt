@@ -20,14 +20,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
 import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
 import com.example.andresarango.aughunt.leaderboard.LeaderBoardActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt.util.challenge_dialog_fragment.ChallengeDialogFragment;
-import com.example.andresarango.aughunt.create.ChallengeTemplateActivity;
-import com.example.andresarango.aughunt.models.DAMLocation;
-import com.example.andresarango.aughunt.models.ChallengePhoto;
-import com.example.andresarango.aughunt.models.User;
+import com.example.andresarango.aughunt._models.DAMLocation;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.User;
 import com.example.andresarango.aughunt.profile.ProfileActivity;
 import com.example.andresarango.aughunt.util.snapshot_callback.SnapshotHelper;
 import com.google.android.gms.awareness.snapshot.LocationResult;
@@ -80,7 +80,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_challenge);
+        setContentView(R.layout.activity_challenges_searched);
         ButterKnife.bind(this);
 
         requestPermission();
@@ -102,7 +102,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.create_challenge:
-                        Intent createChallenge = new Intent(getApplicationContext(), ChallengeTemplateActivity.class);
+                        Intent createChallenge = new Intent(getApplicationContext(), CreateChallengeCameraActivity.class);
                         startActivity(createChallenge);
                         break;
                     case R.id.user_profile:
