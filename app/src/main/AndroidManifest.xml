@@ -19,7 +19,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".login.SplashScreen">
 
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,17 +31,17 @@
 
         </activity>
 
-        <activity android:name=".ProfileActivity">
+        <activity android:name=".profile.ProfileActivity">
 
         </activity>
 
-        <activity android:name=".SearchChallengeActivity" >
+        <activity android:name=".search.SearchChallengeActivity" >
 
         </activity>
 
-        <activity android:name=".ChallengeTemplateActivity" />
-        <activity android:name=".AcceptedChallengeActivity" />
-        <activity android:name=".LeaderBoardActivity" />
+        <activity android:name=".create.CreateChallengeCameraActivity" />
+        <activity android:name=".search.AcceptChallengeCameraActivity" />
+        <activity android:name=".leaderboard.LeaderBoardActivity" />
 
         <meta-data
             android:name="com.google.android.awareness.API_KEY"

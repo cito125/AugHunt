@@ -1,0 +1,11 @@
+package com.example.andresarango.aughunt.search;
+
+import com.example.andresarango.aughunt._models.ChallengePhoto;
+
+/**
+ * Created by Danny on 3/14/2017.
+ */
+
+public interface SearchChallengeHelper {
+    void onSearchChallengeClicked(ChallengePhoto challenge);
+}
