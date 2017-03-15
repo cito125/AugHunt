@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.andresarango.aughunt.R;
@@ -47,10 +46,10 @@ public class ReviewSwipeAdapter extends BaseAdapter {
                     .inflate(R.layout.vh_review_challenge_swipe, parent, false);
         }
         ImageView imageView = (ImageView) view.findViewById(R.id.offer_image);
-        Glide.with(view.getContext()).load(completedChallenge.getPhotoUrl()).centerCrop().into(imageView);
+        Glide.with(view.getContext()).load(completedChallenge.getPhotoUrl()).fitCenter().into(imageView);
 
-        TextView textView = (TextView) view.findViewById(R.id.sample_text);
-        textView.setText(completedChallenge.getPlayerId());
+//        TextView textView = (TextView) view.findViewById(R.id.sample_text);
+//        textView.setText(completedChallenge.getPlayerId());
         return view;
     }
 

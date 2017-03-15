@@ -39,8 +39,7 @@ public class LeaderBoardActivity extends AppCompatActivity{
 
     @BindView(R.id.tv_user_points) TextView mUserPointsTv;
     @BindView(R.id.review_number) TextView mPendingReview;
-    @BindView(R.id.pending_review)
-    TextView mPending;
+    @BindView(R.id.pending_review) TextView mPending;
     @BindView(R.id.list_of_users) RecyclerView mRecyclerView;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
