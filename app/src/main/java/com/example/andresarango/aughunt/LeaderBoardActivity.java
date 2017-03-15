@@ -23,8 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,8 +39,7 @@ public class LeaderBoardActivity extends AppCompatActivity{
 
     @BindView(R.id.tv_user_points) TextView mUserPointsTv;
     @BindView(R.id.review_number) TextView mPendingReview;
-    @BindView(R.id.pending_review)
-    TextView mPending;
+    @BindView(R.id.pending_review) TextView mPending;
     @BindView(R.id.list_of_users) RecyclerView mRecyclerView;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -146,23 +143,14 @@ public class LeaderBoardActivity extends AppCompatActivity{
         String userKey = dataSnapshot.getKey();
 
         Set<String> userKeys = mUserMap.keySet();
-        if (userKeys.contains(userKey)) {
-            mUserMap.put(userKey, dataSnapshot.getValue(User.class));
-        }
+
+        mUserMap.put(userKey, dataSnapshot.getValue(User.class));
+
 
         mUserList.clear();
         for (String key : userKeys) {
             mUserList.add(mUserMap.get(key));
         }
-
-        Comparator<User> pointsComparator = new Comparator<User>() {
-            @Override
-            public int compare(User o1, User o2) {
-                return Integer.valueOf(o2.getUserPoints()).compareTo(o1.getUserPoints());
-            }
-        };
-
-        Collections.sort(mUserList, pointsComparator);
 
         mLeaderBoardAdapter.setUserList(mUserList);
     }
@@ -171,6 +159,7 @@ public class LeaderBoardActivity extends AppCompatActivity{
         // Key - value
         String userKey = dataSnapshot.getKey();
         User user = dataSnapshot.getValue(User.class);
+
 
             mUserMap.put(userKey, user);
 

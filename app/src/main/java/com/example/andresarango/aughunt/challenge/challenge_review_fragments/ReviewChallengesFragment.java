@@ -102,6 +102,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 addChallengeToSwiperView(dataSnapshot);
+
             }
 
             @Override
@@ -237,7 +238,9 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
         removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
+        updateUserPoints(completed);
         updateUsersSubmittedChallenge(completed, true);
+
         if (mCompletedChallengeDeck.isEmpty()) {
             mListener.popFragment(this);
         }
@@ -304,5 +307,23 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     public void onDestroy() {
         super.onDestroy();
         mListener.setTabLayoutVisibile();
+    }
+
+
+    private void updateUserPoints(final ChallengePhotoCompleted completed) {
+        rootRef.child("users").child(completed.getPlayerId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                user.setUserPoints(user.getUserPoints()+1);
+                rootRef.child("users").child(completed.getPlayerId()).setValue(user);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
