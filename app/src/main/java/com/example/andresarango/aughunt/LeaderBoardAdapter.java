@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import com.example.andresarango.aughunt.models.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -43,5 +45,14 @@ class LeaderBoardAdapter extends RecyclerView.Adapter {
     public void addUserToList(User user) {
         mUserList.add(user);
         notifyItemInserted(mUserList.size() - 1);
+        Comparator<User> pointsComparator = new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return Integer.valueOf(o2.getUserPoints()).compareTo(o1.getUserPoints());
+            }
+        };
+
+        Collections.sort(mUserList, pointsComparator);
+
     }
 }

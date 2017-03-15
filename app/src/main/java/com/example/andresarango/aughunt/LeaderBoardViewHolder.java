@@ -1,9 +1,11 @@
 package com.example.andresarango.aughunt;
 
 import android.graphics.Bitmap;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +37,8 @@ class LeaderBoardViewHolder extends RecyclerView.ViewHolder {
     public void bind(User user) {
 
         mUserName.setText(user.getProfileName());
+        mUserPoints.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+        mUserPoints.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorAccent));
         mUserPoints.setText(String.valueOf(user.getUserPoints()));
         mNumberOfCHallenges.setText("Challenges completed: " + String.valueOf(user.getNumberOfSubmittedChallenges()));
         Glide.with(itemView.getContext())
