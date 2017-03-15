@@ -1,7 +1,5 @@
 package com.example.andresarango.aughunt.models;
 
-import com.example.andresarango.aughunt.location.DAMLocation;
-
 import java.io.Serializable;
 
 /**

@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.SearchChallengeActivity;
+import com.example.andresarango.aughunt.search.SearchChallengeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
