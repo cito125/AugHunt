@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import com.example.andresarango.aughunt.leaderboard.LeaderBoardActivity;
 import com.example.andresarango.aughunt.profile.ProfileActivity;
 import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.review.PendingReviewFragment;
+import com.example.andresarango.aughunt.review.PopFragmentListener;
 import com.example.andresarango.aughunt.review.ReviewChallengesFragment;
 import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
 import com.example.andresarango.aughunt.util.challenge_dialog_fragment.ChallengeDialogFragment;
@@ -53,7 +55,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchChallengeActivity extends AppCompatActivity implements SnapshotHelper.SnapshotListener, SearchChallengeHelper, CreatedChallengeListener {
+public class SearchChallengeActivity extends AppCompatActivity implements SnapshotHelper.SnapshotListener, SearchChallengeHelper, CreatedChallengeListener, PopFragmentListener {
     private static final int LOCATION_PERMISSION = 1245;
 
     private ChallengesAdapter mNearbyChallengesAdapter;
@@ -345,7 +347,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     private void startReviewChallengeFragment(ChallengePhoto challenge) {
         mReviewChallengesFragment = new ReviewChallengesFragment();
         mReviewChallengesFragment.setChallengeToReview(challenge);
-        //mReviewChallengesFragment.setmListener(this);
+        mReviewChallengesFragment.setmListener(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -355,5 +357,13 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     }
 
 
+    @Override
+    public void popFragment(Fragment fragment) {
 
+    }
+
+    @Override
+    public void setTabLayoutVisibile() {
+
+    }
 }

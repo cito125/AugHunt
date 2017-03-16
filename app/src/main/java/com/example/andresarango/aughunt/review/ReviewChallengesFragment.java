@@ -325,4 +325,8 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
             }
         });
     }
+
+    public void setmListener(PopFragmentListener mListener) {
+        this.mListener = mListener;
+    }
 }
