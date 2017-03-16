@@ -23,7 +23,6 @@ import android.widget.TextView;
 
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
-import com.example.andresarango.aughunt._models.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt._models.DAMLocation;
 import com.example.andresarango.aughunt._models.User;
 import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
@@ -31,6 +30,7 @@ import com.example.andresarango.aughunt.leaderboard.LeaderBoardActivity;
 import com.example.andresarango.aughunt.profile.ProfileActivity;
 import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.review.PendingReviewFragment;
+import com.example.andresarango.aughunt.review.ReviewChallengesFragment;
 import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
 import com.example.andresarango.aughunt.util.challenge_dialog_fragment.ChallengeDialogFragment;
 import com.example.andresarango.aughunt.util.snapshot_callback.SnapshotHelper;
@@ -81,6 +81,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
 
     private int mPendingReviewIndicator = 0;
     private ChallengePhoto mSelectedChallenge;
+    private ReviewChallengesFragment mReviewChallengesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -335,11 +336,24 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     }
 
 
-    @Override
-    public void onCompletedChallengeClicked(ChallengePhotoCompleted completedChallenge) {
-        startCompareChallengeFragment(completedChallenge, mSelectedChallenge);
+//    @Override
+//    public void onCompletedChallengeClicked(ChallengePhotoCompleted completedChallenge) {
+//        startCompareChallengeFragment(completedChallenge, mSelectedChallenge);
+//
+//    }
 
+    private void startReviewChallengeFragment(ChallengePhoto challenge) {
+        mReviewChallengesFragment = new ReviewChallengesFragment();
+        mReviewChallengesFragment.setChallengeToReview(challenge);
+        //mReviewChallengesFragment.setmListener(this);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.search_challenge, mReviewChallengesFragment)
+                .addToBackStack(null)
+                .commit();
     }
+
 
 
 }

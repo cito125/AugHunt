@@ -28,6 +28,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
             android:layout_centerVertical="true"
+            android:onClick="openPendingReview"
             android:textColor="@color/lightGrey" />
 
         <TextView
@@ -37,6 +38,7 @@
             android:layout_toLeftOf="@id/review_number"
             android:textColor="@color/lightGrey"
             android:layout_centerVertical="true"
+            android:onClick="openPendingReview"
             android:text="Pending review: "/>
 
     </RelativeLayout>
