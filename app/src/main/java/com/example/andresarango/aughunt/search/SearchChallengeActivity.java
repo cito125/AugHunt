@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
@@ -256,6 +257,12 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
         }
 
         mNearbyChallengesAdapter.setChallengeList(challengeList);
+    }
+
+    public void openPendingReview(View view){
+        Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
+        userProfile.putExtra(ProfileActivity.VIEWPAGER_START_POSITION, 3);
+        startActivity(userProfile);
     }
 
     @Override

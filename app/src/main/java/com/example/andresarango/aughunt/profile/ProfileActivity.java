@@ -1,7 +1,6 @@
 package com.example.andresarango.aughunt.profile;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,35 +9,25 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
-import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeFragment;
-import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
-import com.example.andresarango.aughunt.leaderboard.LeaderBoardActivity;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.search.SearchChallengeActivity;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
+import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
+import com.example.andresarango.aughunt.leaderboard.LeaderBoardActivity;
+import com.example.andresarango.aughunt.profile.viewpager.account.ProfileFragment;
+import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeFragment;
+import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeListener;
+import com.example.andresarango.aughunt.profile.viewpager.pending.PendingChallengeFragment;
+import com.example.andresarango.aughunt.profile.viewpager.pending.PendingChallengeListener;
+import com.example.andresarango.aughunt.profile.viewpager.submitted.SubmittedChallengeFragment;
 import com.example.andresarango.aughunt.review.PopFragmentListener;
 import com.example.andresarango.aughunt.review.ReviewChallengesFragment;
-import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeListener;
-import com.example.andresarango.aughunt._models.ChallengePhoto;
-import com.example.andresarango.aughunt._models.User;
-import com.example.andresarango.aughunt.profile.viewpager.submitted.SubmittedChallengeFragment;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.andresarango.aughunt.search.SearchChallengeActivity;
+import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,23 +36,19 @@ import butterknife.ButterKnife;
  * Created by dannylui on 3/11/17.
  */
 
-public class ProfileActivity extends AppCompatActivity implements CreatedChallengeListener, PopFragmentListener {
+public class ProfileActivity extends AppCompatActivity implements CreatedChallengeListener, PendingChallengeListener, PopFragmentListener {
     @BindView(R.id.tab_layout) TabLayout tablayout;
     @BindView(R.id.viewpager) ViewPager pager;
     @BindView(R.id.bottom_navigation) BottomNavigationView mBottomNav;
-    @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
-    @BindView(R.id.tv_main_profile_name) TextView profileNameTv;
-    @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
-    @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
-    @BindView(R.id.tv_main_profile_total_submitted) TextView totalSubmittedChallengesTv;
 
+    public static final String VIEWPAGER_START_POSITION = "view.pager.start.position";
 
+    private ProfileFragment mProfileFragment;
     private SubmittedChallengeFragment mSubmittedChallengesFragment;
     private CreatedChallengeFragment mCreatedChallengeFragment;
     private ReviewChallengesFragment mReviewChallengesFragment;
 
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
-    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+    private PendingChallengeFragment mPendingChallengeFragment;
 
     @Override
 
@@ -72,25 +57,13 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+        int startPos = getIntent().getIntExtra(VIEWPAGER_START_POSITION, 0);
+
         setupTabLayout(tablayout);
         setupViewPager(pager);
         tablayout.setupWithViewPager(pager);
 
-        setupProfileStatusBar();
-
-        Glide.with(getApplicationContext())
-                .load("http://clipart-library.com/images/rcLojMEni.jpg")
-                .asBitmap()
-                .centerCrop()
-                .into(new BitmapImageViewTarget(profilePicIv) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(getResources(), resource);
-                        circularBitmapDrawable.setCircular(true);
-                        profilePicIv.setImageDrawable(circularBitmapDrawable);
-                    }
-                });
+        pager.setCurrentItem(startPos);
 
         setupBottomNavigation();
     }
@@ -98,23 +71,14 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     @Override
     protected void onResume() {
         super.onResume();
-
-
         mBottomNav.getMenu().getItem(0).setChecked(true);
         mBottomNav.getMenu().getItem(1).setChecked(false);
         mBottomNav.getMenu().getItem(2).setChecked(false);
         mBottomNav.getMenu().getItem(3).setChecked(false);
 
-
-
-
-
     }
 
     private void setupBottomNavigation() {
-
-
-
 
         mBottomNav.getMenu().getItem(3).setChecked(false);
         mBottomNav.getMenu().getItem(2).setChecked(false);// Leaderboard
@@ -122,7 +86,6 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         mBottomNav.getMenu().getItem(0).setChecked(true);// Create item
         // Profile item
         BottomNavigationViewHelper.disableShiftMode(mBottomNav);
-
 
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -149,37 +112,23 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         });
     }
 
-    private void setupProfileStatusBar() {
-        rootRef.child("users").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User currentUser = dataSnapshot.getValue(User.class);
-                profileNameTv.setText(currentUser.getProfileName());
-                userPointsTv.setText(String.valueOf(currentUser.getUserPoints()));
-                totalCreatedChallengesTv.setText(String.valueOf(currentUser.getNumberOfCreatedChallenges()));
-                totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-    }
 
     private void setupViewPager(ViewPager pager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
+        mProfileFragment = new ProfileFragment();
         mCreatedChallengeFragment = new CreatedChallengeFragment();
         mCreatedChallengeFragment.setListener(this);
 
         mSubmittedChallengesFragment = new SubmittedChallengeFragment();
 
+        mPendingChallengeFragment = new PendingChallengeFragment();
+        mPendingChallengeFragment.setListener(this);
+
+        adapter.addFragment(mProfileFragment, "Profile");
         adapter.addFragment(mCreatedChallengeFragment, "Created");
         adapter.addFragment(mSubmittedChallengesFragment, "Submitted");
+        adapter.addFragment(mPendingChallengeFragment, "Pending");
         pager.setAdapter(adapter);
     }
 
@@ -228,5 +177,16 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     public void setTabLayoutVisibile() {
         tablayout.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public void refreshPendingFragment() {
+        mPendingChallengeFragment.refreshPendingList();
+    }
+
+    @Override
+    public void onPendingChallengeClicked(ChallengePhoto challenge) {
+        startReviewChallengeFragment(challenge);
+    }
+
 }
 
