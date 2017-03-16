@@ -68,7 +68,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
 
 
     private Map<String, ChallengePhotoCompleted> challengeMap = new HashMap<>();
-    private PopFragmentListener mListener;
+    //private PopFragmentListener mListener;
     private int mPendingReviewIndicator = 0;
 
     @Nullable
@@ -153,7 +153,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
                 if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                     mPendingReviewIndicator += challenge.getPendingReviews();
                     mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
-                    if (mPendingReviewIndicator > 0) {
+                    if (mPendingReviewIndicator > 0 && mPendingReview!=null&&mPending!=null) {
                         mPendingReview.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                         mPending.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                     } else {
@@ -227,9 +227,9 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
         updateUsersSubmittedChallenge(completed, false);
-        if (mCompletedChallengeDeck.isEmpty()) {
-            mListener.popFragment(this);
-        }
+//        if (mCompletedChallengeDeck.isEmpty()) {
+//            mListener.popFragment(this);
+//        }
     }
 
     @Override
@@ -240,9 +240,9 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         updateUserPoints(completed);
         updateUsersSubmittedChallenge(completed, true);
 
-        if (mCompletedChallengeDeck.isEmpty()) {
-            mListener.popFragment(this);
-        }
+//        if (mCompletedChallengeDeck.isEmpty()) {
+//            mListener.popFragment(this);
+//        }
     }
 
     private void updateUsersSubmittedChallenge(final ChallengePhotoCompleted completed, final boolean isAccepted) {
@@ -299,13 +299,13 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     }
 
     public void setPopFragmentListener(PopFragmentListener listener) {
-        mListener = listener;
+       // mListener = listener;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mListener.setTabLayoutVisibile();
+        //mListener.setTabLayoutVisibile();
     }
 
 
@@ -326,7 +326,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         });
     }
 
-    public void setmListener(PopFragmentListener mListener) {
-        this.mListener = mListener;
-    }
+//    public void setmListener(PopFragmentListener mListener) {
+//        this.mListener = mListener;
+//    }
 }

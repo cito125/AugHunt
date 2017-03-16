@@ -84,6 +84,8 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     private int mPendingReviewIndicator = 0;
     private ChallengePhoto mSelectedChallenge;
     private ReviewChallengesFragment mReviewChallengesFragment;
+    private PendingReviewFragment mPendingReviewFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -323,10 +325,10 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
 
     public void openPendingReview(View view){
 
-        PendingReviewFragment pendingReviewFragment = new PendingReviewFragment();
-        pendingReviewFragment.setmListener(this);
+        mPendingReviewFragment = new PendingReviewFragment();
+        mPendingReviewFragment.setmListener(this);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.search_challenge, pendingReviewFragment)
+                .replace(R.id.search_challenge, mPendingReviewFragment)
                 .commit();
 
     }
@@ -347,7 +349,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     private void startReviewChallengeFragment(ChallengePhoto challenge) {
         mReviewChallengesFragment = new ReviewChallengesFragment();
         mReviewChallengesFragment.setChallengeToReview(challenge);
-        mReviewChallengesFragment.setmListener(this);
+        //mReviewChallengesFragment.setmListener(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -359,11 +361,18 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
 
     @Override
     public void popFragment(Fragment fragment) {
-
+       // popFragmentFromBackStack(fragment);
     }
 
     @Override
     public void setTabLayoutVisibile() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        getSupportFragmentManager().beginTransaction()
+                .remove(mReviewChallengesFragment)
+                .commit();
     }
 }
