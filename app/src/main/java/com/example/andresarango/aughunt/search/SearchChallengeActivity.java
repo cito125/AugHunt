@@ -18,17 +18,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
-import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
-import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
-import com.example.andresarango.aughunt.leaderboard.LeaderBoardActivity;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.util.challenge_dialog_fragment.ChallengeDialogFragment;
-import com.example.andresarango.aughunt._models.DAMLocation;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.ChallengePhotoCompleted;
+import com.example.andresarango.aughunt._models.DAMLocation;
 import com.example.andresarango.aughunt._models.User;
+import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
+import com.example.andresarango.aughunt.leaderboard.LeaderBoardActivity;
 import com.example.andresarango.aughunt.profile.ProfileActivity;
+import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeListener;
+import com.example.andresarango.aughunt.review.PendingReviewFragment;
+import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
+import com.example.andresarango.aughunt.util.challenge_dialog_fragment.ChallengeDialogFragment;
 import com.example.andresarango.aughunt.util.snapshot_callback.SnapshotHelper;
 import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +53,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchChallengeActivity extends AppCompatActivity implements SnapshotHelper.SnapshotListener, SearchChallengeHelper {
+public class SearchChallengeActivity extends AppCompatActivity implements SnapshotHelper.SnapshotListener, SearchChallengeHelper, CreatedChallengeListener {
     private static final int LOCATION_PERMISSION = 1245;
 
     private ChallengesAdapter mNearbyChallengesAdapter;
@@ -76,6 +80,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     private int mPendingReviewIndicator = 0;
+    private ChallengePhoto mSelectedChallenge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -312,4 +317,29 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
                 .create()
                 .show();
     }
+
+    public void openPendingReview(View view){
+
+        PendingReviewFragment pendingReviewFragment = new PendingReviewFragment();
+        pendingReviewFragment.setmListener(this);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.search_challenge, pendingReviewFragment)
+                .commit();
+
+    }
+    @Override
+    public void onCreatedChallengeClicked(ChallengePhoto challenge) {
+        mSelectedChallenge = challenge;
+        startReviewChallengeFragment(challenge);
+
+    }
+
+
+    @Override
+    public void onCompletedChallengeClicked(ChallengePhotoCompleted completedChallenge) {
+        startCompareChallengeFragment(completedChallenge, mSelectedChallenge);
+
+    }
+
+
 }
