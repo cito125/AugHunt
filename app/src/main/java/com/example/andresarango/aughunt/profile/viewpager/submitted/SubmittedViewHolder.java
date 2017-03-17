@@ -35,6 +35,9 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder{
     @BindView(R.id.iv_submitted_challenge_image)
     ImageView submittedChallengeImageIv;
 
+    @BindView(R.id.iv_original_challenge_image)
+    ImageView originalChallengeImageIv;
+
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
 
@@ -50,13 +53,13 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder{
 
     public void bind(ChallengePhotoSubmitted submittedChallenge) {
         submittedHintTv.setText("Hint: " + submittedChallenge.getHint());
-        Glide.with(itemView.getContext()).load(submittedChallenge.getPhotoUrl()).into(submittedChallengeImageIv);
+        Glide.with(itemView.getContext()).load(submittedChallenge.getSubmittedPhotoUrl()).into(submittedChallengeImageIv);
+        Glide.with(itemView.getContext()).load(submittedChallenge.getOriginalPhotoUrl()).into(originalChallengeImageIv);
 
-        if (!submittedChallenge.isReviewed()) {
-            itemView.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.progressGrey));
-        } else if (submittedChallenge.isAccepted()) {
+        itemView.setBackgroundColor(0xAA000000);
+        if (submittedChallenge.isAccepted()) {
             itemView.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.acceptedGreen));
-        } else {
+        } else if (submittedChallenge.isReviewed() && !submittedChallenge.isAccepted()) {
             itemView.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.declinedRed));
         }
 
@@ -64,7 +67,7 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                submittedOwnerIdTv.setText("Created by: " + user.getProfileName());
+                submittedOwnerIdTv.setText("Challenge made by: " + user.getProfileName());
 
             }
 

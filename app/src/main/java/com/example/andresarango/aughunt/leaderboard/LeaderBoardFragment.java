@@ -38,6 +38,7 @@ import butterknife.ButterKnife;
  */
 
 public class LeaderBoardFragment extends Fragment {
+    private View mRootView;
     @BindView(R.id.tv_user_points)
     TextView mUserPointsTv;
     @BindView(R.id.review_number)
@@ -56,7 +57,8 @@ public class LeaderBoardFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        return mRootView;
     }
 
     @Override
@@ -164,11 +166,11 @@ public class LeaderBoardFragment extends Fragment {
             mPendingReviewIndicator += challenge.getPendingReviews();
             mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
             if (mPendingReviewIndicator > 0) {
-                mPendingReview.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-                mPending.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+                mPendingReview.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.colorAccent));
+                mPending.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.colorAccent));
             } else {
-                mPendingReview.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                mPending.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
+                mPendingReview.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.lightGrey));
+                mPending.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.lightGrey));
             }
         }
     }

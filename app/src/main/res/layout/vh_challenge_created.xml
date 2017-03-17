@@ -1,88 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    app:cardCornerRadius="10dp"
-    android:elevation="10dp"
-    android:layout_margin="7dp">
+    android:layout_height="300dp">
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_margin="20dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="3dp">
 
-        <ImageView
-            android:id="@+id/iv_created_challenge_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="70dp"
-            android:scaleType="fitXY" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/acceptedGreen"
-            android:gravity="center">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/iv_created_challenge_completed_check"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_check_black_48dp"
-                android:layout_centerVertical="true"/>
+                android:id="@+id/iv_created_challenge_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
 
-            <TextView
-                android:id="@+id/tv_created_challenge_submissions"
-                android:layout_toRightOf="@id/iv_created_challenge_completed_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textSize="15sp"
-                android:layout_marginLeft="10dp"
-                android:text="0"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:background="#99000000"
+                android:gravity="center">
 
-            <ImageView
-                android:id="@+id/iv_created_challenge_pursuing_person"
-                android:layout_toRightOf="@id/tv_created_challenge_submissions"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/ic_person_black_48dp"/>
+                <TextView
+                    android:id="@+id/tv_created_challenge_submissions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@drawable/ic_check_black_24dp"
+                    android:drawableTint="@color/lightGrey"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/tv_created_challenge_players"
-                android:layout_toRightOf="@id/iv_created_challenge_pursuing_person"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:layout_marginLeft="10dp"
+                <TextView
+                    android:id="@+id/tv_created_challenge_players"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="40dp"
+                    android:layout_toRightOf="@id/tv_created_challenge_submissions"
+                    android:drawableLeft="@drawable/ic_directions_run_black_24dp"
+                    android:drawableTint="@color/lightGrey"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="15sp" />
 
-                android:layout_centerVertical="true"
-                android:text="0"/>
-
-            <ImageView
-                android:id="@+id/iv_created_challenge_pending_pen"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_rate_review_black_48dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/tv_created_challenge_players"/>
-            <TextView
-                android:id="@+id/tv_pending_review"
-                android:layout_toRightOf="@id/iv_created_challenge_pending_pen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:textSize="15sp"
-                android:text="0"/>
+            </RelativeLayout>
 
         </RelativeLayout>
 
-    </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
-</android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/tv_pending_review"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/pending_red_styled_bg"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+</RelativeLayout>

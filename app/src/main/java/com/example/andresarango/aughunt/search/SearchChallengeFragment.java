@@ -239,7 +239,7 @@ public class SearchChallengeFragment extends Fragment implements SnapshotHelper.
     public void openPendingReview(){
         ProfileFragment profileFragment = new ProfileFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(ProfileFragment.VIEWPAGER_START_POSITION, 3);
+        bundle.putInt(ProfileFragment.VIEWPAGER_START_POSITION, 1);
         profileFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.home_screen_container, profileFragment)

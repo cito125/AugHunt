@@ -19,11 +19,10 @@ import butterknife.ButterKnife;
 public class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.iv_created_challenge_image) ImageView mChallengeImageIv;
-//    @BindView(R.id.tv_created_challenge_hint) TextView mHintTv;
     @BindView(R.id.tv_created_challenge_players) TextView mPursuingTv;
     @BindView(R.id.tv_created_challenge_submissions) TextView mSubmission;
+
     @BindView(R.id.tv_pending_review) TextView mPendingReviewTv;
-//    @BindView(R.id.tv_hint) TextView mHint;
 
     public CreatedChallengeViewHolder(View itemView) {
         super(itemView);
@@ -31,13 +30,16 @@ public class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(ChallengePhoto challenge) {
+        mPendingReviewTv.setVisibility(View.INVISIBLE);
         Glide.with(itemView.getContext()).load(challenge.getPhotoUrl()).into(mChallengeImageIv);
-//        mHint.setTypeface(mHint.getTypeface(), Typeface.BOLD);
-//        mHint.setText("Hint: ");
-//        mHintTv.setText( challenge.getHint());
+
         mSubmission.setText(String.valueOf(challenge.getCompleted()));
         mPursuingTv.setText(String.valueOf(challenge.getPursuing()));
-        mPendingReviewTv.setText(String.valueOf(challenge.getPendingReviews()));
+
+        if (challenge.getPendingReviews() > 0) {
+            mPendingReviewTv.setVisibility(View.VISIBLE);
+            mPendingReviewTv.setText(String.valueOf(challenge.getPendingReviews()));
+        }
     }
 
 }

@@ -139,15 +139,16 @@ public class AcceptChallengeCameraActivity extends AppCompatActivity implements
                 String url = taskSnapshot.getDownloadUrl().toString();
                 final ChallengePhotoCompleted completedChallenge = new ChallengePhotoCompleted(pushId, mChallengePhoto.getChallengeId(), auth.getCurrentUser().getUid(), url);
                 rootRef.child("completed-challenges").child(mChallengePhoto.getChallengeId()).child(pushId).setValue(completedChallenge);
+
+                // Create submitted challenge object and push to firebase
+                ChallengePhotoSubmitted submittedChallenge = new ChallengePhotoSubmitted(mChallengePhoto.getChallengeId(), mChallengePhoto.getOwnerId(), mChallengePhoto.getHint(), url, mChallengePhoto.getPhotoUrl());
+                rootRef.child("submitted-challenges").child(auth.getCurrentUser().getUid()).child(mChallengePhoto.getChallengeId()).setValue(submittedChallenge);
+
                 incrementCompletedCounter();
                 incrementSubmittedCounter();
             }
         });
 
-
-        // Create submitted challenge object and push to firebase
-        ChallengePhotoSubmitted submittedChallenge = new ChallengePhotoSubmitted(mChallengePhoto.getChallengeId(), mChallengePhoto.getOwnerId(), mChallengePhoto.getHint(), mChallengePhoto.getPhotoUrl());
-        rootRef.child("submitted-challenges").child(auth.getCurrentUser().getUid()).child(mChallengePhoto.getChallengeId()).setValue(submittedChallenge);
 
     }
 

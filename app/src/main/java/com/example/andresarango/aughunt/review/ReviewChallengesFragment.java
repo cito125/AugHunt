@@ -45,27 +45,20 @@ import butterknife.ButterKnife;
  */
 
 public class ReviewChallengesFragment extends Fragment implements SwipeDeck.SwipeDeckCallback {
-
-
     private ChallengePhoto mChallengeToReview;
 
     private ReviewSwipeAdapter mSwipeAdapter = new ReviewSwipeAdapter();
 
     Deque<ChallengePhotoCompleted> mCompletedChallengeDeck = new LinkedList<>();
 
-    @BindView(R.id.swipe_deck)
-    SwipeDeck mSwipeDeck;
-    @BindView(R.id.tv_user_points)
-    TextView mUserPointsTv;
-    @BindView(R.id.review_number)
-    TextView mPendingReview;
-    @BindView(R.id.pending_review)
-    TextView mPending;
+    @BindView(R.id.swipe_deck) SwipeDeck mSwipeDeck;
+    @BindView(R.id.tv_user_points) TextView mUserPointsTv;
+    @BindView(R.id.review_number) TextView mPendingReview;
+    @BindView(R.id.pending_review) TextView mPending;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-
 
     private Map<String, ChallengePhotoCompleted> challengeMap = new HashMap<>();
     private PopFragmentListener mListener;
@@ -224,7 +217,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @Override
     public void cardSwipedLeft(long stableId) {
         ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
-        removeCompletedChallengeFromFirebase(completed);
+//        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
         updateUsersSubmittedChallenge(completed, false);
         if (mCompletedChallengeDeck.isEmpty()) {
@@ -235,7 +228,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @Override
     public void cardSwipedRight(long stableId) {
         ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
-        removeCompletedChallengeFromFirebase(completed);
+//        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
         updateUserPoints(completed);
         updateUsersSubmittedChallenge(completed, true);
@@ -307,7 +300,6 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         super.onStop();
         System.out.println("CALLED ON STOP");
         mListener.setTabLayoutVisibile();
-        mListener.refreshPendingFragment();
     }
 
     private void updateUserPoints(final ChallengePhotoCompleted completed) {
