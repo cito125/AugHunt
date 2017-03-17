@@ -300,7 +300,6 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         super.onStop();
         System.out.println("CALLED ON STOP");
         mListener.setTabLayoutVisibile();
-        mListener.refreshPendingFragment();
     }
 
     private void updateUserPoints(final ChallengePhotoCompleted completed) {

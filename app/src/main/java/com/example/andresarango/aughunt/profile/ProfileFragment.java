@@ -17,8 +17,6 @@ import com.example.andresarango.aughunt._models.ChallengePhoto;
 import com.example.andresarango.aughunt.profile.viewpager.account.ProfileTabFragment;
 import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeFragment;
 import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeListener;
-import com.example.andresarango.aughunt.profile.viewpager.pending.PendingChallengeFragment;
-import com.example.andresarango.aughunt.profile.viewpager.pending.PendingChallengeListener;
 import com.example.andresarango.aughunt.profile.viewpager.submitted.SubmittedChallengeFragment;
 import com.example.andresarango.aughunt.review.PopFragmentListener;
 import com.example.andresarango.aughunt.review.ReviewChallengesFragment;
@@ -30,7 +28,7 @@ import butterknife.ButterKnife;
  * Created by Danny on 3/17/2017.
  */
 
-public class ProfileFragment extends Fragment implements CreatedChallengeListener, PendingChallengeListener, PopFragmentListener {
+public class ProfileFragment extends Fragment implements CreatedChallengeListener, PopFragmentListener {
     @BindView(R.id.tab_layout) TabLayout tablayout;
     @BindView(R.id.viewpager) ViewPager pager;
 
@@ -40,8 +38,6 @@ public class ProfileFragment extends Fragment implements CreatedChallengeListene
     private SubmittedChallengeFragment mSubmittedChallengesTabFragment;
     private CreatedChallengeFragment mCreatedChallengeTabFragment;
     private ReviewChallengesFragment mReviewChallengeTabFragment;
-
-    private PendingChallengeFragment mPendingChallengeFragment;
 
     @Nullable
     @Override
@@ -82,13 +78,9 @@ public class ProfileFragment extends Fragment implements CreatedChallengeListene
 
         mSubmittedChallengesTabFragment = new SubmittedChallengeFragment();
 
-        mPendingChallengeFragment = new PendingChallengeFragment();
-        mPendingChallengeFragment.setListener(this);
-
         adapter.addFragment(mProfileTabFragment, "Profile");
         adapter.addFragment(mCreatedChallengeTabFragment, "Created");
         adapter.addFragment(mSubmittedChallengesTabFragment, "Submitted");
-        adapter.addFragment(mPendingChallengeFragment, "Pending");
         pager.setAdapter(adapter);
     }
 
@@ -111,16 +103,6 @@ public class ProfileFragment extends Fragment implements CreatedChallengeListene
     @Override
     public void setTabLayoutVisibile() {
         tablayout.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void refreshPendingFragment() {
-        mPendingChallengeFragment.refreshPendingList();
-    }
-
-    @Override
-    public void onPendingChallengeClicked(ChallengePhoto challenge) {
-        startReviewChallengeFragment(challenge);
     }
 
     private void startReviewChallengeFragment(ChallengePhoto challenge) {
