@@ -18,7 +18,7 @@ import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
 import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
 import com.example.andresarango.aughunt.leaderboard.LeaderBoardActivity;
-import com.example.andresarango.aughunt.profile.viewpager.account.ProfileFragment;
+import com.example.andresarango.aughunt.profile.viewpager.account.ProfileTabFragment;
 import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeFragment;
 import com.example.andresarango.aughunt.profile.viewpager.created.CreatedChallengeListener;
 import com.example.andresarango.aughunt.profile.viewpager.pending.PendingChallengeFragment;
@@ -43,7 +43,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
 
     public static final String VIEWPAGER_START_POSITION = "view.pager.start.position";
 
-    private ProfileFragment mProfileFragment;
+    private ProfileTabFragment mProfileTabFragment;
     private SubmittedChallengeFragment mSubmittedChallengesFragment;
     private CreatedChallengeFragment mCreatedChallengeFragment;
     private ReviewChallengesFragment mReviewChallengesFragment;
@@ -116,7 +116,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
     private void setupViewPager(ViewPager pager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        mProfileFragment = new ProfileFragment();
+        mProfileTabFragment = new ProfileTabFragment();
         mCreatedChallengeFragment = new CreatedChallengeFragment();
         mCreatedChallengeFragment.setListener(this);
 
@@ -125,7 +125,7 @@ public class ProfileActivity extends AppCompatActivity implements CreatedChallen
         mPendingChallengeFragment = new PendingChallengeFragment();
         mPendingChallengeFragment.setListener(this);
 
-        adapter.addFragment(mProfileFragment, "Profile");
+        adapter.addFragment(mProfileTabFragment, "Profile");
         adapter.addFragment(mCreatedChallengeFragment, "Created");
         adapter.addFragment(mSubmittedChallengesFragment, "Submitted");
         adapter.addFragment(mPendingChallengeFragment, "Pending");

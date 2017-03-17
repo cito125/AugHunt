@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/top_menu"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:id="@+id/tv_user_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:textColor="#FFEB3B" />
+
+        <TextView
+            android:id="@+id/review_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/lightGrey"
+            android:onClick="openPendingReview"/>
+
+        <TextView
+            android:id="@+id/pending_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/review_number"
+            android:textColor="@color/lightGrey"
+            android:layout_centerVertical="true"
+            android:text="Pending review: "
+            android:onClick="openPendingReview"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_challenge_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_menu"
+        android:layout_above="@id/bottom_navigation">
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

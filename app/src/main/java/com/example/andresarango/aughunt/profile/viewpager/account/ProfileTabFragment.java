@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
  * Created by Danny on 3/16/2017.
  */
 
-public class ProfileFragment extends Fragment {
+public class ProfileTabFragment extends Fragment {
     @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
     @BindView(R.id.tv_main_profile_name) TextView profileNameTv;
     @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_tab_profile, container, false);
     }
 
     @Override

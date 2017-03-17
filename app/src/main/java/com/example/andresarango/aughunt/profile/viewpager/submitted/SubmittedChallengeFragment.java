@@ -40,7 +40,7 @@ public class SubmittedChallengeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_challenges_submitted, container, false);
+        return inflater.inflate(R.layout.fragment_tab_challenges_submitted, container, false);
     }
 
     @Override

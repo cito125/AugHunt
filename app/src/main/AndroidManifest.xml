@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".login.SplashScreen">
-            
+
         </activity>
 
         <activity android:name=".login.StartActivity">
@@ -29,14 +29,19 @@
 
         </activity>
 
-        <activity android:name=".search.SearchChallengeActivity" >
+        <activity android:name=".HomeScreenActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".search.SearchChallengeActivity" >
 
         </activity>
+
 
         <activity android:name=".create.CreateChallengeCameraActivity" />
         <activity android:name=".search.AcceptChallengeCameraActivity" />

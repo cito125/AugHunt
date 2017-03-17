@@ -54,7 +54,6 @@ public class PendingChallengeFragment extends Fragment {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.setAdapter(new PendingChallengeAdapter(mListener));
 
-
         callFirebase();
 
     }
