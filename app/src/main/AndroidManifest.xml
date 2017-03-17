@@ -25,10 +25,6 @@
 
         </activity>
 
-        <activity android:name=".profile.ProfileActivity">
-
-        </activity>
-
         <activity android:name=".HomeScreenActivity">
 
             <intent-filter>
@@ -38,14 +34,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".search.SearchChallengeActivity" >
-
-        </activity>
-
 
         <activity android:name=".create.CreateChallengeCameraActivity" />
         <activity android:name=".search.AcceptChallengeCameraActivity" />
-        <activity android:name=".leaderboard.LeaderBoardActivity" />
 
         <meta-data
             android:name="com.google.android.awareness.API_KEY"
