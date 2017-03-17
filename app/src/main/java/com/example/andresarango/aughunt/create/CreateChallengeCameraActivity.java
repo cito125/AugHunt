@@ -5,6 +5,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,13 +23,15 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.andresarango.aughunt.HomeScreenActivity;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.util.camera.AspectRatioFragment;
-import com.example.andresarango.aughunt.util.camera.CameraCallback;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
 import com.example.andresarango.aughunt._models.DAMLocation;
-import com.example.andresarango.aughunt.util.snapshot_callback.SnapshotHelper;
 import com.example.andresarango.aughunt._models.User;
+import com.example.andresarango.aughunt.profile.ProfileFragment;
+import com.example.andresarango.aughunt.util.camera.AspectRatioFragment;
+import com.example.andresarango.aughunt.util.camera.CameraCallback;
+import com.example.andresarango.aughunt.util.snapshot_callback.SnapshotHelper;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
 import com.google.android.gms.awareness.snapshot.LocationResult;
@@ -149,7 +152,16 @@ public class CreateChallengeCameraActivity extends AppCompatActivity implements
                 Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
                         .show();
                 progressDialog.dismiss();
+
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(ProfileFragment.VIEWPAGER_START_POSITION, 1);
+                setResult(1234, resultIntent);
+
+
                 finish();
+
+
+
             }
 
 

@@ -52,7 +52,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                         break;
                     case R.id.create_challenge:
                         Intent intent = new Intent(HomeScreenActivity.this, CreateChallengeCameraActivity.class);
-                        startActivity(intent);
+                        startActivityForResult(intent, 1234);
                         break;
                     case R.id.user_profile:
                         getSupportFragmentManager().beginTransaction()
@@ -68,6 +68,28 @@ public class HomeScreenActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // After opening up camera activity and taking a picture, it'll open up the created tab in profile
+        switch (resultCode) {
+            case 1234:
+                startProfileCreatedTab();
+                break;
+        }
+    }
+
+    public void startProfileCreatedTab() {
+        ProfileFragment profileFragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ProfileFragment.VIEWPAGER_START_POSITION, 1);
+        profileFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.home_screen_container, profileFragment)
+                .commit();
     }
 
     public void setBottomNavFocusSearch() {
