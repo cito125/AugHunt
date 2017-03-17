@@ -3,32 +3,30 @@ package com.example.andresarango.aughunt.search;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
-import com.example.andresarango.aughunt.util.bottom_nav_helper.BottomNavigationViewHelper;
-import com.example.andresarango.aughunt.leaderboard.LeaderBoardActivity;
+import com.example.andresarango.aughunt.HomeScreenActivity;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.util.challenge_dialog_fragment.ChallengeDialogFragment;
-import com.example.andresarango.aughunt._models.DAMLocation;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.DAMLocation;
 import com.example.andresarango.aughunt._models.User;
-import com.example.andresarango.aughunt.profile.ProfileActivity;
+import com.example.andresarango.aughunt.profile.ProfileFragment;
+import com.example.andresarango.aughunt.util.challenge_dialog_fragment.ChallengeDialogFragment;
 import com.example.andresarango.aughunt.util.snapshot_callback.SnapshotHelper;
 import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,96 +47,76 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchChallengeActivity extends AppCompatActivity implements SnapshotHelper.SnapshotListener, SearchChallengeHelper {
+/**
+ * Created by Danny on 3/16/2017.
+ */
+
+public class SearchChallengeFragment extends Fragment implements SnapshotHelper.SnapshotListener, SearchChallengeHelper {
+    private View mRootView;
+    @BindView(R.id.search_challenge_recyclerview) RecyclerView mRecyclerView;
+    @BindView(R.id.tv_user_points) TextView mUserPointsTv;
+    @BindView(R.id.review_number) TextView mPendingReview;
+    @BindView(R.id.pending_review) TextView mPending;
+
     private static final int LOCATION_PERMISSION = 1245;
 
     private ChallengesAdapter mNearbyChallengesAdapter;
 
     private DAMLocation userLocation;
     private Double radius = 100.0;
+    private int mPendingReviewIndicator = 0;
 
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
     private List<ChallengePhoto> challengeList = new ArrayList<>();
     private Set<String> submittedChallengeSet = new HashSet<>();
 
-    @BindView(R.id.search_challenge_recyclerview)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.tv_user_points)
-    TextView mUserPointsTv;
-    @BindView(R.id.review_number)
-    TextView mPendingReview;
-    @BindView(R.id.bottom_navigation)
-    BottomNavigationView mBottomNav;
-    @BindView(R.id.pending_review)
-    TextView mPending;
-
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
-    private int mPendingReviewIndicator = 0;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mRootView = inflater.inflate(R.layout.fragment_challenges_searched, container, false);
+        return mRootView;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_challenges_searched);
-        ButterKnife.bind(this);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
         requestPermission();
         retrieveUserFromFirebaseAndSetProfile();
-        setupBottomNavigation();
-    }
 
-    private void setupBottomNavigation() {
-
-        mBottomNav.getMenu().getItem(3).setChecked(true);// Search item
-        mBottomNav.getMenu().getItem(2).setChecked(false);// Leaderboard
-        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
-        mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
-        BottomNavigationViewHelper.disableShiftMode(mBottomNav);
-
-
-        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        mPendingReview.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.create_challenge:
-                        Intent createChallenge = new Intent(getApplicationContext(), CreateChallengeCameraActivity.class);
-                        startActivity(createChallenge);
-                        break;
-                    case R.id.user_profile:
-                        Intent userProfile = new Intent(getApplicationContext(), ProfileActivity.class);
-                        startActivity(userProfile);
-                        break;
-                    case R.id.leaderboard:
-                        Intent leadeBoard = new Intent(getApplicationContext(), LeaderBoardActivity.class);
-                        startActivity(leadeBoard);
-                        break;
-                }
-                return true;
+            public void onClick(View view) {
+                openPendingReview();
+            }
+        });
+
+        mPending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openPendingReview();
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        System.out.println("CALLED ON START");
-        mBottomNav.getMenu().getItem(3).setChecked(true);
-        mBottomNav.getMenu().getItem(2).setChecked(false);  // Search item
-        mBottomNav.getMenu().getItem(1).setChecked(false); // Create item
-        mBottomNav.getMenu().getItem(0).setChecked(false); // Profile item
-
-        mPendingReviewIndicator = 0;
-        challengeList.clear();
-        challengeMap.clear();
-        submittedChallengeSet.clear();
+    private void getUserLocation() {
         SnapshotHelper snapshotHelper = new SnapshotHelper(this);
-        snapshotHelper.runSnapshot(getApplicationContext());
-        setUpRecyclerView();
+        snapshotHelper.runSnapshot(getContext());
+    }
+
+    @Override
+    public void run(LocationResult locationResult) {
+        userLocation = new DAMLocation(locationResult.getLocation().getLatitude(), locationResult.getLocation().getLongitude());
+        System.out.println(userLocation.getLat() + " " + userLocation.getLng() + " <--- USER LOCATION");
+        initialize();
     }
 
     private void setUpRecyclerView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mNearbyChallengesAdapter = new ChallengesAdapter(this);
         mRecyclerView.setAdapter(mNearbyChallengesAdapter);
     }
@@ -199,11 +177,11 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
             mPendingReviewIndicator += challenge.getPendingReviews();
             mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
             if (mPendingReviewIndicator > 0) {
-                mPendingReview.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
-                mPending.setTextColor(ContextCompat.getColor(this, R.color.colorAccent));
+                mPendingReview.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.colorAccent)); // For some reason crashes with getContext but not if i use root view to get context
+                mPending.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.colorAccent));
             } else {
-                mPendingReview.setTextColor(ContextCompat.getColor(this, R.color.lightGrey));
-                mPending.setTextColor(ContextCompat.getColor(this, R.color.lightGrey));
+                mPendingReview.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.lightGrey));
+                mPending.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.lightGrey));
             }
         }
 
@@ -258,29 +236,36 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
         mNearbyChallengesAdapter.setChallengeList(challengeList);
     }
 
+    public void openPendingReview(){
+        ProfileFragment profileFragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ProfileFragment.VIEWPAGER_START_POSITION, 3);
+        profileFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.home_screen_container, profileFragment)
+                .commit();
+    }
+
     @Override
     public void onSearchChallengeClicked(ChallengePhoto challenge) {
         DialogFragment dialogFragment = ChallengeDialogFragment.getInstance(challenge);
-        dialogFragment.show(getSupportFragmentManager(), "challenge_fragment");
+        dialogFragment.show(getActivity().getSupportFragmentManager(), "challenge_fragment");
     }
 
-    @Override
-    public void run(LocationResult locationResult) {
-        userLocation = new DAMLocation(locationResult.getLocation().getLatitude(), locationResult.getLocation().getLongitude());
-        System.out.println(userLocation.getLat() + " " + userLocation.getLng() + " <--- USER LOCATION");
-        initialize();
-    }
 
-    //    PERMISSION STUFF
+
+
+
+    // PERMISSION STUFF
     private void requestPermission() {
-        int locationPermission = ContextCompat.checkSelfPermission(SearchChallengeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int locationPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
         boolean locationPermissionIsNotGranted = locationPermission != PackageManager.PERMISSION_GRANTED;
         boolean APILevelIsTwentyThreeOrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
         if (locationPermissionIsNotGranted && APILevelIsTwentyThreeOrHigher) {
             marshamallowRequestPermission();
         }
         if (locationPermissionIsNotGranted) {
-            ActivityCompat.requestPermissions(SearchChallengeActivity.this,
+            ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION);
         }
@@ -295,7 +280,7 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(SearchChallengeActivity.this,
+                            ActivityCompat.requestPermissions(getActivity(),
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     LOCATION_PERMISSION);
                         }
@@ -305,11 +290,24 @@ public class SearchChallengeActivity extends AppCompatActivity implements Snapsh
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
-        new AlertDialog.Builder(SearchChallengeActivity.this)
+        new AlertDialog.Builder(getContext())
                 .setMessage(message)
                 .setPositiveButton("NO", onClickListener)
                 .setNegativeButton("YES", null)
                 .create()
                 .show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        System.out.println("SEARCH ON START IS CALLED");
+        ((HomeScreenActivity)getActivity()).setBottomNavFocusSearch();
+        mPendingReviewIndicator = 0;
+        challengeList.clear();
+        challengeMap.clear();
+        submittedChallengeSet.clear();
+        getUserLocation();
+        setUpRecyclerView();
     }
 }

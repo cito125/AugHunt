@@ -1,4 +1,4 @@
-package com.example.andresarango.aughunt.profile.viewpager.created;
+package com.example.andresarango.aughunt.profile.viewpager.pending;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,22 +28,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by dannylui on 3/10/17.
+ * Created by Danny on 3/16/2017.
  */
 
-public class CreatedChallengeFragment extends Fragment {
-    @BindView(R.id.created_challenges) RecyclerView mRecyclerView;
-//    @BindView(R.id.fab_create_challenge) FloatingActionButton mFloatingActionButton;
-
-    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+public class PendingChallengeFragment extends Fragment {
+    @BindView(R.id.rv_pending) RecyclerView mRecyclerView;
 
     private Map<String, ChallengePhoto> challengeMap = new HashMap<>();
-    private CreatedChallengeListener mListener;
+    private PendingChallengeListener mListener;
+
+    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_tab_challenges_created, container, false);
+        return inflater.inflate(R.layout.fragment_tab_challenges_pending, container, false);
     }
 
     @Override
@@ -53,7 +52,8 @@ public class CreatedChallengeFragment extends Fragment {
 
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        mRecyclerView.setAdapter(new CreatedChallengeAdapter(mListener));
+        mRecyclerView.setAdapter(new PendingChallengeAdapter(mListener));
+
         callFirebase();
 
     }
@@ -91,17 +91,19 @@ public class CreatedChallengeFragment extends Fragment {
         // Key - value
         String challengeKey = dataSnapshot.getKey();
         ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
+        List<ChallengePhoto> challengeList = new ArrayList<>();
 
         // Check location
-        if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+        if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) && challenge.getPendingReviews() > 0) {
             challengeMap.put(challengeKey, challenge);
-
-            CreatedChallengeAdapter adapter = (CreatedChallengeAdapter) mRecyclerView.getAdapter();
-            adapter.addChallengeToList(challenge);
-
-        } else {
-            System.out.println("NOT THE RIGHT USER");
         }
+
+        for (String key : challengeMap.keySet() ){
+            challengeList.add(challengeMap.get(key));
+        }
+
+        PendingChallengeAdapter adapter = (PendingChallengeAdapter) mRecyclerView.getAdapter();
+        adapter.setChallengeList(challengeList);
     }
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
@@ -118,11 +120,18 @@ public class CreatedChallengeFragment extends Fragment {
         }
 
         // update recycler view
-        CreatedChallengeAdapter adapter = (CreatedChallengeAdapter) mRecyclerView.getAdapter();
+        PendingChallengeAdapter adapter = (PendingChallengeAdapter) mRecyclerView.getAdapter();
         adapter.setChallengeList(challengeList);
     }
 
-    public void setListener(CreatedChallengeListener mListener) {
+    public void setListener(PendingChallengeListener mListener) {
         this.mListener = mListener;
+    }
+
+
+    public void refreshPendingList() {
+        System.out.println("CALLED REFRESH PENDING");
+        challengeMap.clear();
+        callFirebase();
     }
 }

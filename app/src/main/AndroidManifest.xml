@@ -18,30 +18,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".login.SplashScreen">
-            
-            
+
         </activity>
 
         <activity android:name=".login.StartActivity">
 
         </activity>
 
-        <activity android:name=".profile.ProfileActivity">
+        <activity android:name=".HomeScreenActivity">
 
-        </activity>
-
-        <activity android:name=".search.SearchChallengeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+
 
         <activity android:name=".create.CreateChallengeCameraActivity" />
         <activity android:name=".search.AcceptChallengeCameraActivity" />
-        <activity android:name=".leaderboard.LeaderBoardActivity" />
 
         <meta-data
             android:name="com.google.android.awareness.API_KEY"

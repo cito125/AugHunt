@@ -13,14 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.andresarango.aughunt.HomeScreenActivity;
 import com.example.andresarango.aughunt.R;
-import com.example.andresarango.aughunt.search.SearchChallengeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginFragment extends Fragment{
+public class LoginFragment extends Fragment {
     private View rootView;
     private EditText emailEtv;
     private EditText passEtv;
@@ -78,8 +78,9 @@ public class LoginFragment extends Fragment{
                     Toast.makeText(rootView.getContext(), "Sign in success!", Toast.LENGTH_SHORT).show();
 
                     // Go to home screen activity
-                    Intent intent = new Intent(getActivity(), SearchChallengeActivity.class);
+                    Intent intent = new Intent(getActivity(), HomeScreenActivity.class);
                     startActivity(intent);
+                    getActivity().finish();
                 } else {
                     Toast.makeText(rootView.getContext(), "Sign in failed.", Toast.LENGTH_SHORT).show();
                 }

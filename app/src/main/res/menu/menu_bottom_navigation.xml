@@ -8,16 +8,16 @@
         android:title="@string/text_search_challenges"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/leaderboard"
-        android:enabled="true"
-        android:icon="@drawable/leaderboard"
-        android:title="@string/leader_board"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/create_challenge"
         android:enabled="true"
         android:icon="@drawable/ic_add_a_photo_black_48dp"
         android:title="@string/text_create_challenges"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/leaderboard"
+        android:enabled="true"
+        android:icon="@drawable/leaderboard"
+        android:title="@string/leader_board"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/user_profile"

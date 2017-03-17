@@ -23,6 +23,8 @@
             android:id="@+id/etv_login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_email_black_24dp"
+            android:drawablePadding="10dp"
             android:hint="Email"
             android:paddingBottom="20dp" />
 
@@ -31,7 +33,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:drawableLeft="@drawable/ic_lock_black_24dp"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
             android:hint="Password"
+            android:inputType="textPassword"
             android:paddingBottom="20dp" />
 
         <Button
@@ -47,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
-            android:background="#AAAAAAAA"
+            android:background="#BBBBBB"
             android:text="Sign Up" />
 
     </LinearLayout>
