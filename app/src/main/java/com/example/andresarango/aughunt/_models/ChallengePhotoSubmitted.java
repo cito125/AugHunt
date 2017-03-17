@@ -8,7 +8,8 @@ public class ChallengePhotoSubmitted {
     private String challengeId;
     private String ownerId;
     private String hint;
-    private String photoUrl;
+    private String submittedPhotoUrl;
+    private String originalPhotoUrl;
     private boolean isAccepted;
     private boolean isReviewed;
 
@@ -16,11 +17,12 @@ public class ChallengePhotoSubmitted {
 
     }
 
-    public ChallengePhotoSubmitted(String challengeId, String ownerId, String hint, String photoUrl) {
+    public ChallengePhotoSubmitted(String challengeId, String ownerId, String hint, String submittedPhotoUrl, String originalPhotoUrl) {
         this.challengeId = challengeId;
         this.ownerId = ownerId;
         this.hint = hint;
-        this.photoUrl = photoUrl;
+        this.submittedPhotoUrl = submittedPhotoUrl;
+        this.originalPhotoUrl = originalPhotoUrl;
         this.isAccepted = false;
         this.isReviewed = false;
     }
@@ -37,8 +39,12 @@ public class ChallengePhotoSubmitted {
         return hint;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getSubmittedPhotoUrl() {
+        return submittedPhotoUrl;
+    }
+
+    public String getOriginalPhotoUrl() {
+        return originalPhotoUrl;
     }
 
     public boolean isAccepted() {

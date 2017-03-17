@@ -7,8 +7,8 @@
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
 
-    <color name="acceptedGreen">#AA9CCC65</color>
-    <color name="declinedRed">#AAEC407A</color>
+    <color name="acceptedGreen">#AA0baf0b</color>
+    <color name="declinedRed">#AAaf0b0b</color>
     <color name="progressGrey">#AAE0E0E0</color>
 
     <color name="lightGrey">#e7edee</color>

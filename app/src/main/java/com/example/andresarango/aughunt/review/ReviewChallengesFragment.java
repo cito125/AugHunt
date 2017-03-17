@@ -217,7 +217,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @Override
     public void cardSwipedLeft(long stableId) {
         ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
-        removeCompletedChallengeFromFirebase(completed);
+//        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
         updateUsersSubmittedChallenge(completed, false);
         if (mCompletedChallengeDeck.isEmpty()) {
@@ -228,7 +228,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @Override
     public void cardSwipedRight(long stableId) {
         ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
-        removeCompletedChallengeFromFirebase(completed);
+//        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
         updateUserPoints(completed);
         updateUsersSubmittedChallenge(completed, true);
