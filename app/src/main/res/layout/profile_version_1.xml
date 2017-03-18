@@ -7,13 +7,13 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#AA3f4944">
+        android:background="#EE2b3e51">
 
     </ImageView>
 
-    <!-- Trophy -->
+    <!-- Trophy and user points -->
     <TextView
-        android:id="@+id/tv_trophy"
+        android:id="@+id/tv_main_profile_points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -24,17 +24,6 @@
         android:drawablePadding="10dp"
         android:background="@color/lightGrey"
         android:padding="5dp"/>
-
-    <!-- User points -->
-    <TextView
-        android:id="@+id/tv_main_profile_points"
-        android:layout_toRightOf="@id/tv_trophy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/lightGrey"
-        android:padding="9dp"
-        android:text="10/100 PTS"/>
 
     <!-- Image avatar -->
     <ImageView
@@ -63,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_main_profile_name"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:text=" CHALLENGES COMPLETED"
         android:textSize="15dp" />
 
@@ -72,7 +61,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_completed"
-        android:layout_margin="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:background="#AA000000"
         android:padding="5dp"
         android:text="0"
@@ -84,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_main_profile_total_created"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:text="CHALLENGES SUBMITTED" />
 
     <TextView
@@ -92,7 +83,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_submitted"
-        android:layout_margin="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:background="#AA000000"
         android:padding="5dp"
         android:text="0"
