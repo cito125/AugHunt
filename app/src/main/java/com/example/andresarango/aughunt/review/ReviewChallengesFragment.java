@@ -220,6 +220,8 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
 //        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
         updateUsersSubmittedChallenge(completed, false);
+        updateUsersReviewedChallenge();
+
         if (mCompletedChallengeDeck.isEmpty()) {
             mListener.popFragment(this);
         }
@@ -232,10 +234,27 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         decrementPendingReviewCounter();
         updateUserPoints(completed);
         updateUsersSubmittedChallenge(completed, true);
+        updateUsersReviewedChallenge();
 
         if (mCompletedChallengeDeck.isEmpty()) {
             mListener.popFragment(this);
         }
+    }
+
+    private void updateUsersReviewedChallenge() {
+        rootRef.child("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+                currentUser.setNumberOfReviewedChallenges(currentUser.getNumberOfReviewedChallenges() + 1);
+                rootRef.child("users").child(auth.getCurrentUser().getUid()).setValue(currentUser);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void updateUsersSubmittedChallenge(final ChallengePhotoCompleted completed, final boolean isAccepted) {

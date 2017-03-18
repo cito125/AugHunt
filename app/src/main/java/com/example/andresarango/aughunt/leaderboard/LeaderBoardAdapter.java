@@ -23,7 +23,7 @@ class LeaderBoardAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vh_leaderboard_userpoints, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vh_leaderboard, parent, false);
         return new LeaderBoardViewHolder(itemView);
     }
 
@@ -50,11 +50,12 @@ class LeaderBoardAdapter extends RecyclerView.Adapter {
 
         Collections.sort(userList, pointsComparator);
         this.mUserList = userList;
+
+        notifyDataSetChanged();
     }
 
     public void addUserToList(User user) {
         mUserList.add(user);
-        notifyItemInserted(mUserList.size() - 1);
         Comparator<User> pointsComparator = new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
@@ -64,5 +65,6 @@ class LeaderBoardAdapter extends RecyclerView.Adapter {
 
         Collections.sort(mUserList, pointsComparator);
 
+        notifyDataSetChanged();
     }
 }

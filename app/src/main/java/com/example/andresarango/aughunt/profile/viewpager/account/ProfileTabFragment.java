@@ -34,10 +34,10 @@ import butterknife.ButterKnife;
 public class ProfileTabFragment extends Fragment {
     @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
     @BindView(R.id.tv_main_profile_name) TextView profileNameTv;
-//    @BindView(R.id.tv_main_profile_user_id) TextView profileUserIdTv;
     @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
     @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
     @BindView(R.id.tv_main_profile_total_submitted) TextView totalSubmittedChallengesTv;
+    @BindView(R.id.tv_main_profile_total_reviewed) TextView totalReviewedChallengesTv;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -76,10 +76,11 @@ public class ProfileTabFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
                 profileNameTv.setText(currentUser.getProfileName());
-//                profileUserIdTv.setText("ID: " + auth.getCurrentUser().getUid());
+
                 userPointsTv.setText("0  |  " + currentUser.getUserPoints() + "/100 PTS");
                 totalCreatedChallengesTv.setText(String.valueOf(currentUser.getNumberOfCreatedChallenges()));
                 totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
+                totalReviewedChallengesTv.setText(String.valueOf(currentUser.getNumberOfReviewedChallenges()));
             }
 
             @Override

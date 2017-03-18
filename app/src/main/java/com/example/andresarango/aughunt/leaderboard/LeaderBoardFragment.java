@@ -39,14 +39,11 @@ import butterknife.ButterKnife;
 
 public class LeaderBoardFragment extends Fragment {
     private View mRootView;
-    @BindView(R.id.tv_user_points)
-    TextView mUserPointsTv;
-    @BindView(R.id.review_number)
-    TextView mPendingReview;
-    @BindView(R.id.pending_review)
-    TextView mPending;
-    @BindView(R.id.list_of_users)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.tv_user_points) TextView mUserPointsTv;
+    @BindView(R.id.review_number) TextView mPendingReview;
+    @BindView(R.id.pending_review) TextView mPending;
+    @BindView(R.id.list_of_users) RecyclerView mRecyclerView;
+
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private Map<String, User> mUserMap = new HashMap<>();
@@ -106,11 +103,11 @@ public class LeaderBoardFragment extends Fragment {
         String userKey = dataSnapshot.getKey();
         User user = dataSnapshot.getValue(User.class);
 
-
         mUserMap.put(userKey, user);
 
         LeaderBoardAdapter adapter = (LeaderBoardAdapter) mRecyclerView.getAdapter();
         adapter.addUserToList(user);
+        System.out.println(user.getProfileName());
     }
 
     private void updateRecyclerView(DataSnapshot dataSnapshot) {
@@ -162,6 +159,8 @@ public class LeaderBoardFragment extends Fragment {
     private void addChallengeToRecyclerView(DataSnapshot dataSnapshot) {
         ChallengePhoto challenge = dataSnapshot.getValue(ChallengePhoto.class);
 
+        // To get all the pending reviews, loop through all the challenges with pending > 0 that belongs
+        // to this user
         if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             mPendingReviewIndicator += challenge.getPendingReviews();
             mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
