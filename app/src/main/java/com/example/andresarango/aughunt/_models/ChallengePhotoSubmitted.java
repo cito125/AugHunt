@@ -10,6 +10,7 @@ public class ChallengePhotoSubmitted {
     private String hint;
     private String submittedPhotoUrl;
     private String originalPhotoUrl;
+    private Long timestamp;
     private boolean isAccepted;
     private boolean isReviewed;
 
@@ -17,7 +18,7 @@ public class ChallengePhotoSubmitted {
 
     }
 
-    public ChallengePhotoSubmitted(String challengeId, String ownerId, String hint, String submittedPhotoUrl, String originalPhotoUrl) {
+    public ChallengePhotoSubmitted(String challengeId, String ownerId, String hint, String submittedPhotoUrl, String originalPhotoUrl, Long timestamp) {
         this.challengeId = challengeId;
         this.ownerId = ownerId;
         this.hint = hint;
@@ -25,6 +26,7 @@ public class ChallengePhotoSubmitted {
         this.originalPhotoUrl = originalPhotoUrl;
         this.isAccepted = false;
         this.isReviewed = false;
+        this.timestamp = timestamp;
     }
 
     public String getChallengeId() {
@@ -47,6 +49,10 @@ public class ChallengePhotoSubmitted {
         return originalPhotoUrl;
     }
 
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
     public boolean isAccepted() {
         return isAccepted;
     }
@@ -62,4 +68,5 @@ public class ChallengePhotoSubmitted {
     public void setReviewed(boolean reviewed) {
         isReviewed = reviewed;
     }
+
 }

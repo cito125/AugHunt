@@ -1,11 +1,9 @@
 package com.example.andresarango.aughunt.leaderboard;
 
 import android.graphics.Bitmap;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,11 +22,12 @@ import butterknife.ButterKnife;
 
 class LeaderBoardViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.user_pic) ImageView mUserPic;
-    @BindView(R.id.user_profile_name)
-    TextView mUserName;
-    @BindView(R.id.user_points) TextView mUserPoints;
-    @BindView(R.id.number_of_challenges) TextView mNumberOfCHallenges;
+    @BindView(R.id.iv_leader_profile_pic) ImageView mUserPic;
+    @BindView(R.id.tv_leader_profile_name) TextView mUserName;
+    @BindView(R.id.tv_leader_user_points) TextView mUserPoints;
+    @BindView(R.id.tv_leader_completed_challenges) TextView mNumberOfSubmitted;
+    @BindView(R.id.tv_leader_created_challenges) TextView mNumberOfCreated;
+    @BindView(R.id.tv_leader_reviewed_challenges) TextView mNumberOfReviewed;
 
     public LeaderBoardViewHolder(View itemView) {
         super(itemView);
@@ -37,11 +36,6 @@ class LeaderBoardViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(User user) {
 
-        mUserName.setText(user.getProfileName());
-        mUserPoints.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-        mUserPoints.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorAccent));
-        mUserPoints.setText(String.valueOf(user.getUserPoints()));
-        mNumberOfCHallenges.setText("Challenges completed: " + String.valueOf(user.getNumberOfSubmittedChallenges()));
         Glide.with(itemView.getContext())
                 .load("http://clipart-library.com/images/rcLojMEni.jpg")
                 .asBitmap()
@@ -55,6 +49,18 @@ class LeaderBoardViewHolder extends RecyclerView.ViewHolder {
                         mUserPic.setImageDrawable(circularBitmapDrawable);
                     }
                 });
+
+        mUserName.setText(user.getProfileName());
+
+
+
+        int points = user.getUserPoints() / 100;
+        mUserPoints.setText(String.valueOf(points));
+
+        mNumberOfSubmitted.setText(String.valueOf(user.getNumberOfSubmittedChallenges()));
+        mNumberOfCreated.setText(String.valueOf(user.getNumberOfCreatedChallenges()));
+        mNumberOfReviewed.setText(String.valueOf(user.getNumberOfReviewedChallenges()));
+
 
     }
 }

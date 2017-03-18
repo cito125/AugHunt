@@ -9,6 +9,8 @@ import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -49,13 +51,44 @@ public class CreatedChallengeAdapter extends RecyclerView.Adapter<CreatedChallen
     }
 
     public void setChallengeList(List<ChallengePhoto> challengeList) {
+
+        Comparator<ChallengePhoto> pendingComparator = new Comparator<ChallengePhoto>() {
+            @Override
+            public int compare(ChallengePhoto challengePhotoOne, ChallengePhoto challengePhotoTwo) {
+                if (challengePhotoTwo.getPendingReviews() != challengePhotoOne.getPendingReviews()) {
+                    return Integer.valueOf(challengePhotoTwo.getPendingReviews()).compareTo(challengePhotoOne.getPendingReviews());
+                } else {
+                    return Long.valueOf(challengePhotoTwo.getTimestamp()).compareTo(challengePhotoOne.getTimestamp());
+                }
+            }
+        };
+
+        Collections.sort(challengeList, pendingComparator);
+
         this.mChallengeList.clear();
         this.mChallengeList.addAll(challengeList);
+
         notifyDataSetChanged();
     }
 
-    public void addChallengeToList(ChallengePhoto challenge) {
+    public void addChallengeToList(final ChallengePhoto challenge) {
         mChallengeList.add(challenge);
-        notifyItemInserted(mChallengeList.size() - 1);
+        Comparator<ChallengePhoto> pendingComparator = new Comparator<ChallengePhoto>() {
+            @Override
+            public int compare(ChallengePhoto challengePhotoOne, ChallengePhoto challengePhotoTwo) {
+                if (challengePhotoTwo.getPendingReviews() != challengePhotoOne.getPendingReviews()) {
+                    return Integer.valueOf(challengePhotoTwo.getPendingReviews()).compareTo(challengePhotoOne.getPendingReviews());
+                } else {
+                    return Long.valueOf(challengePhotoTwo.getTimestamp()).compareTo(challengePhotoOne.getTimestamp());
+                }
+            }
+        };
+
+        Collections.sort(mChallengeList, pendingComparator);
+
+
+        notifyDataSetChanged();
+
+
     }
 }
