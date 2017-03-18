@@ -13,4 +13,6 @@
 
     <color name="lightGrey">#e7edee</color>
     <color name="grey">#616161</color>
+
+    <color name="trophyYellow">#FBC02D</color>
 </resources>

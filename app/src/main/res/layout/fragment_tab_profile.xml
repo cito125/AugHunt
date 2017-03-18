@@ -1,113 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/profile_status_bar"
-        android:layout_below="@id/tab_layout"
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_marginTop="15dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="130dp"
-            android:layout_height="130dp">
-
-            <ImageView
-                android:id="@+id/iv_main_profile_pic"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:id="@+id/tv_main_profile_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textSize="15dp"
-                android:text="Profile name"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <!-- Avatar background -->
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="200dp"
+            android:background="#EE2b3e51">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+        </ImageView>
 
-                <TextView
-                    android:id="@+id/tv_main_profile_points"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:text="-99"
-                    android:layout_marginBottom="10dp"
-                    android:layout_gravity="center"/>
+        <!-- Trophy and user points -->
+        <TextView
+            android:id="@+id/tv_main_profile_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@color/lightGrey"
+            android:drawableLeft="@drawable/ic_trophy_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/trophyYellow"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="0" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Points"/>
+        <!-- Image avatar -->
+        <ImageView
+            android:id="@+id/iv_main_profile_pic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp" />
 
-            </LinearLayout>
+        <!-- Profile name -->
+        <TextView
+            android:id="@+id/tv_main_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_main_profile_pic"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp"
+            android:text="UNKNOWN"
+            android:textSize="25sp">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
+        </TextView>
 
-                <TextView
-                    android:id="@+id/tv_main_profile_total_created"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:text="-99"
-                    android:layout_marginBottom="10dp"
-                    android:layout_gravity="center"/>
+        <!-- CHALLENGES COMPLETED -->
+        <TextView
+            android:id="@+id/tv_challenges_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_main_profile_name"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/ic_done_all_black_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/acceptedGreen"
+            android:gravity="center"
+            android:text=" CHALLENGES COMPLETED"
+            android:textSize="15dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Created"/>
+        <TextView
+            android:id="@+id/tv_main_profile_total_submitted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_challenges_completed"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:background="#AA000000"
+            android:padding="5dp"
+            android:text="0"
+            android:textColor="@color/lightGrey" />
 
-            </LinearLayout>
+        <!-- CHALLENGES CREATED -->
+        <TextView
+            android:id="@+id/tv_challenges_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_main_profile_total_submitted"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/ic_gavel_black_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/trophyYellow"
+            android:gravity="center"
+            android:text="CHALLENGES CREATED" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+        <TextView
+            android:id="@+id/tv_main_profile_total_created"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_challenges_created"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:background="#AA000000"
+            android:padding="5dp"
+            android:text="0"
+            android:textColor="@color/lightGrey"
+            android:textSize="15dp" />
 
-                <TextView
-                    android:id="@+id/tv_main_profile_total_submitted"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:text="-99"
-                    android:layout_marginBottom="10dp"
-                    android:layout_gravity="center"/>
+        <!-- CHALLENGES REVIEWED -->
+        <TextView
+            android:id="@+id/tv_challenges_reviewed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_main_profile_total_created"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/ic_stars_black_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/declinedRed"
+            android:gravity="center"
+            android:text="CHALLENGES REVIEWED" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Submitted"/>
+        <TextView
+            android:id="@+id/tv_main_profile_total_reviewed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_challenges_reviewed"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:background="#AA000000"
+            android:padding="5dp"
+            android:text="0"
+            android:textColor="@color/lightGrey"
+            android:textSize="15dp" />
 
-            </LinearLayout>
-        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/tv_main_profile_total_reviewed" />
 
-    </LinearLayout>
-
-</LinearLayout>
+    </RelativeLayout>
+</ScrollView>
