@@ -15,8 +15,13 @@ import android.widget.FrameLayout;
 import com.example.andresarango.aughunt.R;
 import com.unity3d.player.UnityPlayer;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class UnityCreateChallengeActivity extends AppCompatActivity {
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
+    @BindView(R.id.activate_button) Button mActivateButton;
+    @BindView(R.id.deactivate_button) Button mDeactivateButton;
 
     // Setup activity layout
     @Override
@@ -31,16 +36,15 @@ public class UnityCreateChallengeActivity extends AppCompatActivity {
         FrameLayout unityFrame = (FrameLayout) findViewById(R.id.unity_frame);
         unityFrame.addView(mUnityPlayer);
         mUnityPlayer.requestFocus();
-        Button activateButton = (Button) findViewById(R.id.activate_button);
-        Button deactivateButton = (Button) findViewById(R.id.deactivate_button);
+        ButterKnife.bind(this);
 
-        activateButton.setOnClickListener(new View.OnClickListener() {
+        mActivateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUnityPlayer.UnitySendMessage("3DCanvas", "activate", "yeer");
             }
         });
-        deactivateButton.setOnClickListener(new View.OnClickListener() {
+        mDeactivateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUnityPlayer.UnitySendMessage("3DCanvas", "deactivate", "yeeer");
