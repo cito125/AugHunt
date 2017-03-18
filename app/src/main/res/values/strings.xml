@@ -4,7 +4,7 @@
     <string name="text_create_challenges">Create</string>
     <string name="text_profile">Profile</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="leader_board">Leaderboard</string>
 </resources>
