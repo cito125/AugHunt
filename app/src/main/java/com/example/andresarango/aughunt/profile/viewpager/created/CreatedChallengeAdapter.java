@@ -68,14 +68,11 @@ public class CreatedChallengeAdapter extends RecyclerView.Adapter<CreatedChallen
         this.mChallengeList.clear();
         this.mChallengeList.addAll(challengeList);
 
-
-
         notifyDataSetChanged();
     }
 
     public void addChallengeToList(final ChallengePhoto challenge) {
         mChallengeList.add(challenge);
-        notifyItemInserted(mChallengeList.size() - 1);
         Comparator<ChallengePhoto> pendingComparator = new Comparator<ChallengePhoto>() {
             @Override
             public int compare(ChallengePhoto challengePhotoOne, ChallengePhoto challengePhotoTwo) {
@@ -88,6 +85,9 @@ public class CreatedChallengeAdapter extends RecyclerView.Adapter<CreatedChallen
         };
 
         Collections.sort(mChallengeList, pendingComparator);
+
+
+        notifyDataSetChanged();
 
 
     }

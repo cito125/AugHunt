@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import com.example.andresarango.aughunt._models.ChallengePhotoSubmitted;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -31,8 +33,18 @@ public class SubmittedAdapter extends RecyclerView.Adapter<SubmittedViewHolder> 
     }
 
     public void setSubmittedList(List<ChallengePhotoSubmitted> submittedList) {
+        Comparator<ChallengePhotoSubmitted> submittedComparator = new Comparator<ChallengePhotoSubmitted>() {
+            @Override
+            public int compare(ChallengePhotoSubmitted challengePhotoSubmittedOne, ChallengePhotoSubmitted challengePhotoSubmittedTwo) {
+                return challengePhotoSubmittedTwo.getTimestamp().compareTo(challengePhotoSubmittedOne.getTimestamp());
+            }
+        };
+
+        Collections.sort(submittedList, submittedComparator);
+
         this.submittedList.clear();
         this.submittedList.addAll(submittedList);
+
         notifyDataSetChanged();
     }
 }
