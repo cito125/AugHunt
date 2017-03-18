@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 public class ProfileTabFragment extends Fragment {
     @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
     @BindView(R.id.tv_main_profile_name) TextView profileNameTv;
-    @BindView(R.id.tv_main_profile_user_id) TextView profileUserIdTv;
+//    @BindView(R.id.tv_main_profile_user_id) TextView profileUserIdTv;
     @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
     @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
     @BindView(R.id.tv_main_profile_total_submitted) TextView totalSubmittedChallengesTv;
@@ -45,7 +45,7 @@ public class ProfileTabFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile_tab, container, false);
+        return inflater.inflate(R.layout.profile_version_1, container, false);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ProfileTabFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
                 profileNameTv.setText(currentUser.getProfileName());
-                profileUserIdTv.setText("ID: " + auth.getCurrentUser().getUid());
+//                profileUserIdTv.setText("ID: " + auth.getCurrentUser().getUid());
                 userPointsTv.setText(currentUser.getUserPoints() + "/100 PTS");
                 totalCreatedChallengesTv.setText(String.valueOf(currentUser.getNumberOfCreatedChallenges()));
                 totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
