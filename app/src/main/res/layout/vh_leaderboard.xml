@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_margin="5dp"
+    android:elevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="#8000000" />
+
+        <!-- Profile name -->
+        <TextView
+            android:id="@+id/tv_leader_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@id/iv_icon"
+            android:text="Unknown"
+            android:textSize="20sp" />
+
+        <!-- Completed -->
+        <TextView
+            android:id="@+id/tv_leader_completed_challenges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_leader_profile_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/iv_icon"
+            android:drawableLeft="@drawable/ic_done_all_black_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/acceptedGreen"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="15dp" />
+
+        <!-- Created -->
+        <TextView
+            android:id="@+id/tv_leader_created_challenges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_leader_profile_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_leader_completed_challenges"
+            android:drawableLeft="@drawable/ic_gavel_black_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/trophyYellow"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="15dp" />
+
+        <!-- Reviewed -->
+        <TextView
+            android:id="@+id/tv_leader_reviewed_challenges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_leader_profile_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_leader_created_challenges"
+            android:drawableLeft="@drawable/ic_stars_black_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/declinedRed"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="#10000000"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/ic_trophy_32dp"
+            android:drawableTint="@color/trophyYellow"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
