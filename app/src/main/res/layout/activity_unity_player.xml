@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.andresarango.aughunt.create.UnityPlayerActivity">
+    tools:context="com.example.andresarango.aughunt.create.UnityCreateChallengeActivity">
 
     <FrameLayout
         android:id="@+id/unity_frame"

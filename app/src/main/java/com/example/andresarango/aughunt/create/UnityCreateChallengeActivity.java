@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import com.example.andresarango.aughunt.R;
 import com.unity3d.player.UnityPlayer;
 
-public class UnityPlayerActivity extends AppCompatActivity {
+public class UnityCreateChallengeActivity extends AppCompatActivity {
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
 
     // Setup activity layout

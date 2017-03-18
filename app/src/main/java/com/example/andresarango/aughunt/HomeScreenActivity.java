@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.andresarango.aughunt.create.CreateChallengeCameraActivity;
+import com.example.andresarango.aughunt.create.UnityCreateChallengeActivity;
 import com.example.andresarango.aughunt.leaderboard.LeaderBoardFragment;
 import com.example.andresarango.aughunt.profile.ProfileFragment;
 import com.example.andresarango.aughunt.search.SearchChallengeFragment;
@@ -51,7 +52,8 @@ public class HomeScreenActivity extends AppCompatActivity {
                                 .commit();
                         break;
                     case R.id.create_challenge:
-                        Intent intent = new Intent(HomeScreenActivity.this, CreateChallengeCameraActivity.class);
+//                        Intent intent = new Intent(HomeScreenActivity.this, CreateChallengeCameraActivity.class);
+                        Intent intent = new Intent(HomeScreenActivity.this, UnityCreateChallengeActivity.class);
                         startActivityForResult(intent, 1234);
                         break;
                     case R.id.user_profile:
