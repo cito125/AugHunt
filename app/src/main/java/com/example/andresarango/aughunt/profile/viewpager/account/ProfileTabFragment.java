@@ -1,6 +1,7 @@
 package com.example.andresarango.aughunt.profile.viewpager.account;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt._models.User;
+import com.example.andresarango.aughunt.login.StartActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,12 +34,14 @@ import butterknife.ButterKnife;
  */
 
 public class ProfileTabFragment extends Fragment {
+    private View mRootView;
     @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
     @BindView(R.id.tv_main_profile_name) TextView profileNameTv;
     @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
     @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
     @BindView(R.id.tv_main_profile_total_submitted) TextView totalSubmittedChallengesTv;
     @BindView(R.id.tv_main_profile_total_reviewed) TextView totalReviewedChallengesTv;
+    @BindView(R.id.tv_profile_logout) TextView logoutTv;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -45,7 +49,8 @@ public class ProfileTabFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_tab_profile, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_tab_profile, container, false);
+        return mRootView;
     }
 
     @Override
@@ -68,6 +73,15 @@ public class ProfileTabFragment extends Fragment {
                         profilePicIv.setImageDrawable(circularBitmapDrawable);
                     }
                 });
+
+        logoutTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                auth.signOut();
+                Intent intent = new Intent(mRootView.getContext(), StartActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupProfileStatusBar() {
@@ -77,7 +91,11 @@ public class ProfileTabFragment extends Fragment {
                 User currentUser = dataSnapshot.getValue(User.class);
                 profileNameTv.setText(currentUser.getProfileName());
 
-                userPointsTv.setText("0  |  " + currentUser.getUserPoints() + "/100 PTS");
+                int points = currentUser.getUserPoints();
+                int trophies = points / 100;
+                int userPoints = points - (trophies * 100);
+
+                userPointsTv.setText(trophies + "  |  " + userPoints + "/100 PTS");
                 totalCreatedChallengesTv.setText(String.valueOf(currentUser.getNumberOfCreatedChallenges()));
                 totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
                 totalReviewedChallengesTv.setText(String.valueOf(currentUser.getNumberOfReviewedChallenges()));

@@ -66,7 +66,7 @@
             android:layout_toRightOf="@id/tv_leader_created_challenges"
             android:drawableLeft="@drawable/ic_gavel_black_24dp"
             android:drawablePadding="5dp"
-            android:drawableTint="@color/declinedRed"
+            android:drawableTint="@color/colorAccent"
             android:gravity="center"
             android:text="0"
             android:textSize="15dp" />

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
-            android:textColor="#FFEB3B" />
+            android:textColor="@color/trophyYellow" />
 
         <TextView
             android:id="@+id/review_number"
@@ -34,7 +34,8 @@
             android:layout_toLeftOf="@id/review_number"
             android:textColor="@color/lightGrey"
             android:layout_centerVertical="true"
-            android:text="Pending review: "/>
+            android:text="Pending review: "
+            android:onClick="openPendingReview"/>
 
     </RelativeLayout>
 

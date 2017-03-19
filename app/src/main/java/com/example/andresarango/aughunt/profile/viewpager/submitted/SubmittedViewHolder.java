@@ -38,6 +38,8 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder{
     @BindView(R.id.iv_original_challenge_image)
     ImageView originalChallengeImageIv;
 
+    @BindView(R.id.iv_submitted_decision_image) ImageView decisionImageIv;
+
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
 
@@ -58,8 +60,10 @@ public class SubmittedViewHolder extends RecyclerView.ViewHolder{
 
         itemView.setBackgroundColor(0xAA000000);
         if (submittedChallenge.isAccepted()) {
+            decisionImageIv.setBackgroundResource(R.drawable.accept_submitted_text_bg);
             itemView.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.acceptedGreen));
         } else if (submittedChallenge.isReviewed() && !submittedChallenge.isAccepted()) {
+            decisionImageIv.setBackgroundResource(R.drawable.reject_submitted_text_bg);
             itemView.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.declinedRed));
         }
 

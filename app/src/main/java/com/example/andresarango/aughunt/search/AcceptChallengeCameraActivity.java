@@ -199,7 +199,7 @@ public class AcceptChallengeCameraActivity extends AppCompatActivity implements
 
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                Toast.makeText(getApplicationContext(), "Challenge submitted", Toast.LENGTH_SHORT)
+                Toast.makeText(getApplicationContext(), "Challenge sent to be reviewed!", Toast.LENGTH_SHORT)
                         .show();
                 progressDialog.dismiss();
                 finish();

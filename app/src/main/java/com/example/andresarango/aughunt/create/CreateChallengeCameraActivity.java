@@ -157,7 +157,6 @@ public class CreateChallengeCameraActivity extends AppCompatActivity implements
                 resultIntent.putExtra(ProfileFragment.VIEWPAGER_START_POSITION, 1);
                 setResult(1234, resultIntent);
 
-
                 finish();
 
 
