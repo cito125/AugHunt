@@ -29,6 +29,16 @@
             android:padding="5dp"
             android:text="0" />
 
+        <TextView
+            android:id="@+id/tv_profile_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:text="LOGOUT"
+            android:padding="7dp"
+            android:background="@color/lightGrey"/>
+
         <!-- Image avatar -->
         <ImageView
             android:id="@+id/iv_main_profile_pic"
@@ -116,7 +126,7 @@
             android:layout_marginTop="30dp"
             android:drawableLeft="@drawable/ic_gavel_black_24dp"
             android:drawablePadding="5dp"
-            android:drawableTint="@color/declinedRed"
+            android:drawableTint="@color/colorAccent"
             android:gravity="center"
             android:text="CHALLENGES REVIEWED" />
 

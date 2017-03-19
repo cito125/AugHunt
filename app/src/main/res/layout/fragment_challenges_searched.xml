@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
-            android:textColor="#FFEB3B" />
+            android:textColor="@color/trophyYellow" />
 
         <TextView
             android:id="@+id/review_number"

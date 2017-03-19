@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.daprlabs.aaron.swipedeck.SwipeDeck;
@@ -55,6 +56,8 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @BindView(R.id.tv_user_points) TextView mUserPointsTv;
     @BindView(R.id.review_number) TextView mPendingReview;
     @BindView(R.id.pending_review) TextView mPending;
+    @BindView(R.id.btn_review_decline) Button mDeclineBtn;
+    @BindView(R.id.btn_review_accept) Button mAcceptBtn;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -76,6 +79,20 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
         ButterKnife.bind(this, view);
         initializeSwiperView();
         retrieveUserFromFirebaseAndSetProfile();
+
+        mDeclineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSwipeDeck.swipeTopCardLeft(180);
+            }
+        });
+
+        mAcceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSwipeDeck.swipeTopCardRight(180);
+            }
+        });
 
     }
 

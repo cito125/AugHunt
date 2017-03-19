@@ -16,6 +16,7 @@ import com.example.andresarango.aughunt.HomeScreenActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
 import com.example.andresarango.aughunt._models.User;
+import com.example.andresarango.aughunt.profile.ProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -66,6 +67,20 @@ public class LeaderBoardFragment extends Fragment {
         retrieveUserFromFirebaseAndSetProfile();
         initializePoints();
         initialize();
+
+        mPending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openPendingReview();
+            }
+        });
+
+        mPendingReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openPendingReview();
+            }
+        });
     }
 
     private void initialize() {
@@ -197,6 +212,16 @@ public class LeaderBoardFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mLeaderBoardAdapter = new LeaderBoardAdapter();
         mRecyclerView.setAdapter(mLeaderBoardAdapter);
+    }
+
+    public void openPendingReview(){
+        ProfileFragment profileFragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ProfileFragment.VIEWPAGER_START_POSITION, 1);
+        profileFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.home_screen_container, profileFragment)
+                .commit();
     }
 
     @Override
