@@ -36,6 +36,8 @@ public class ChallengeViewholder extends RecyclerView.ViewHolder {
     @BindView(R.id.btn_search_challenge_find)
     Button findChallengeBtn;
 
+    @BindView(R.id.ar_object_silhouette) ImageView arObjectSilhouetteIv;
+
     private DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
 
     private final SearchChallengeHelper mListener;
@@ -89,7 +91,7 @@ public class ChallengeViewholder extends RecyclerView.ViewHolder {
         });
 
         if (challenge.getArObjectStr().equals("kitten")) {
-
+            arObjectSilhouetteIv.setBackgroundResource(R.drawable.cat_avatar_hidden);
         }
     }
 }

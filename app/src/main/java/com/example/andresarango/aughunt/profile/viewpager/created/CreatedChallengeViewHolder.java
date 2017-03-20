@@ -44,7 +44,7 @@ public class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
         }
 
         if (challenge.getArObjectStr().equals("kitten")) {
-
+            arObjectIv.setBackgroundResource(R.drawable.cat_avatar_revealed);
         }
     }
 

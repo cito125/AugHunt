@@ -46,6 +46,7 @@ import butterknife.ButterKnife;
  */
 
 public class ReviewChallengesFragment extends Fragment implements SwipeDeck.SwipeDeckCallback {
+    private View mRootView;
     private ChallengePhoto mChallengeToReview;
 
     private ReviewSwipeAdapter mSwipeAdapter = new ReviewSwipeAdapter();
@@ -70,7 +71,8 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_challenges_review, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_challenges_review, container, false);
+        return mRootView;
     }
 
     @Override
@@ -164,11 +166,11 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
                     mPendingReviewIndicator += challenge.getPendingReviews();
                     mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
                     if (mPendingReviewIndicator > 0) {
-                        mPendingReview.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-                        mPending.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+                        mPendingReview.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.colorAccent));
+                        mPending.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.colorAccent));
                     } else {
-                        mPendingReview.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                        mPending.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
+                        mPendingReview.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.lightGrey));
+                        mPending.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.lightGrey));
                     }
                 }
 

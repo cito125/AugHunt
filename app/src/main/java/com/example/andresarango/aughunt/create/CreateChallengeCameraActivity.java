@@ -121,7 +121,7 @@ public class CreateChallengeCameraActivity extends AppCompatActivity implements
                 break;
             case R.id.btn_submit_challenge:
                 if (mCameraCallback.getPicData() != null && !TextUtils.isEmpty(mHintText) && !TextUtils.isEmpty(arObjectStr)) {
-                    progressDialog.setMessage("Submitting");
+                    progressDialog.setMessage("Making challenge...");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
                     submitChallenge();
@@ -205,7 +205,7 @@ public class CreateChallengeCameraActivity extends AppCompatActivity implements
         final EditText edittext = new EditText(getApplicationContext());
         alert.setView(edittext);
 
-        alert.setMessage("Enter Your Hint");
+        alert.setMessage("Enter Your Clue");
 
         alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {

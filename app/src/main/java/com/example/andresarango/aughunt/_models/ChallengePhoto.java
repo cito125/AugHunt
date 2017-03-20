@@ -14,7 +14,7 @@ public class ChallengePhoto implements Serializable {
     private String hint;
     private int pursuing;
     private int completed;
-    private long timestamp;
+    private Long timestamp;
     private int pendingReviews;
     private String arObjectStr;
 
@@ -22,7 +22,7 @@ public class ChallengePhoto implements Serializable {
 
     }
 
-    public ChallengePhoto(String challengeId, String ownerId, DAMLocation location, String photoUrl, String hint, long timestamp, String arObjectStr) {
+    public ChallengePhoto(String challengeId, String ownerId, DAMLocation location, String photoUrl, String hint, Long timestamp, String arObjectStr) {
         this.challengeId = challengeId;
         this.ownerId = ownerId;
         this.location = location;
@@ -60,7 +60,7 @@ public class ChallengePhoto implements Serializable {
         return pursuing;
     }
 
-    public long getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 

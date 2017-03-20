@@ -39,7 +39,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_margin="10dp"
-                android:background="@color/acceptedGreen"/>
+                android:src="@drawable/cat_avatar_revealed"/>
         </LinearLayout>
 
         <Button

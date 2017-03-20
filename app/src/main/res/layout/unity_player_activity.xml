@@ -7,23 +7,28 @@
 
     <Button
         android:id="@+id/btn_cat_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:text="CAT IMAGE"
-        android:layout_alignParentBottom="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true" />
 
     <Button
         android:id="@+id/btn_camera_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:text="CAMERA"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:visibility="invisible"/>
 
     <FrameLayout
         android:id="@+id/unity_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:layout_above="@id/btn_cat_image"/>
 
     <!--<Button-->

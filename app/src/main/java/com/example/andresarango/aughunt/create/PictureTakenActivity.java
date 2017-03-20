@@ -17,6 +17,7 @@ import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
 import com.example.andresarango.aughunt._models.ChallengePhotoCompleted;
 import com.example.andresarango.aughunt._models.ChallengePhotoSubmitted;
+import com.example.andresarango.aughunt._models.DAMLocation;
 import com.example.andresarango.aughunt._models.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,7 +45,7 @@ public class PictureTakenActivity extends AppCompatActivity {
     @BindView(R.id.iv_edit_photo)
     ImageView photoIv;
 
-    public static final String DESTINATION_KEY = "YOMAMA";
+    public static String DESTINATION_KEY = "YOMAMA";
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
@@ -62,15 +63,39 @@ public class PictureTakenActivity extends AppCompatActivity {
 
         mChallengePhoto = UnityPlayerActivity.mChallengePhoto;
 
+        System.out.println("GET HERE FROM UNITY ACTIVITY");
         if (intent.hasExtra(DESTINATION_KEY)) {
+
+//            System.out.println("GET INSIDE FROM UNITY ACTIVITY");
+//            System.out.println(DESTINATION_KEY);
             String filePath = intent.getStringExtra(DESTINATION_KEY);
+//            System.out.println(filePath);
+//            String[] array = filePath.split(" ");
+//            System.out.println("ARRAY SIZE: " + array.length);
+//            String challengeId = array[0];
+//            String hint = array[1];
+//            String ownerId = array[2];
+//            String photoUrl = array[3];
+//            String lat = array[4];
+//            String lng = array[5];
+//            String timestamp = array[6];
+//            String arObjectStr = array[7];
+
+//            DAMLocation location = new DAMLocation(Double.valueOf(lat), Double.valueOf(lng));
+//
+//            mChallengePhoto = new ChallengePhoto(challengeId, ownerId, location, photoUrl, hint, Long.valueOf(timestamp), arObjectStr);
+
             Bitmap bmp = BitmapFactory.decodeFile(filePath);
             photoIv.setImageBitmap(bmp);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
             picByteArray = stream.toByteArray();
         }
+/*
+03-20 14:07:32.651 27722-27722/com.example.andresarango.aughunt I/System.out: -KfgsqIKVGVUf3WcQXxz fghj 3uAcOjBgcPZb0Rs8EggRsNXNBmK2 https://firebasestorage.googleapis.com/v0/b/capstoneaughunt.appspot.com/o/challenges%2F-KfgsqIKVGVUf3WcQXxz?alt=media&token=05f8dea8-c2cd-48fd-a329-d3d6c5a6ff44 40.7416373 -73.9352932 1490033012 kitten YOMAMA
 
+
+ */
 
         submitCompletedChallenge();
         Toast.makeText(getApplicationContext(), "Sending...", Toast.LENGTH_SHORT).show();

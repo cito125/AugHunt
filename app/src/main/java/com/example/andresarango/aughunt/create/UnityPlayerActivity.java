@@ -32,6 +32,7 @@ public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHe
     @BindView(R.id.btn_camera_image) Button cameraBtn;
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
 
+    public static String GIMME;
     public static ChallengePhoto mChallengePhoto;
     public static boolean hasSubmitted = false;
 
@@ -68,6 +69,10 @@ public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHe
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                String strToSend = deserializeChallengePhoto();
+//                strToSend += PictureTakenActivity.DESTINATION_KEY;
+//                PictureTakenActivity.DESTINATION_KEY = strToSend;
+//                System.out.println(strToSend);
                 mUnityPlayer.UnitySendMessage("Main Camera", "takeScreenShotAndShare", PictureTakenActivity.DESTINATION_KEY);
             }
         });
@@ -104,6 +109,21 @@ public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHe
 
     }
 
+    public String deserializeChallengePhoto() {
+        String result = "";
+        result += mChallengePhoto.getChallengeId() + " ";
+        result += mChallengePhoto.getHint() + " ";
+        result += mChallengePhoto.getOwnerId() + " ";
+        result += mChallengePhoto.getPhotoUrl() + " ";
+        result += mChallengePhoto.getLocation().getLat() + " ";
+        result += mChallengePhoto.getLocation().getLng() + " ";
+        result += mChallengePhoto.getTimestamp() + " ";
+        result += mChallengePhoto.getArObjectStr() + " ";
+
+
+        return result;
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         // To support deep linking, we need to make sure that the client can get access to
@@ -135,7 +155,7 @@ public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHe
         if (hasSubmitted) {
             Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
             startActivity(intent);
-            finish();
+            onBackPressed();
         } else {
             mUnityPlayer.resume();
         }
@@ -210,7 +230,7 @@ public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHe
     @Override
     public void run(LocationResult locationResult) {
         DAMLocation currentLocation = new DAMLocation(locationResult.getLocation().getLatitude(), locationResult.getLocation().getLongitude());
-        if (currentLocation.isWithinRadius(mChallengePhoto.getLocation(), 50.0)) {
+        if (currentLocation.isWithinRadius(mChallengePhoto.getLocation(), 100.0)) {
             Toast.makeText(getApplicationContext(), "Spotted a kitten, find and capture it!", Toast.LENGTH_SHORT).show();
             mUnityPlayer.UnitySendMessage("3DCanvas", "activate", "swag");
             catImageBtn.setEnabled(false);
