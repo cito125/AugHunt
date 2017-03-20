@@ -220,7 +220,8 @@ public class CreateChallengeCameraActivity extends AppCompatActivity implements
             }
         });
 
-        alert.show();
+        alert.show().getWindow().setLayout(1000, 700);
+
 
     }
 

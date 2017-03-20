@@ -74,6 +74,8 @@ public class ProfileTabFragment extends Fragment {
                     }
                 });
 
+
+
         logoutTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +101,22 @@ public class ProfileTabFragment extends Fragment {
                 totalCreatedChallengesTv.setText(String.valueOf(currentUser.getNumberOfCreatedChallenges()));
                 totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
                 totalReviewedChallengesTv.setText(String.valueOf(currentUser.getNumberOfReviewedChallenges()));
+
+                if (currentUser.getProfilePicUrl() != null) {
+                    Glide.with(getContext())
+                            .load(currentUser.getProfilePicUrl())
+                            .asBitmap()
+                            .centerCrop()
+                            .into(new BitmapImageViewTarget(profilePicIv) {
+                                @Override
+                                protected void setResource(Bitmap resource) {
+                                    RoundedBitmapDrawable circularBitmapDrawable =
+                                            RoundedBitmapDrawableFactory.create(getResources(), resource);
+                                    circularBitmapDrawable.setCircular(true);
+                                    profilePicIv.setImageDrawable(circularBitmapDrawable);
+                                }
+                            });
+                }
             }
 
             @Override
