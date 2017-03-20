@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.andresarango.aughunt.HomeScreenActivity;
@@ -63,6 +64,10 @@ public class CreateChallengeCameraActivity extends AppCompatActivity implements
     @BindView(R.id.btn_leave_hint) Button mHint;
     @BindView(R.id.btn_submit_challenge) Button mSubmit;
     @BindView(R.id.photo) FrameLayout mPhoto;
+    @BindView(R.id.ar_object)
+    ImageView arObjectIv;
+
+    private String arObjectStr;
 
     private CameraCallback mCameraCallback;
 
@@ -86,6 +91,7 @@ public class CreateChallengeCameraActivity extends AppCompatActivity implements
         mPhoto.setOnClickListener(this);
         mHint.setOnClickListener(this);
         mSubmit.setOnClickListener(this);
+        arObjectIv.setOnClickListener(this);
 
         initializeCamera();
         requestPermission();
@@ -114,15 +120,18 @@ public class CreateChallengeCameraActivity extends AppCompatActivity implements
                 createDialog();
                 break;
             case R.id.btn_submit_challenge:
-                if (mCameraCallback.getPicData() != null && !TextUtils.isEmpty(mHintText)) {
+                if (mCameraCallback.getPicData() != null && !TextUtils.isEmpty(mHintText) && !TextUtils.isEmpty(arObjectStr)) {
                     progressDialog.setMessage("Submitting");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
                     submitChallenge();
                 } else {
-                    Toast.makeText(this, "Hint or photo is missing", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "Hint, photo or AR object is missing", Toast.LENGTH_SHORT)
                             .show();
                 }
+                break;
+            case R.id.ar_object:
+                arObjectStr = "kitten";
                 break;
         }
     }
@@ -144,7 +153,7 @@ public class CreateChallengeCameraActivity extends AppCompatActivity implements
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 String url = taskSnapshot.getDownloadUrl().toString();
-                ChallengePhoto challenge = new ChallengePhoto(pushId, auth.getCurrentUser().getUid(), damLocation, url, mHintText, System.currentTimeMillis()/1000);
+                ChallengePhoto challenge = new ChallengePhoto(pushId, auth.getCurrentUser().getUid(), damLocation, url, mHintText, System.currentTimeMillis()/1000, arObjectStr);
                 rootRef.child("challenges").child(pushId).setValue(challenge); // Upload challenge object to firebase database
 
                 incrementCreatedChallengeCounter();

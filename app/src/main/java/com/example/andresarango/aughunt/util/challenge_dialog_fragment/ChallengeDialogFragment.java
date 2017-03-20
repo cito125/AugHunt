@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import com.example.andresarango.aughunt.create.UnityPlayerActivity;
 import com.example.andresarango.aughunt.search.AcceptChallengeCameraActivity;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
 import com.google.firebase.database.DataSnapshot;
@@ -60,7 +61,10 @@ public class ChallengeDialogFragment extends DialogFragment {
                 });
 
 
-                Intent intent = new Intent(getContext(), AcceptChallengeCameraActivity.class);
+//                Intent intent = new Intent(getContext(), AcceptChallengeCameraActivity.class);
+//                intent.putExtra(CHALLENGE, mChallengePhoto);
+//                startActivity(intent);
+                Intent intent = new Intent(getContext(), UnityPlayerActivity.class);
                 intent.putExtra(CHALLENGE, mChallengePhoto);
                 startActivity(intent);
             }

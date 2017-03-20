@@ -88,6 +88,8 @@ public class ChallengeViewholder extends RecyclerView.ViewHolder {
             }
         });
 
+        if (challenge.getArObjectStr().equals("kitten")) {
 
+        }
     }
 }

@@ -27,11 +27,26 @@
 
         </FrameLayout>
 
+        <LinearLayout
+            android:id="@+id/ar_object_list"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:background="#AA000000">
+
+            <ImageView
+                android:id="@+id/ar_object"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
+                android:background="@color/acceptedGreen"/>
+        </LinearLayout>
+
         <Button
             android:id="@+id/btn_leave_hint"
+            android:layout_above="@id/ar_object_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="25dp"
             android:layout_marginLeft="20dp"
             android:background="#5D91B6"
@@ -39,9 +54,9 @@
 
         <Button
             android:id="@+id/btn_submit_challenge"
+            android:layout_above="@id/ar_object_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="25dp"
             android:layout_marginRight="20dp"
@@ -50,12 +65,11 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_take_photo"
+            android:layout_above="@id/ar_object_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="30dp"
-            app:layout_anchorGravity="bottom|right|end"
             android:src="@drawable/ic_photo_camera_black_24dp"/>
     </RelativeLayout>
 

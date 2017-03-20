@@ -6,18 +6,33 @@ import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.andresarango.aughunt.R;
+import com.example.andresarango.aughunt._models.ChallengePhoto;
+import com.example.andresarango.aughunt._models.DAMLocation;
+import com.example.andresarango.aughunt.util.challenge_dialog_fragment.ChallengeDialogFragment;
+import com.example.andresarango.aughunt.util.snapshot_callback.SnapshotHelper;
+import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.unity3d.player.*;
 
-public class UnityPlayerActivity extends Activity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHelper.SnapshotListener{
+    @BindView(R.id.btn_cat_image) Button catImageBtn;
+    @BindView(R.id.btn_camera_image) Button cameraBtn;
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
+
+    private ChallengePhoto mChallengePhoto;
+
 
     // Setup activity layout
     @Override
@@ -33,31 +48,60 @@ public class UnityPlayerActivity extends Activity {
         unityFrame.addView(mUnityPlayer);
         mUnityPlayer.requestFocus();
 
-        Button activateButton = (Button) findViewById(R.id.activate_button);
-        Button deactivateButton = (Button) findViewById(R.id.deactivate_button);
-        Button photoButton = (Button) findViewById(R.id.photo_button);
+        // New Code starts here
+        ButterKnife.bind(this);
 
-        activateButton.setOnClickListener(new View.OnClickListener() {
+        mChallengePhoto = (ChallengePhoto) getIntent().getSerializableExtra(ChallengeDialogFragment.CHALLENGE);
+        mUnityPlayer.UnitySendMessage("3DCanvas", "deactivate", "swag");
+
+        cameraBtn.setEnabled(false);
+
+        catImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUnityPlayer.UnitySendMessage("3DCanvas", "activate", "swag");
+                SnapshotHelper snapshotHelper = new SnapshotHelper(UnityPlayerActivity.this);
+                snapshotHelper.runSnapshot(getApplicationContext());
             }
         });
 
-        deactivateButton.setOnClickListener(new View.OnClickListener() {
+        cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUnityPlayer.UnitySendMessage("3DCanvas", "deactivate", "swag");
-            }
-        });
-
-        photoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println(Environment.getExternalStorageDirectory().getAbsolutePath());
                 mUnityPlayer.UnitySendMessage("Main Camera", "takeScreenShotAndShare", PictureTakenActivity.DESTINATION_KEY);
+
             }
         });
+
+//        Button activateButton = (Button) findViewById(R.id.activate_button);
+//        Button deactivateButton = (Button) findViewById(R.id.deactivate_button);
+//        Button photoButton = (Button) findViewById(R.id.photo_button);
+
+
+
+//        activateButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mUnityPlayer.UnitySendMessage("3DCanvas", "activate", "swag");
+//            }
+//        });
+//
+//        deactivateButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mUnityPlayer.UnitySendMessage("3DCanvas", "deactivate", "swag");
+//            }
+//        });
+//
+//        photoButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                System.out.println(Environment.getExternalStorageDirectory().getAbsolutePath());
+//                mUnityPlayer.UnitySendMessage("Main Camera", "takeScreenShotAndShare", PictureTakenActivity.DESTINATION_KEY);
+//            }
+//        });
+
+
+
     }
 
     @Override
@@ -148,5 +192,20 @@ public class UnityPlayerActivity extends Activity {
     /*API12*/
     public boolean onGenericMotionEvent(MotionEvent event) {
         return mUnityPlayer.injectEvent(event);
+    }
+
+    @Override
+    public void run(LocationResult locationResult) {
+        DAMLocation currentLocation = new DAMLocation(locationResult.getLocation().getLatitude(), locationResult.getLocation().getLongitude());
+        if (currentLocation.isWithinRadius(mChallengePhoto.getLocation(), 50.0)) {
+            Toast.makeText(getApplicationContext(), "Spotted a kitten, find and capture it!", Toast.LENGTH_SHORT).show();
+            mUnityPlayer.UnitySendMessage("3DCanvas", "activate", "swag");
+            catImageBtn.setEnabled(false);
+            catImageBtn.setVisibility(View.INVISIBLE);
+            cameraBtn.setEnabled(true);
+            cameraBtn.setVisibility(View.VISIBLE);
+        } else {
+            Toast.makeText(getApplicationContext(), "No kitten nearby, keep looking!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -16,12 +16,13 @@ public class ChallengePhoto implements Serializable {
     private int completed;
     private long timestamp;
     private int pendingReviews;
+    private String arObjectStr;
 
     public ChallengePhoto() {
 
     }
 
-    public ChallengePhoto(String challengeId, String ownerId, DAMLocation location, String photoUrl, String hint, long timestamp) {
+    public ChallengePhoto(String challengeId, String ownerId, DAMLocation location, String photoUrl, String hint, long timestamp, String arObjectStr) {
         this.challengeId = challengeId;
         this.ownerId = ownerId;
         this.location = location;
@@ -31,6 +32,7 @@ public class ChallengePhoto implements Serializable {
         this.pursuing = 0;
         this.completed = 0;
         this.pendingReviews = 0;
+        this.arObjectStr = arObjectStr;
 
     }
 
@@ -68,6 +70,10 @@ public class ChallengePhoto implements Serializable {
 
     public int getPendingReviews() {
         return pendingReviews;
+    }
+
+    public String getArObjectStr() {
+        return arObjectStr;
     }
 
     public void setPursuing(int pursuing) {

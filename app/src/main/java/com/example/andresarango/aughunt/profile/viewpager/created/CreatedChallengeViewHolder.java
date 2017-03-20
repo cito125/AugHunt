@@ -24,6 +24,8 @@ public class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.tv_pending_review) TextView mPendingReviewTv;
 
+    @BindView(R.id.ar_object) ImageView arObjectIv;
+
     public CreatedChallengeViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -39,6 +41,10 @@ public class CreatedChallengeViewHolder extends RecyclerView.ViewHolder {
         if (challenge.getPendingReviews() > 0) {
             mPendingReviewTv.setVisibility(View.VISIBLE);
             mPendingReviewTv.setText(String.valueOf(challenge.getPendingReviews()));
+        }
+
+        if (challenge.getArObjectStr().equals("kitten")) {
+
         }
     }
 
