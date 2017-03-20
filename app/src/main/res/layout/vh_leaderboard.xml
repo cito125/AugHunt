@@ -27,67 +27,112 @@
             android:textSize="20sp" />
 
         <!-- Completed -->
+        <LinearLayout
+            android:id="@+id/tv_leader_completed_challenges_ph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawablePadding="5dp"
+            android:layout_below="@id/tv_leader_profile_name"
+            android:layout_toRightOf="@id/iv_leader_profile_pic"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_done_all_black_24dp"
+                android:gravity="center"
+                android:tint="@color/acceptedGreen"
+                />
         <TextView
             android:id="@+id/tv_leader_completed_challenges"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_leader_profile_name"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/iv_leader_profile_pic"
-            android:drawableLeft="@drawable/ic_done_all_black_24dp"
-            android:drawablePadding="5dp"
-            android:drawableTint="@color/acceptedGreen"
-            android:gravity="center"
-            android:text="0"
+            android:text=" 0"
             android:textSize="15dp" />
+        </LinearLayout>
 
         <!-- Created -->
+        <LinearLayout
+            android:id="@+id/tv_leader_created_challenges_ph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawablePadding="5dp"
+            android:layout_below="@id/tv_leader_profile_name"
+            android:layout_toRightOf="@id/tv_leader_completed_challenges_ph"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_stars_black_24dp"
+                android:gravity="center"
+                android:tint="@color/trophyYellow"
+                />
         <TextView
             android:id="@+id/tv_leader_created_challenges"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_leader_profile_name"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/tv_leader_completed_challenges"
-            android:drawableLeft="@drawable/ic_stars_black_24dp"
-            android:drawablePadding="5dp"
-            android:drawableTint="@color/trophyYellow"
-            android:gravity="center"
-            android:text="0"
+            android:text=" 0"
             android:textSize="15dp" />
+        </LinearLayout>
 
         <!-- Reviewed -->
+        <LinearLayout
+            android:id="@+id/tv_leader_reviewed_challenges_ph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawablePadding="5dp"
+            android:layout_below="@id/tv_leader_profile_name"
+            android:layout_toRightOf="@id/tv_leader_created_challenges_ph"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_gavel_black_24dp"
+                android:gravity="center"
+                android:tint="@color/colorAccent"
+                />
         <TextView
             android:id="@+id/tv_leader_reviewed_challenges"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_leader_profile_name"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/tv_leader_created_challenges"
-            android:drawableLeft="@drawable/ic_gavel_black_24dp"
-            android:drawablePadding="5dp"
-            android:drawableTint="@color/colorAccent"
-            android:gravity="center"
-            android:text="0"
+            android:text=" 0"
             android:textSize="15dp" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/tv_leader_user_points_ph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
+            android:background="#10000000"
+            android:orientation="horizontal"
+            android:gravity="center">
         <TextView
             android:id="@+id/tv_leader_user_points"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="#10000000"
-            android:drawablePadding="5dp"
-            android:drawableRight="@drawable/ic_trophy_32dp"
             android:drawableTint="@color/trophyYellow"
+            android:text="0 "
             android:gravity="center"
-            android:padding="5dp"
-            android:text="0"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_trophy_32dp"
+                android:gravity="center"
+                android:tint="@color/trophyYellow"
+                />
+        </LinearLayout>
 
     </RelativeLayout>
 

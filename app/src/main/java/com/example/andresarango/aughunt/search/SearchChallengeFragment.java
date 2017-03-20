@@ -175,6 +175,9 @@ public class SearchChallengeFragment extends Fragment implements SnapshotHelper.
 
         if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             mPendingReviewIndicator += challenge.getPendingReviews();
+            if(mPendingReviewIndicator<0){
+                mPendingReviewIndicator=0;
+            };
             mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
             if (mPendingReviewIndicator > 0) {
                 mPendingReview.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.colorAccent)); // For some reason crashes with getContext but not if i use root view to get context

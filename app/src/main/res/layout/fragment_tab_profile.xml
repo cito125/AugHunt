@@ -16,18 +16,31 @@
         </ImageView>
 
         <!-- Trophy and user points -->
+        <LinearLayout
+            android:id="@+id/tv_main_profile_points_ph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_margin="20dp"
+            android:padding="5dp"
+            android:drawablePadding="10dp"
+            android:background="@color/lightGrey"
+            android:orientation="horizontal">
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_trophy_24dp"
+                android:gravity="center"
+                android:tint="@color/trophyYellow"
+                />
         <TextView
             android:id="@+id/tv_main_profile_points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
             android:background="@color/lightGrey"
-            android:drawableLeft="@drawable/ic_trophy_24dp"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/trophyYellow"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="0" />
+            android:text=" 0" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_profile_logout"
@@ -61,25 +74,36 @@
         </TextView>
 
         <!-- CHALLENGES COMPLETED -->
-        <TextView
-            android:id="@+id/tv_challenges_completed"
+        <LinearLayout
+            android:id="@+id/tv_challenges_completed_ph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_main_profile_name"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="30dp"
-            android:drawableLeft="@drawable/ic_done_all_black_24dp"
-            android:drawablePadding="5dp"
-            android:drawableTint="@color/acceptedGreen"
             android:gravity="center"
+            android:orientation="horizontal">
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_done_all_black_24dp"
+                android:gravity="center"
+                android:tint="@color/acceptedGreen"
+                />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_challenges_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
             android:text=" CHALLENGES COMPLETED"
             android:textSize="15dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_main_profile_total_submitted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_challenges_completed"
+            android:layout_below="@id/tv_challenges_completed_ph"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="10dp"
@@ -89,24 +113,36 @@
             android:textColor="@color/lightGrey" />
 
         <!-- CHALLENGES CREATED -->
-        <TextView
-            android:id="@+id/tv_challenges_created"
+        <LinearLayout
+            android:id="@+id/tv_challenges_created_ph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_main_profile_total_submitted"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="30dp"
-            android:drawableLeft="@drawable/ic_stars_black_24dp"
-            android:drawablePadding="5dp"
-            android:drawableTint="@color/trophyYellow"
             android:gravity="center"
-            android:text="CHALLENGES CREATED" />
+            android:orientation="horizontal">
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_stars_black_24dp"
+                android:gravity="center"
+                android:tint="@color/trophyYellow"
+                />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_challenges_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text=" CHALLENGES CREATED" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_main_profile_total_created"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_challenges_created"
+            android:layout_below="@id/tv_challenges_created_ph"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="10dp"
@@ -117,24 +153,34 @@
             android:textSize="15dp" />
 
         <!-- CHALLENGES REVIEWED -->
-        <TextView
-            android:id="@+id/tv_challenges_reviewed"
+        <LinearLayout
+            android:id="@+id/tv_challenges_reviewed_ph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_below="@id/tv_main_profile_total_created"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="30dp"
-            android:drawableLeft="@drawable/ic_gavel_black_24dp"
-            android:drawablePadding="5dp"
-            android:drawableTint="@color/colorAccent"
-            android:gravity="center"
-            android:text="CHALLENGES REVIEWED" />
+            android:gravity="center">
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_gavel_black_24dp"
+                android:gravity="center"
+                android:tint="@color/colorAccent"
+                />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_challenges_reviewed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" CHALLENGES REVIEWED" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_main_profile_total_reviewed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_challenges_reviewed"
+            android:layout_below="@id/tv_challenges_reviewed_ph"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="10dp"
