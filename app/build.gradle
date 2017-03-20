@@ -15,32 +15,27 @@ android {
 
 dependencies {
     def supportVersion = '25.2.0'
-
     compile "com.android.support:appcompat-v7:${supportVersion}"
     compile "com.android.support:recyclerview-v7:${supportVersion}"
     compile "com.android.support:design:${supportVersion}"
     compile "com.android.support:cardview-v7:${supportVersion}"
-
     // Userful libraries to have
+    // This is a preview release. The API is subject to change. This is not an official Google product.
+    // Awareness API
+    // Firebase
+    // Swiper library
+    compile files('/Users/andresarango/Desktop/ProjectsAC33/homework/AugHunt/libs/unity-classes.jar')
     compile 'com.jakewharton:butterknife:8.5.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
-    // This is a preview release. The API is subject to change. This is not an official Google product.
     compile 'com.github.google:cameraview:d0b508a5ea'
-
-    // Awareness API
     compile 'com.google.android.gms:play-services-awareness:10.2.0'
-
-    // Firebase
     compile 'com.google.firebase:firebase-auth:10.2.0'
     compile 'com.google.firebase:firebase-database:10.2.0'
     compile 'com.google.firebase:firebase-storage:10.2.0'
-
-    // Swiper library
     compile 'com.daprlabs.aaron:swipedeck:2.0.6'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }
 apply plugin: 'com.google.gms.google-services'
 
