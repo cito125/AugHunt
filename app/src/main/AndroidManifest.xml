@@ -20,11 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".login.SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".login.StartActivity"></activity>
         <activity android:name=".HomeScreenActivity"></activity>
@@ -45,7 +41,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBeF2aZF_8M99U4ryAymUg3fPcAm-hww9A" />
 
-        <activity android:name=".create.UnityPlayerActivity"></activity>
+        <activity android:name=".create.UnityPlayerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
