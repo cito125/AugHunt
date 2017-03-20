@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.andresarango.aughunt.HomeScreenActivity;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt._models.ChallengePhoto;
 import com.example.andresarango.aughunt._models.DAMLocation;
@@ -31,8 +32,8 @@ public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHe
     @BindView(R.id.btn_camera_image) Button cameraBtn;
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
 
-    private ChallengePhoto mChallengePhoto;
-
+    public static ChallengePhoto mChallengePhoto;
+    public static boolean hasSubmitted = false;
 
     // Setup activity layout
     @Override
@@ -68,7 +69,6 @@ public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHe
             @Override
             public void onClick(View v) {
                 mUnityPlayer.UnitySendMessage("Main Camera", "takeScreenShotAndShare", PictureTakenActivity.DESTINATION_KEY);
-
             }
         });
 
@@ -131,7 +131,20 @@ public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHe
     @Override
     protected void onResume() {
         super.onResume();
-        mUnityPlayer.resume();
+        System.out.println("Called on resume unity player");
+        if (hasSubmitted) {
+            Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            mUnityPlayer.resume();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        System.out.println("Called on start unity player");
     }
 
     // Low Memory Unity
