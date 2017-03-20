@@ -45,23 +45,25 @@
         <Button
             android:id="@+id/btn_leave_hint"
             android:layout_above="@id/ar_object_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="20dp"
-            android:background="#5D91B6"
-            android:text="Hint" />
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="25dp"
+            android:textSize="10sp"
+            android:background="#17B3C3"
+            android:text="HINT" />
 
         <Button
             android:id="@+id/btn_submit_challenge"
             android:layout_above="@id/ar_object_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginRight="20dp"
-            android:background="#5D91B6"
-            android:text="Submit" />
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="25dp"
+            android:textSize="10sp"
+            android:background="#17B3C3"
+            android:text="SUBMIT" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_take_photo"

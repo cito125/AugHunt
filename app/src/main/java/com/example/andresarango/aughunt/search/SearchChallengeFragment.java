@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.andresarango.aughunt.HomeScreenActivity;
@@ -57,6 +58,8 @@ public class SearchChallengeFragment extends Fragment implements SnapshotHelper.
     @BindView(R.id.tv_user_points) TextView mUserPointsTv;
     @BindView(R.id.review_number) TextView mPendingReview;
     @BindView(R.id.pending_review) TextView mPending;
+    @BindView(R.id.layout_searched_challenge_bg)
+    LinearLayout layout;
 
     private static final int LOCATION_PERMISSION = 1245;
 
@@ -205,12 +208,20 @@ public class SearchChallengeFragment extends Fragment implements SnapshotHelper.
                 }
 
                 if (challenge.getLocation().isWithinRadius(userLocation, radius) &&
-                        !submittedChallengeSet.contains(challengeKey)) {
+                        !submittedChallengeSet.contains(challengeKey) &&
+                        !challenge.getOwnerId().equals(auth.getCurrentUser().getUid())) {
                     System.out.println("ADDING ONE TO RV");
                     challengeMap.put(challengeKey, challenge);
                     challengeList.add(challengeMap.get(challengeKey));
 
+                    if (challengeList.isEmpty()) {
+                        // Set background with pin
+                    } else {
+                        // Set background without
+                    }
+
                     mNearbyChallengesAdapter.setChallengeList(challengeList);
+
                 } else {
                     System.out.println("NOT WITHIN RADIUS / HAS SUBMITTED");
                 }

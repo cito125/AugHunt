@@ -126,12 +126,13 @@ public class CreateChallengeCameraActivity extends AppCompatActivity implements
                     progressDialog.show();
                     submitChallenge();
                 } else {
-                    Toast.makeText(this, "Hint, photo or AR object is missing", Toast.LENGTH_SHORT)
+                    Toast.makeText(getApplicationContext(), "Hint, photo or AR object is missing", Toast.LENGTH_SHORT)
                             .show();
                 }
                 break;
             case R.id.ar_object:
                 arObjectStr = "kitten";
+                Toast.makeText(getApplicationContext(), "CHOSE KITTEN!", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

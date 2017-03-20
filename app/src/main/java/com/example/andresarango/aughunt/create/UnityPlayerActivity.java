@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -28,8 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHelper.SnapshotListener{
-    @BindView(R.id.btn_cat_image) Button catImageBtn;
-    @BindView(R.id.btn_camera_image) Button cameraBtn;
+    @BindView(R.id.btn_cat_image)
+    FloatingActionButton catImageBtn;
+    @BindView(R.id.btn_camera_image) FloatingActionButton cameraBtn;
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
 
     public static String GIMME;
@@ -57,6 +59,7 @@ public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHe
         mUnityPlayer.UnitySendMessage("3DCanvas", "deactivate", "swag");
 
         cameraBtn.setEnabled(false);
+        Toast.makeText(getApplicationContext(), "Press to search!", Toast.LENGTH_LONG).show();
 
         catImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,10 +72,6 @@ public class UnityPlayerActivity extends AppCompatActivity implements SnapshotHe
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String strToSend = deserializeChallengePhoto();
-//                strToSend += PictureTakenActivity.DESTINATION_KEY;
-//                PictureTakenActivity.DESTINATION_KEY = strToSend;
-//                System.out.println(strToSend);
                 mUnityPlayer.UnitySendMessage("Main Camera", "takeScreenShotAndShare", PictureTakenActivity.DESTINATION_KEY);
             }
         });

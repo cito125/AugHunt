@@ -236,7 +236,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @Override
     public void cardSwipedLeft(long stableId) {
         ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
-//        removeCompletedChallengeFromFirebase(completed);
+        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
         updateUsersSubmittedChallenge(completed, false);
         updateUsersReviewedChallenge();
@@ -249,7 +249,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
     @Override
     public void cardSwipedRight(long stableId) {
         ChallengePhotoCompleted completed = mCompletedChallengeDeck.removeLast();
-//        removeCompletedChallengeFromFirebase(completed);
+        removeCompletedChallengeFromFirebase(completed);
         decrementPendingReviewCounter();
         updateUserPoints(completed);
         updateUsersSubmittedChallenge(completed, true);
@@ -265,7 +265,7 @@ public class ReviewChallengesFragment extends Fragment implements SwipeDeck.Swip
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
-                currentUser.setNumberOfReviewedChallenges(currentUser.getNumberOfReviewedChallenges() + 1);
+                currentUser.setNumberOfReviewedChallenges(currentUser.getNumberOfReviewedChallenges() + 25);
                 rootRef.child("users").child(auth.getCurrentUser().getUid()).setValue(currentUser);
             }
 
