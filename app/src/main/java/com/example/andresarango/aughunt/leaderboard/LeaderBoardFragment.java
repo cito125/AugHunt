@@ -178,6 +178,9 @@ public class LeaderBoardFragment extends Fragment {
         // to this user
         if (challenge.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             mPendingReviewIndicator += challenge.getPendingReviews();
+            if(mPendingReviewIndicator<0){
+                mPendingReviewIndicator=0;
+            };
             mPendingReview.setText(String.valueOf(mPendingReviewIndicator));
             if (mPendingReviewIndicator > 0) {
                 mPendingReview.setTextColor(ContextCompat.getColor(mRootView.getContext(), R.color.colorAccent));
