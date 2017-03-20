@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_location_searching_black_24dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_camera_image"

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.andresarango.aughunt.R;
 import com.example.andresarango.aughunt._models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,12 +29,21 @@ import butterknife.ButterKnife;
 
 class LeaderBoardViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.iv_leader_profile_pic) ImageView mUserPic;
-    @BindView(R.id.tv_leader_profile_name) TextView mUserName;
-    @BindView(R.id.tv_leader_user_points) TextView mUserPoints;
-    @BindView(R.id.tv_leader_completed_challenges) TextView mNumberOfSubmitted;
-    @BindView(R.id.tv_leader_created_challenges) TextView mNumberOfCreated;
-    @BindView(R.id.tv_leader_reviewed_challenges) TextView mNumberOfReviewed;
+    @BindView(R.id.iv_leader_profile_pic)
+    ImageView mUserPic;
+    @BindView(R.id.tv_leader_profile_name)
+    TextView mUserName;
+    @BindView(R.id.tv_leader_user_points)
+    TextView mUserPoints;
+    @BindView(R.id.tv_leader_completed_challenges)
+    TextView mNumberOfSubmitted;
+    @BindView(R.id.tv_leader_created_challenges)
+    TextView mNumberOfCreated;
+    @BindView(R.id.tv_leader_reviewed_challenges)
+    TextView mNumberOfReviewed;
+
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
 
     public LeaderBoardViewHolder(View itemView) {
         super(itemView);
@@ -52,8 +68,6 @@ class LeaderBoardViewHolder extends RecyclerView.ViewHolder {
 
         mUserName.setText(user.getProfileName());
 
-
-
         int points = user.getUserPoints() / 100;
         mUserPoints.setText(String.valueOf(points));
 
@@ -61,6 +75,22 @@ class LeaderBoardViewHolder extends RecyclerView.ViewHolder {
         mNumberOfCreated.setText(String.valueOf(user.getNumberOfCreatedChallenges()));
         mNumberOfReviewed.setText(String.valueOf(user.getNumberOfReviewedChallenges()));
 
+
+        if (!TextUtils.isEmpty(user.getProfilePicUrl())) {
+            Glide.with(itemView.getContext())
+                    .load(user.getProfilePicUrl())
+                    .asBitmap()
+                    .centerCrop()
+                    .into(new BitmapImageViewTarget(mUserPic) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable =
+                                    RoundedBitmapDrawableFactory.create(itemView.getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            mUserPic.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
+        }
 
     }
 }

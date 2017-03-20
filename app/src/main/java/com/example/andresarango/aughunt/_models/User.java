@@ -20,6 +20,7 @@ public class User {
     public User(String userId, String profileName) {
         this.userId = userId;
         this.profileName = profileName;
+        this.profilePicUrl = "";
         this.userPoints = 0;
         this.numberOfCreatedChallenges = 0;
         this.numberOfSubmittedChallenges = 0;

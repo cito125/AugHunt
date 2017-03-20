@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +103,7 @@ public class ProfileTabFragment extends Fragment {
                 totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
                 totalReviewedChallengesTv.setText(String.valueOf(currentUser.getNumberOfReviewedChallenges()));
 
-                if (currentUser.getProfilePicUrl() != null) {
+                if (!TextUtils.isEmpty(currentUser.getProfilePicUrl())) {
                     Glide.with(getContext())
                             .load(currentUser.getProfilePicUrl())
                             .asBitmap()
