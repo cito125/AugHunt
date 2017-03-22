@@ -46,7 +46,7 @@ public class ReviewSwipeAdapter extends BaseAdapter {
                     .inflate(R.layout.vh_challenge_review_swipe, parent, false);
         }
         ImageView imageView = (ImageView) view.findViewById(R.id.offer_image);
-        Glide.with(view.getContext()).load(completedChallenge.getPhotoUrl()).fitCenter().into(imageView);
+        Glide.with(view.getContext()).load(completedChallenge.getPhotoUrl()).into(imageView);
 
 //        TextView textView = (TextView) view.findViewById(R.id.sample_text);
 //        textView.setText(completedChallenge.getPlayerId());

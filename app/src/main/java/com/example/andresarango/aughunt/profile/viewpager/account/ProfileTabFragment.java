@@ -61,7 +61,7 @@ public class ProfileTabFragment extends Fragment {
 
         setupProfileStatusBar();
 
-        Glide.with(getContext())
+        Glide.with(mRootView.getContext())
                 .load("http://ps4daily.com/wp-content/uploads/2016/02/crash-1449380161172.jpg")
                 .asBitmap()
                 .centerCrop()
@@ -69,7 +69,7 @@ public class ProfileTabFragment extends Fragment {
                     @Override
                     protected void setResource(Bitmap resource) {
                         RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(getResources(), resource);
+                                RoundedBitmapDrawableFactory.create(mRootView.getResources(), resource);
                         circularBitmapDrawable.setCircular(true);
                         profilePicIv.setImageDrawable(circularBitmapDrawable);
                     }
@@ -104,7 +104,7 @@ public class ProfileTabFragment extends Fragment {
                 totalReviewedChallengesTv.setText(String.valueOf(currentUser.getNumberOfReviewedChallenges()));
 
                 if (!TextUtils.isEmpty(currentUser.getProfilePicUrl())) {
-                    Glide.with(getContext())
+                    Glide.with(mRootView.getContext())
                             .load(currentUser.getProfilePicUrl())
                             .asBitmap()
                             .centerCrop()
@@ -112,7 +112,7 @@ public class ProfileTabFragment extends Fragment {
                                 @Override
                                 protected void setResource(Bitmap resource) {
                                     RoundedBitmapDrawable circularBitmapDrawable =
-                                            RoundedBitmapDrawableFactory.create(getResources(), resource);
+                                            RoundedBitmapDrawableFactory.create(mRootView.getResources(), resource);
                                     circularBitmapDrawable.setCircular(true);
                                     profilePicIv.setImageDrawable(circularBitmapDrawable);
                                 }
