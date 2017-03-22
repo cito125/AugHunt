@@ -36,16 +36,25 @@ import butterknife.ButterKnife;
 
 public class ProfileTabFragment extends Fragment {
     private View mRootView;
-    @BindView(R.id.iv_main_profile_pic) ImageView profilePicIv;
-    @BindView(R.id.tv_main_profile_name) TextView profileNameTv;
-    @BindView(R.id.tv_main_profile_points) TextView userPointsTv;
-    @BindView(R.id.tv_main_profile_total_created) TextView totalCreatedChallengesTv;
-    @BindView(R.id.tv_main_profile_total_submitted) TextView totalSubmittedChallengesTv;
-    @BindView(R.id.tv_main_profile_total_reviewed) TextView totalReviewedChallengesTv;
-    @BindView(R.id.tv_profile_logout) TextView logoutTv;
+    @BindView(R.id.iv_main_profile_pic)
+    ImageView profilePicIv;
+    @BindView(R.id.tv_main_profile_name)
+    TextView profileNameTv;
+    @BindView(R.id.tv_main_profile_points)
+    TextView userPointsTv;
+    @BindView(R.id.tv_main_profile_total_created)
+    TextView totalCreatedChallengesTv;
+    @BindView(R.id.tv_main_profile_total_submitted)
+    TextView totalSubmittedChallengesTv;
+    @BindView(R.id.tv_main_profile_total_reviewed)
+    TextView totalReviewedChallengesTv;
+    @BindView(R.id.tv_profile_logout)
+    TextView logoutTv;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+
+    private User mCurrentUser;
 
     @Nullable
     @Override
@@ -61,20 +70,49 @@ public class ProfileTabFragment extends Fragment {
 
         setupProfileStatusBar();
 
-        Glide.with(mRootView.getContext())
-                .load("http://ps4daily.com/wp-content/uploads/2016/02/crash-1449380161172.jpg")
-                .asBitmap()
-                .centerCrop()
-                .into(new BitmapImageViewTarget(profilePicIv) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(mRootView.getResources(), resource);
-                        circularBitmapDrawable.setCircular(true);
-                        profilePicIv.setImageDrawable(circularBitmapDrawable);
-                    }
-                });
+//        Glide.with(mRootView.getContext())
+//                .load("http://ps4daily.com/wp-content/uploads/2016/02/crash-1449380161172.jpg")
+//                .asBitmap()
+//                .centerCrop()
+//                .into(new BitmapImageViewTarget(profilePicIv) {
+//                    @Override
+//                    protected void setResource(Bitmap resource) {
+//                        RoundedBitmapDrawable circularBitmapDrawable =
+//                                RoundedBitmapDrawableFactory.create(mRootView.getResources(), resource);
+//                        circularBitmapDrawable.setCircular(true);
+//                        profilePicIv.setImageDrawable(circularBitmapDrawable);
+//                    }
+//                });
 
+        rootRef.child("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mCurrentUser = dataSnapshot.getValue(User.class);
+
+                if (mCurrentUser != null && !TextUtils.isEmpty(mCurrentUser.getProfilePicUrl())) {
+                    Glide.with(mRootView.getContext())
+                            .load(mCurrentUser.getProfilePicUrl())
+                            .asBitmap()
+                            .centerCrop()
+                            .into(new BitmapImageViewTarget(profilePicIv) {
+                                @Override
+                                protected void setResource(Bitmap resource) {
+                                    RoundedBitmapDrawable circularBitmapDrawable =
+                                            RoundedBitmapDrawableFactory.create(mRootView.getResources(), resource);
+                                    circularBitmapDrawable.setCircular(true);
+                                    profilePicIv.setImageDrawable(circularBitmapDrawable);
+                                }
+                            });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
 
 
         logoutTv.setOnClickListener(new View.OnClickListener() {
@@ -103,21 +141,23 @@ public class ProfileTabFragment extends Fragment {
                 totalSubmittedChallengesTv.setText(String.valueOf(currentUser.getNumberOfSubmittedChallenges()));
                 totalReviewedChallengesTv.setText(String.valueOf(currentUser.getNumberOfReviewedChallenges()));
 
-                if (!TextUtils.isEmpty(currentUser.getProfilePicUrl())) {
-                    Glide.with(mRootView.getContext())
-                            .load(currentUser.getProfilePicUrl())
-                            .asBitmap()
-                            .centerCrop()
-                            .into(new BitmapImageViewTarget(profilePicIv) {
-                                @Override
-                                protected void setResource(Bitmap resource) {
-                                    RoundedBitmapDrawable circularBitmapDrawable =
-                                            RoundedBitmapDrawableFactory.create(mRootView.getResources(), resource);
-                                    circularBitmapDrawable.setCircular(true);
-                                    profilePicIv.setImageDrawable(circularBitmapDrawable);
-                                }
-                            });
-                }
+                mCurrentUser = currentUser;
+                System.out.println(mCurrentUser.getProfilePicUrl());
+//                if (!TextUtils.isEmpty(currentUser.getProfilePicUrl())) {
+//                    Glide.with(mRootView.getContext())
+//                            .load(currentUser.getProfilePicUrl())
+//                            .asBitmap()
+//                            .centerCrop()
+//                            .into(new BitmapImageViewTarget(profilePicIv) {
+//                                @Override
+//                                protected void setResource(Bitmap resource) {
+//                                    RoundedBitmapDrawable circularBitmapDrawable =
+//                                            RoundedBitmapDrawableFactory.create(mRootView.getResources(), resource);
+//                                    circularBitmapDrawable.setCircular(true);
+//                                    profilePicIv.setImageDrawable(circularBitmapDrawable);
+//                                }
+//                            });
+//                }
             }
 
             @Override
