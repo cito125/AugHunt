@@ -35,9 +35,9 @@ This was a month long project presented at Google on Coalition for Queens Androi
 
 Thanks
 ------
-* Andres (https://github.com/cito125)
-* Mila (https://github.com/Mila2010)
-* Danny (https://github.com/dannylui91)
+* [Andres](https://github.com/cito125)
+* [Mila](https://github.com/Mila2010)
+* [Danny](https://github.com/dannylui91)
 * JRod - Technical Mentor
 * Ramona - Technical Mentor
 * Elan - Design Mentor
