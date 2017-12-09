@@ -25,7 +25,7 @@ We looked into Vuforia, Layar, Wikitude, and other incredibly ready-made AR libr
 
 Challenges that went with using Unity:
 1. Learning a new language and developing on a new environment
-2. Importing Unity in to Android Studio (We didn't believe was possible given that they're two different environments)
+2. Importing Unity in to Android Studio
 3. Finding up to date resources online in relation to Android + Unity
 4. ...
 
