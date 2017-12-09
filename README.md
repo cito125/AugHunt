@@ -38,8 +38,8 @@ Thanks
 * [Andres](https://github.com/cito125)
 * [Mila](https://github.com/Mila2010)
 * [Danny](https://github.com/dannylui91)
-* JRod - Technical Mentor
-* Ramona - Technical Mentor
+* [Jrod](https://github.com/jrodbx) - Technical Mentor
+* [Ramona](https://github.com/ramonaharrison) - Technical Mentor
 * Elan - Design Mentor
 * Danielle - Design Mentor
 
